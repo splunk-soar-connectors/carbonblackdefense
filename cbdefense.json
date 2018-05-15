@@ -1,0 +1,4339 @@
+{
+    "appid": "4d5a3ff3-5d68-4682-9209-73ffbe487c71",
+    "name": "Carbon Black Defense",
+    "description": "This app integrates with an instance of Carbon Black defense to run investigative actions",
+    "type": "endpoint",
+    "product_vendor": "Carbon Black",
+    "logo": "logo_carbonblack.svg",
+    "logo_dark": "logo_carbonblack_dark.svg",
+    "product_name": "Defense",
+    "product_version_regex": ".*",
+    "publisher": "Phantom",
+    "license": "Copyright (c) 2018 Splunk Inc.",
+    "app_version": "1.0.0",
+    "utctime_updated": "2018-04-03T04:58:23.963791Z",
+    "package_name": "phantom_carbonblackdefense",
+    "main_module": "cbdefense_connector.pyc",
+    "min_phantom_version": "3.0.284",
+    "app_wizard_version": "1.0.0",
+    "configuration": {
+        "api_url": {
+            "description": "API URL",
+            "data_type": "string",
+            "required": true,
+            "order": 0
+        },
+        "verify_server_cert": {
+            "description": "Verify Server Certificate",
+            "data_type": "boolean",
+            "required": true,
+            "default": false,
+            "order": 1
+        },
+        "api_connector_id": {
+            "description": "API Connector ID",
+            "data_type": "password",
+            "required": false,
+            "order": 2
+        },
+        "api_key": {
+            "description": "API Key",
+            "data_type": "password",
+            "required": false,
+            "order": 3
+        },
+        "siem_connector_id": {
+            "description": "SIEM Connector ID",
+            "data_type": "password",
+            "required": false,
+            "order": 4
+        },
+        "siem_key": {
+            "description": "SIEM Key",
+            "data_type": "password",
+            "required": false,
+            "order": 5
+        }
+    },
+    "actions": [
+        {
+            "action": "test connectivity",
+            "identifier": "test_connectivity",
+            "description": "Validate the supplied API Key",
+            "type": "test",
+            "read_only": true,
+            "parameters": {},
+            "output": [],
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "list devices",
+            "identifier": "list_devices",
+            "description": "List devices conntected to CB Defense",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {},
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.assignedToName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.macAddress",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.adGroupId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.avEngine",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.avVdfVersion",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.rootedByAnalyticsTime",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.linuxKernelVersion",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.rootedBySensorTime",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.passiveMode",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.currentSensorPolicyName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceGuid",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.lastDevicePolicyRequestedTime",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.lastPolicyUpdatedTime",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.registeredTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1523552410489
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceSessionId",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.lastDevicePolicyChangedTime",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policyName",
+                    "data_type": "string",
+                    "example_values": [
+                        "default"
+                    ],
+                    "column_name": "Policy Name",
+                    "column_order": 3
+                },
+                {
+                    "data_path": "action_result.data.*.testId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        -1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.osVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "MAC OS X 10.10.5"
+                    ],
+                    "column_name": "OS",
+                    "column_order": 4
+                },
+                {
+                    "data_path": "action_result.data.*.avUpdateServers",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.virtualMachine",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastContact",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1525989801253
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.middleName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.activationCode",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deregisteredTime",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.lastResetTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastInternalIpAddress",
+                    "data_type": "string",
+                    "example_values": [
+                        "192.168.2.125"
+                    ],
+                    "contains": [
+                        "ip"
+                    ],
+                    "column_name": "Internal IP",
+                    "column_order": 5
+                },
+                {
+                    "data_path": "action_result.data.*.avMaster",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policyId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        6525
+                    ],
+                    "contains": [
+                        "cb defense policy id"
+                    ],
+                    "column_name": "Policy ID",
+                    "column_order": 2
+                },
+                {
+                    "data_path": "action_result.data.*.lastLocation",
+                    "data_type": "string",
+                    "example_values": [
+                        "OFFSITE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceType",
+                    "data_type": "string",
+                    "example_values": [
+                        "MAC"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.encodedActivationCode",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.organizationId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1105
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastVirusActivityTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.avStatus",
+                    "data_type": "string",
+                    "example_values": [
+                        "AV_DEREGISTERED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.sensorStates",
+                    "data_type": "string",
+                    "example_values": [
+                        "ACTIVE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.email",
+                    "data_type": "string",
+                    "example_values": [
+                        "cberninger"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.virtualizationProvider",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.avPackVersion",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "REGISTERED"
+                    ],
+                    "column_name": "Status",
+                    "column_order": 7
+                },
+                {
+                    "data_path": "action_result.data.*.scanStatus",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.messages",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "cberninger-mac2"
+                    ],
+                    "column_name": "Device Name",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.data.*.windowsPlatform",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.scanLastActionTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.createTime",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.vdiBaseDevice",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.rootedByAnalytics",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.targetPriorityType",
+                    "data_type": "string",
+                    "example_values": [
+                        "MEDIUM"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.avProductVersion",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastExternalIpAddress",
+                    "data_type": "string",
+                    "example_values": [
+                        "67.143.209.15"
+                    ],
+                    "contains": [
+                        "ip"
+                    ],
+                    "column_name": "External IP",
+                    "column_order": 6
+                },
+                {
+                    "data_path": "action_result.data.*.lastShutdownTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1525540260438
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.quarantined",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceOwnerId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        278380
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        844355
+                    ],
+                    "contains": [
+                        "cb defense device id"
+                    ],
+                    "column_name": "Device ID",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.sensorVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "3.0.2.8"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.organizationName",
+                    "data_type": "string",
+                    "example_values": [
+                        "cb-internal-alliances.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastReportedTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1525963397592
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.firstName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.uninstallCode",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.uninstalledTime",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.assignedToId",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policyOverride",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.sensorOutOfDate",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.avAveVersion",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.activationCodeExpiryTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1524157210454
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceMetaDataItemList",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.lastName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.originEventHash",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.avLastScanTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.rootedBySensor",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.scanLastCompleteTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.firstVirusActivityTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "update device",
+            "identifier": "update_device",
+            "description": "Change the policy of a device conntected to CB Defense",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "device_id": {
+                    "description": "ID of device to update",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "cb defense device id"
+                    ],
+                    "order": 0
+                },
+                "policy_id": {
+                    "description": "ID of policy to assign to device",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "cb defense policy id"
+                    ],
+                    "order": 1
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ],
+                    "column_name": "Status",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.assignedToName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.macAddress",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.adGroupId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.avEngine",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.rootedByAnalyticsTime",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.linuxKernelVersion",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.rootedBySensorTime",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.passiveMode",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.currentSensorPolicyName",
+                    "data_type": "string",
+                    "example_values": [
+                        "default"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.lastPolicyRequestedTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1525995595018
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.deviceGuid",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.lastPolicyChangedTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1525995403040
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.registeredTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1521768234743
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.deviceSessionId",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.policyName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.testId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        -1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.osVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "Windows 7 x64 SP: 1"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.avUpdateServers",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.virtualMachine",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.lastContact",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1525995619292
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.middleName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.activationCode",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.lastResetTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.lastInternalIpAddress",
+                    "data_type": "string",
+                    "example_values": [
+                        "10.0.0.30"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.avMaster",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.lastLocation",
+                    "data_type": "string",
+                    "example_values": [
+                        "OFFSITE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.apcEnabled",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.deviceType",
+                    "data_type": "string",
+                    "example_values": [
+                        "WINDOWS"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.organizationId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1105
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.lastVirusActivityTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.avStatus",
+                    "data_type": "string",
+                    "example_values": [
+                        "AV_BYPASS"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.sensorStates",
+                    "data_type": "string",
+                    "example_values": [
+                        "SECURITY_CENTER_OPTLN_DISABLED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.email",
+                    "data_type": "string",
+                    "example_values": [
+                        "win7-endpoint\\root"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.virtualizationProvider",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "REGISTERED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.scanStatus",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.messages",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.windowsPlatform",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.scanLastActionTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.createTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1521768234702
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.vdiBaseDevice",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.rootedByAnalytics",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.updateVersion",
+                    "data_type": "numeric",
+                    "example_values": [
+                        3007
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.targetPriorityType",
+                    "data_type": "string",
+                    "example_values": [
+                        "MEDIUM"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.lastExternalIpAddress",
+                    "data_type": "string",
+                    "example_values": [
+                        "73.243.20.18"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.lastShutdownTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.quarantined",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.deviceOwnerId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        275511
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.deviceId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        802435
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "win7-endpoint"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.sensorVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "3.1.0.100"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.organizationName",
+                    "data_type": "string",
+                    "example_values": [
+                        "cb-internal-alliances.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.lastReportedTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1525995612523
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.firstName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.uninstallCode",
+                    "data_type": "string",
+                    "example_values": [
+                        "DJ4VJ49H"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.uninstalledTime",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.assignedToId",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.policyOverride",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.sensorOutOfDate",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.policyId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        12864
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.lastName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.avLastScanTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.rootedBySensor",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.scanLastCompleteTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.firstVirusActivityTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.success",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Successfully updated device's policy"
+                    ],
+                    "column_name": "Message",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.parameter.device_id",
+                    "data_type": "string",
+                    "contains": [
+                        "cb defense device id"
+                    ],
+                    "example_values": [
+                        "802435"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.policy_id",
+                    "data_type": "string",
+                    "contains": [
+                        "cb defense policy id"
+                    ],
+                    "example_values": [
+                        "12864"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "list policies",
+            "identifier": "list_policies",
+            "description": "List polcies that exist on CB Defense",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {},
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.latestRevision",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1488926710902
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.description",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.priorityLevel",
+                    "data_type": "string",
+                    "example_values": [
+                        "MEDIUM"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version",
+                    "data_type": "numeric",
+                    "example_values": [
+                        2
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.systemPolicy",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.sensorSettings.*.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "ALLOW_UNINSTALL"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.sensorSettings.*.value",
+                    "data_type": "string",
+                    "example_values": [
+                        "true"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.rules",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policy.avSettings.features.*.enabled",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.avSettings.features.*.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "SIGNATURE_UPDATE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.avSettings.updateServers.serversForOffSiteDevices",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://updates.cdc.carbonblack.io/update"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.avSettings.updateServers.servers.*.regId",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policy.avSettings.updateServers.servers.*.flags",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.avSettings.updateServers.servers.*.server",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://updates.cdc.carbonblack.io/update"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.avSettings.onDemandScan.profile",
+                    "data_type": "string",
+                    "example_values": [
+                        "NORMAL"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.avSettings.onDemandScan.scanUsb",
+                    "data_type": "string",
+                    "example_values": [
+                        "AUTOSCAN"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.avSettings.onDemandScan.scanCdDvd",
+                    "data_type": "string",
+                    "example_values": [
+                        "AUTOSCAN"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.avSettings.onDemandScan.schedule.recoveryScanIfMissed",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.avSettings.onDemandScan.schedule.days",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policy.avSettings.onDemandScan.schedule.rangeHours",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.avSettings.onDemandScan.schedule.startHour",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.avSettings.onAccessScan.profile",
+                    "data_type": "string",
+                    "example_values": [
+                        "NORMAL"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.avSettings.apc.riskLevel",
+                    "data_type": "numeric",
+                    "example_values": [
+                        4
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.avSettings.apc.enabled",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.avSettings.apc.maxExeDelay",
+                    "data_type": "numeric",
+                    "example_values": [
+                        45
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.avSettings.apc.maxFileSize",
+                    "data_type": "numeric",
+                    "example_values": [
+                        4
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.avSettings.signatureUpdate.schedule.fullIntervalHours",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.avSettings.signatureUpdate.schedule.initialRandomDelayHours",
+                    "data_type": "numeric",
+                    "example_values": [
+                        4
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.avSettings.signatureUpdate.schedule.intervalHours",
+                    "data_type": "numeric",
+                    "example_values": [
+                        4
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.directoryActionRules",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policy.knownBadHashAutoDeleteDelayMs",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policy.id",
+                    "data_type": "numeric",
+                    "example_values": [
+                        -1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.id",
+                    "data_type": "numeric",
+                    "example_values": [
+                        6525
+                    ],
+                    "contains": [
+                        "cb defense policy id"
+                    ],
+                    "column_name": "ID",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.data.*.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "default"
+                    ],
+                    "column_name": "Name",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.policy.rules.*.action",
+                    "data_type": "string",
+                    "example_values": [
+                        "DENY"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.rules.*.application.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "REPUTATION"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.rules.*.application.value",
+                    "data_type": "string",
+                    "example_values": [
+                        "COMPANY_BLACK_LIST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.rules.*.operation",
+                    "data_type": "string",
+                    "example_values": [
+                        "RUN"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.rules.*.required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy.rules.*.id",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Num policies: 33"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.num_policies",
+                    "data_type": "numeric",
+                    "example_values": [
+                        33
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "add policy",
+            "identifier": "create_policy",
+            "description": "Create a new policy on CB Defense",
+            "verbose": "The <b>json_fields</b> parameter can be used to configure other fields in the created policy. This parameter takes a JSON dictionary with the format of the policy field seen <a href=\"https://developer.carbonblack.com/reference/cb-defense/1/rest-api/#create-new-policy\">here</a>.",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "name": {
+                    "description": "Name",
+                    "data_type": "string",
+                    "required": true,
+                    "order": 0
+                },
+                "description": {
+                    "description": "Description",
+                    "data_type": "string",
+                    "required": true,
+                    "order": 1
+                },
+                "priority": {
+                    "description": "Priority Level",
+                    "data_type": "string",
+                    "required": true,
+                    "value_list": [
+                        "LOW",
+                        "MEDIUM",
+                        "HIGH"
+                    ],
+                    "default": "MEDIUM",
+                    "order": 2
+                },
+                "json_fields": {
+                    "description": "Other configuration fields in JSON format",
+                    "data_type": "string",
+                    "required": false,
+                    "order": 3
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ],
+                    "column_name": "Status",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policyId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        13145
+                    ],
+                    "contains": [
+                        "cb defense policy id"
+                    ],
+                    "column_name": "ID",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.data.*.success",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Policy id: 13145"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.priority",
+                    "data_type": "string",
+                    "example_values": [
+                        "MEDIUM"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.json_fields",
+                    "data_type": "string",
+                    "example_values": [
+                        "{\"sensorSettings\":[{\"name\":\"ALLOW_UNINSTALL\",\"value\":\"true\"}]}"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "Phantom policy 3"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.description",
+                    "data_type": "string",
+                    "example_values": [
+                        "This is going to be deleted very soon"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.policy_id",
+                    "data_type": "numeric",
+                    "example_values": [
+                        13145
+                    ],
+                    "contains": [
+                        "cb defense policy id"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "delete policy",
+            "identifier": "delete_policy",
+            "description": "Delete a policy on CB Defense",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "id": {
+                    "description": "ID",
+                    "data_type": "string",
+                    "required": true,
+                    "contains": [
+                        "cb defense policy id"
+                    ],
+                    "order": 0
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ],
+                    "column_name": "Status",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.success",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Policy successfully deleted"
+                    ],
+                    "column_name": "Message",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.parameter.id",
+                    "data_type": "string",
+                    "example_values": [
+                        "13145"
+                    ],
+                    "contains": [
+                        "cb defense policy id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "add rule",
+            "identifier": "add_rule",
+            "description": "Add a rule to a policy on CB Defense",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "id": {
+                    "description": "ID",
+                    "data_type": "string",
+                    "required": true,
+                    "contains": [
+                        "cb defense policy id"
+                    ],
+                    "order": 0
+                },
+                "rules": {
+                    "description": "JSON dictionary containing rules configuration",
+                    "data_type": "string",
+                    "required": true,
+                    "order": 1
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.success",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ruleId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Rule id: 1"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.rules",
+                    "data_type": "string",
+                    "example_values": [
+                        "{\"action\":\"TERMINATE\",\"application\":{\"type\":\"REPUTATION\",\"value\":\"COMPANY_BLACK_LIST\"},\"operation\":\"RANSOM\",\"required\":true,\"id\":1}"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.id",
+                    "data_type": "string",
+                    "example_values": [
+                        "12864"
+                    ],
+                    "contains": [
+                        "cb defense policy id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.rule_id",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "delete rule",
+            "identifier": "delete_rule",
+            "description": "Delete a rule from a policy on CB Defense",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "policy_id": {
+                    "description": "Policy ID",
+                    "data_type": "string",
+                    "required": true,
+                    "contains": [
+                        "cb defense policy id"
+                    ],
+                    "order": 0
+                },
+                "rule_id": {
+                    "description": "Rule ID",
+                    "data_type": "string",
+                    "required": true,
+                    "order": 1
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ],
+                    "column_name": "Status",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.success",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Rule successfully deleted"
+                    ],
+                    "column_name": "Message",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.parameter.rule_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "1"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.policy_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "12864"
+                    ],
+                    "contains": [
+                        "cb defense policy id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "list processes",
+            "identifier": "list_processes",
+            "description": "List processes that match supplied filter criteria",
+            "verbose": "Due to a limitation in the API, the only options for the <b>search_span</b> parameter are <b>one day</b>, <b>one week</b>, or <b>two weeks</b>.",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "ip": {
+                    "description": "IP",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": true,
+                    "contains": [
+                        "ip"
+                    ],
+                    "order": 0
+                },
+                "host_name": {
+                    "description": "Host Name",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": true,
+                    "contains": [
+                        "host name"
+                    ],
+                    "order": 1
+                },
+                "owner": {
+                    "description": "Owner",
+                    "data_type": "string",
+                    "required": false,
+                    "order": 2
+                },
+                "search_span": {
+                    "description": "Number of days back to search",
+                    "data_type": "numeric",
+                    "required": false,
+                    "value_list": [
+                        "one day",
+                        "one week",
+                        "two weeks",
+                        "one month"
+                    ],
+                    "default": "one day",
+                    "order": 3
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.applicationName",
+                    "data_type": "string",
+                    "example_values": [
+                        "msiexec.exe"
+                    ],
+                    "contains": [
+                        "file name"
+                    ],
+                    "column_name": "Application Name",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.data.*.processId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        2764
+                    ],
+                    "contains": [
+                        "pid"
+                    ],
+                    "column_name": "Process ID",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.numEvents",
+                    "data_type": "numeric",
+                    "example_values": [
+                        115
+                    ],
+                    "column_name": "Number of Events",
+                    "column_order": 3
+                },
+                {
+                    "data_path": "action_result.data.*.applicationPath",
+                    "data_type": "string",
+                    "example_values": [
+                        "C:\\Windows\\System32\\msiexec.exe"
+                    ],
+                    "contains": [
+                        "file path",
+                        "file name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.privatePid",
+                    "data_type": "string",
+                    "example_values": [
+                        "2764-1526029242314-632"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.sha256Hash",
+                    "data_type": "string",
+                    "example_values": [
+                        "8a78beaf0cb03715193503afd114e5b094c41b2ed58662fcd204ab2cb4d728e6"
+                    ],
+                    "contains": [
+                        "sha256"
+                    ],
+                    "column_name": "SHA-256 Hash",
+                    "column_order": 2
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Num results: 85"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.owner",
+                    "data_type": "string",
+                    "example_values": [
+                        "win7-endpoint\\root"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.ip",
+                    "data_type": "string",
+                    "example_values": [
+                        "73.243.20.18"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.search_span",
+                    "data_type": "string",
+                    "example_values": [
+                        "one day"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.host_name",
+                    "data_type": "string",
+                    "example_values": [
+                        "win7-endpoint"
+                    ],
+                    "contains": [
+                        "host name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.num_results",
+                    "data_type": "numeric",
+                    "example_values": [
+                        85
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "list events",
+            "identifier": "list_events",
+            "description": "List events that match supplied filter criteria",
+            "verbose": "Use the <b>description</b> parameter to search for a substring in the description of an event. The description of an event will include general information about the event such as fields like destination URL and commandline entries.<br><br>The parameter <b>ip</b>, <b>host_name</b>, <b>hash</b>, <b>application</b>, and <b>owner</b> apply only to the device the event came from. Thus, for example, the <b>ip</b> paramters cannot be used to search for a destination IP. To search for a certain destination IP, or other fields, use the <b>description</b> parameter instead.<br><br>Due to a limitation in the API, the only options for the <b>search_span</b> parameter are <b>one day</b>, <b>one week</b>, or <b>two weeks</b>.",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "ip": {
+                    "description": "IP",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": true,
+                    "contains": [
+                        "ip"
+                    ],
+                    "order": 2
+                },
+                "host_name": {
+                    "description": "Host Name",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": true,
+                    "contains": [
+                        "host name"
+                    ],
+                    "order": 3
+                },
+                "hash": {
+                    "description": "SHA-256 Hash",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": true,
+                    "contains": [
+                        "hash",
+                        "sha256"
+                    ],
+                    "order": 4
+                },
+                "application": {
+                    "description": "Application Name",
+                    "data_type": "string",
+                    "required": false,
+                    "order": 5
+                },
+                "description": {
+                    "description": "Search for a substring in the event description",
+                    "data_type": "string",
+                    "required": false,
+                    "order": 0
+                },
+                "event_type": {
+                    "description": "Event Type",
+                    "data_type": "string",
+                    "required": false,
+                    "value_list": [
+                        "NETWORK",
+                        "FILE_CREATE",
+                        "REGISTRY_ACCESS",
+                        "SYSTEM_API_CALL",
+                        "CREATE_PROCESS",
+                        "DATA_ACCESS",
+                        "INJECT_CODE"
+                    ],
+                    "order": 1
+                },
+                "owner": {
+                    "description": "Owner",
+                    "data_type": "string",
+                    "required": false,
+                    "order": 6
+                },
+                "search_span": {
+                    "description": "Number of days back to search",
+                    "data_type": "numeric",
+                    "required": false,
+                    "value_list": [
+                        "one day",
+                        "one week",
+                        "two weeks"
+                    ],
+                    "default": "one day",
+                    "order": 7
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.ip",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ],
+                    "example_values": [
+                        "73.243.20.18"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.host_name",
+                    "data_type": "string",
+                    "contains": [
+                        "host name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.hash",
+                    "data_type": "string",
+                    "contains": [
+                        "hash",
+                        "sha256"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.application",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.description",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.owner",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.event_type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.search_span",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Num results: 141"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventId",
+                    "data_type": "string",
+                    "example_values": [
+                        "d58c2f3f386011e8a36b77c521bd3166"
+                    ],
+                    "contains": [
+                        "cb defense event id"
+                    ],
+                    "column_name": "Event ID",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.targetApp.applicationName",
+                    "data_type": "string",
+                    "contains": [
+                        "file name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.targetApp.md5Hash",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.targetApp.reputationProperty",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.targetApp.effectiveReputation",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.targetApp.applicationPath",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.targetApp.virusName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.targetApp.effectiveReputationSource",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.targetApp.virusCategory",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.targetApp.sha256Hash",
+                    "data_type": "string",
+                    "contains": [
+                        "sha256"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.targetApp.virusSubCategory",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1522884889399
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.selectedApp.applicationName",
+                    "data_type": "string",
+                    "example_values": [
+                        "GoogleUpdate.exe"
+                    ],
+                    "contains": [
+                        "file name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.selectedApp.md5Hash",
+                    "data_type": "string",
+                    "example_values": [
+                        "605ccc9ce1839bc5583017df7cae27a6"
+                    ],
+                    "contains": [
+                        "md5"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.selectedApp.reputationProperty",
+                    "data_type": "string",
+                    "example_values": [
+                        "TRUSTED_WHITE_LIST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.selectedApp.effectiveReputation",
+                    "data_type": "string",
+                    "example_values": [
+                        "TRUSTED_WHITE_LIST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.selectedApp.applicationPath",
+                    "data_type": "string",
+                    "example_values": [
+                        "C:\\Program Files (x86)\\Google\\Update\\GoogleUpdate.exe"
+                    ],
+                    "contains": [
+                        "file path",
+                        "file name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.selectedApp.virusName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.selectedApp.effectiveReputationSource",
+                    "data_type": "string",
+                    "example_values": [
+                        "CLOUD"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.selectedApp.virusCategory",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.selectedApp.sha256Hash",
+                    "data_type": "string",
+                    "example_values": [
+                        "f1f67830fc3531dfbdaf5315f59422438ab9f243d89491ac75d1818e7ed98b5d"
+                    ],
+                    "contains": [
+                        "sha256"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.selectedApp.virusSubCategory",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.attackStage",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.processDetails.userName",
+                    "data_type": "string",
+                    "example_values": [
+                        "SYSTEM"
+                    ],
+                    "contains": [
+                        "user name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.processDetails.processId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        2872
+                    ],
+                    "contains": [
+                        "pid"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.processDetails.targetPid",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.processDetails.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "GoogleUpdate.exe"
+                    ],
+                    "contains": [
+                        "file name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.processDetails.parentPid",
+                    "data_type": "numeric",
+                    "example_values": [
+                        2240
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.processDetails.interpreterHash",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.processDetails.interpreterName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.processDetails.commandLine",
+                    "data_type": "string",
+                    "example_values": [
+                        "\"C:\\Program Files (x86)\\Google\\Update\\GoogleUpdate.exe\" /ua /installsource scheduler"
+                    ],
+                    "contains": [
+                        "file path",
+                        "file name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.processDetails.parentName",
+                    "data_type": "string",
+                    "example_values": [
+                        "taskeng.exe"
+                    ],
+                    "contains": [
+                        "file name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.processDetails.parentPrivatePid",
+                    "data_type": "string",
+                    "example_values": [
+                        "2240-1522884884012-2740"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.processDetails.targetPrivatePid",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.processDetails.parentCommandLine",
+                    "data_type": "string",
+                    "example_values": [
+                        "taskeng.exe {51047E07-798E-4573-BDBB-EEA36650F965} S-1-5-18:NT AUTHORITY\\System:Service:"
+                    ],
+                    "contains": [
+                        "file path",
+                        "file name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.processDetails.targetCommandLine",
+                    "data_type": "string",
+                    "contains": [
+                        "file name",
+                        "file path"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.processDetails.privatePid",
+                    "data_type": "string",
+                    "example_values": [
+                        "2872-1522884884152-2742"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.processDetails.milisSinceProcessStart",
+                    "data_type": "numeric",
+                    "example_values": [
+                        47
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.processDetails.targetName",
+                    "data_type": "string",
+                    "contains": [
+                        "file name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.processDetails.fullUserName",
+                    "data_type": "string",
+                    "example_values": [
+                        "NT AUTHORITY\\SYSTEM"
+                    ],
+                    "contains": [
+                        "user name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventType",
+                    "data_type": "string",
+                    "example_values": [
+                        "SYSTEM_API_CALL"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.parentApp.applicationName",
+                    "data_type": "string",
+                    "example_values": [
+                        "taskeng.exe"
+                    ],
+                    "contains": [
+                        "file name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.parentApp.md5Hash",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.parentApp.reputationProperty",
+                    "data_type": "string",
+                    "example_values": [
+                        "TRUSTED_WHITE_LIST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.parentApp.effectiveReputation",
+                    "data_type": "string",
+                    "example_values": [
+                        "TRUSTED_WHITE_LIST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.parentApp.applicationPath",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.parentApp.virusName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.parentApp.effectiveReputationSource",
+                    "data_type": "string",
+                    "example_values": [
+                        "WHITE_DATABASE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.parentApp.virusCategory",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.parentApp.sha256Hash",
+                    "data_type": "string",
+                    "example_values": [
+                        "5fdcf73191bff9dbb03886755ffcf0bc15849f0e216884a5a8b9bb375fa7c1a5"
+                    ],
+                    "contains": [
+                        "sha256"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.parentApp.virusSubCategory",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.longDescription",
+                    "data_type": "string",
+                    "example_values": [
+                        "The application \"<share><link hash=\"f1f67830fc3531dfbdaf5315f59422438ab9f243d89491ac75d1818e7ed98b5d\">C:\\Program Files (x86)\\Google\\Update\\GoogleUpdate.exe</link></share>\" attempted to list all processes, by calling the function \"NtQuerySystemInformation\". The operation was successful."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threatIndicators",
+                    "data_type": "string",
+                    "example_values": [
+                        "RUN_SYSTEM_UTILITY"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.securityEventCode",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.policyName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Phantom_Policy"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.agentLocation",
+                    "data_type": "string",
+                    "example_values": [
+                        "OFFSITE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.targetPriorityCode",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.deviceName",
+                    "data_type": "string",
+                    "example_values": [
+                        "win7-endpoint"
+                    ],
+                    "column_name": "Device Name",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.deviceIpAddress",
+                    "data_type": "string",
+                    "example_values": [
+                        "73.243.20.18"
+                    ],
+                    "contains": [
+                        "ip"
+                    ],
+                    "column_name": "Device IP",
+                    "column_order": 2
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.deviceHostName",
+                    "data_type": "string",
+                    "contains": [
+                        "host name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.deviceOwnerName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.email",
+                    "data_type": "string",
+                    "example_values": [
+                        "win7-endpoint\\root"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.deviceType",
+                    "data_type": "string",
+                    "example_values": [
+                        "WINDOWS"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.deviceId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        802435
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.deviceVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "Windows 7 x64 SP: 1"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.deviceIpV4Address",
+                    "data_type": "string",
+                    "example_values": [
+                        "73.243.20.18"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.deviceLocation.city",
+                    "data_type": "string",
+                    "example_values": [
+                        "Denver"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.deviceLocation.countryCode",
+                    "data_type": "string",
+                    "example_values": [
+                        "US"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.deviceLocation.areaCode",
+                    "data_type": "numeric",
+                    "example_values": [
+                        303
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.deviceLocation.metroCode",
+                    "data_type": "numeric",
+                    "example_values": [
+                        751
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.deviceLocation.region",
+                    "data_type": "string",
+                    "example_values": [
+                        "CO"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.deviceLocation.longitude",
+                    "data_type": "numeric",
+                    "example_values": [
+                        -104.9528
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.deviceLocation.countryName",
+                    "data_type": "string",
+                    "example_values": [
+                        "United States"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.deviceLocation.latitude",
+                    "data_type": "numeric",
+                    "example_values": [
+                        39.729004
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.deviceLocation.dmaCode",
+                    "data_type": "numeric",
+                    "example_values": [
+                        751
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.deviceLocation.postalCode",
+                    "data_type": "string",
+                    "example_values": [
+                        "80206"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceDetails.targetPriorityType",
+                    "data_type": "string",
+                    "example_values": [
+                        "MEDIUM"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.registryValue",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.netFlow.service",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.netFlow.peerSiteReputation",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.netFlow.peerIpAddress",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.netFlow.peerLocation",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.netFlow.sourcePort",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.netFlow.peerFqdn",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.netFlow.destAddress",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.netFlow.peerIpV4Address",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.netFlow.sourceAddress",
+                    "data_type": "string",
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.netFlow.destPort",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.incidentId",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.shortDescription",
+                    "data_type": "string",
+                    "example_values": [
+                        "The application \"<share><link hash=\"f1f67830fc3531dfbdaf5315f59422438ab9f243d89491ac75d1818e7ed98b5d\">GoogleUpdate.exe</link></share>\" successfully attempted to list all processes."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.createTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1522884927587
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.alertScore",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.alertCategory",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.netFlow.peerLocation.city",
+                    "data_type": "string",
+                    "example_values": [
+                        "Dublin"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.netFlow.peerLocation.countryCode",
+                    "data_type": "string",
+                    "example_values": [
+                        "IE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.netFlow.peerLocation.areaCode",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.netFlow.peerLocation.metroCode",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.netFlow.peerLocation.region",
+                    "data_type": "string",
+                    "example_values": [
+                        "07"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.netFlow.peerLocation.longitude",
+                    "data_type": "numeric",
+                    "example_values": [
+                        -6.2489014
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.netFlow.peerLocation.countryName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Ireland"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.netFlow.peerLocation.latitude",
+                    "data_type": "numeric",
+                    "example_values": [
+                        53.3331
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.netFlow.peerLocation.dmaCode",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.netFlow.peerLocation.postalCode",
+                    "data_type": "string",
+                    "example_values": [
+                        "D02"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.num_results",
+                    "data_type": "numeric",
+                    "example_values": [
+                        141
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "get event",
+            "identifier": "get_event",
+            "description": "Get information about an event",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "id": {
+                    "description": "Event ID",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "cb defense event id"
+                    ],
+                    "order": 0
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ],
+                    "column_name": "Status",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.eventId",
+                    "data_type": "string",
+                    "example_values": [
+                        "3077d242391711e8b9b1afced5871817"
+                    ],
+                    "contains": [
+                        "md5"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.targetApp.applicationName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.targetApp.md5Hash",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.targetApp.reputationProperty",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.targetApp.effectiveReputation",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.targetApp.applicationPath",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.targetApp.virusName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.targetApp.effectiveReputationSource",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.targetApp.virusCategory",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.targetApp.sha256Hash",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.targetApp.virusSubCategory",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.eventTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1522963235141
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.selectedApp.applicationName",
+                    "data_type": "string",
+                    "example_values": [
+                        "svchost.exe"
+                    ],
+                    "contains": [
+                        "file name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.selectedApp.md5Hash",
+                    "data_type": "string",
+                    "example_values": [
+                        "440684c4f823aae2cc587363f9c477a6"
+                    ],
+                    "contains": [
+                        "md5"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.selectedApp.reputationProperty",
+                    "data_type": "string",
+                    "example_values": [
+                        "TRUSTED_WHITE_LIST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.selectedApp.effectiveReputation",
+                    "data_type": "string",
+                    "example_values": [
+                        "TRUSTED_WHITE_LIST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.selectedApp.applicationPath",
+                    "data_type": "string",
+                    "example_values": [
+                        "C:\\Windows\\System32\\svchost.exe"
+                    ],
+                    "contains": [
+                        "file path",
+                        "file name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.selectedApp.virusName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.selectedApp.effectiveReputationSource",
+                    "data_type": "string",
+                    "example_values": [
+                        "CLOUD"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.selectedApp.virusCategory",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.selectedApp.sha256Hash",
+                    "data_type": "string",
+                    "example_values": [
+                        "b868487f8edbd0571d30d89573f087bfeac3da190652344afd351b1868ea0f8b"
+                    ],
+                    "contains": [
+                        "sha256"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.selectedApp.virusSubCategory",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.attackStage",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.processDetails.userName",
+                    "data_type": "string",
+                    "example_values": [
+                        "JOHN"
+                    ],
+                    "contains": [
+                        "user name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.processDetails.processId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        4756
+                    ],
+                    "contains": [
+                        "pid"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.processDetails.targetPid",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.processDetails.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "svchost.exe"
+                    ],
+                    "contains": [
+                        "file name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.processDetails.parentPid",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.processDetails.interpreterHash",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.processDetails.interpreterName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.processDetails.commandLine",
+                    "data_type": "string",
+                    "example_values": [
+                        "c:\\windows\\system32\\svchost.exe -k unistacksvcgroup -s WpnUserService"
+                    ],
+                    "contains": [
+                        "file path"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.processDetails.parentName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.processDetails.parentPrivatePid",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.processDetails.targetPrivatePid",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.processDetails.parentCommandLine",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.processDetails.targetCommandLine",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.processDetails.privatePid",
+                    "data_type": "string",
+                    "example_values": [
+                        "4756-1520520566761-155"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.processDetails.milisSinceProcessStart",
+                    "data_type": "numeric",
+                    "example_values": [
+                        2442668380
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.processDetails.targetName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.processDetails.fullUserName",
+                    "data_type": "string",
+                    "example_values": [
+                        "CBR-AGENT\\JOHN"
+                    ],
+                    "contains": [
+                        "user name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.eventType",
+                    "data_type": "string",
+                    "example_values": [
+                        "NETWORK"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.parentApp.applicationName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.parentApp.md5Hash",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.parentApp.reputationProperty",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.parentApp.effectiveReputation",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.parentApp.applicationPath",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.parentApp.virusName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.parentApp.effectiveReputationSource",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.parentApp.virusCategory",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.parentApp.sha256Hash",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.parentApp.virusSubCategory",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.longDescription",
+                    "data_type": "string",
+                    "example_values": [
+                        "The application \"<share><link hash=\"b868487f8edbd0571d30d89573f087bfeac3da190652344afd351b1868ea0f8b\">c:\\windows\\system32\\svchost.exe -k unistacksvcgroup -s WpnUserService</link></share>\" established a <accent>TCP/443</accent> connection to <share><accent>184.50.166.121</accent></share><accent>:443</accent> (<share><accent>cdn.onenote.net</accent></share>, located in Amsterdam 07, Netherlands) from <share><accent>172.21.2.104</accent></share><accent>:51038</accent>. The device was off the corporate network using the public address <accent>37.142.34.66</accent> (<accent>CBR-Agent.MVDev.local</accent>, located in Kfar Hamaccabi 04, Israel). The operation was successful."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.threatIndicators",
+                    "data_type": "string",
+                    "example_values": [
+                        "NETWORK_ACCESS"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.securityEventCode",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.policyName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Minerva_Policy"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.agentLocation",
+                    "data_type": "string",
+                    "example_values": [
+                        "OFFSITE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.targetPriorityCode",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.deviceName",
+                    "data_type": "string",
+                    "example_values": [
+                        "CBR-Agent"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.deviceIpAddress",
+                    "data_type": "string",
+                    "example_values": [
+                        "37.142.34.66"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.deviceHostName",
+                    "data_type": "string",
+                    "contains": [
+                        "host name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.deviceOwnerName",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.email",
+                    "data_type": "string",
+                    "example_values": [
+                        "JOHN"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.deviceType",
+                    "data_type": "string",
+                    "example_values": [
+                        "WINDOWS"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.deviceId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        776723
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.deviceVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "Windows 10 x64"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.deviceIpV4Address",
+                    "data_type": "string",
+                    "example_values": [
+                        "37.142.34.66"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.deviceLocation.city",
+                    "data_type": "string",
+                    "example_values": [
+                        "Kfar Hamaccabi"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.deviceLocation.countryCode",
+                    "data_type": "string",
+                    "example_values": [
+                        "IL"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.deviceLocation.areaCode",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.deviceLocation.metroCode",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.deviceLocation.region",
+                    "data_type": "string",
+                    "example_values": [
+                        "04"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.deviceLocation.longitude",
+                    "data_type": "numeric",
+                    "example_values": [
+                        35.116394
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.deviceLocation.countryName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Israel"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.deviceLocation.latitude",
+                    "data_type": "numeric",
+                    "example_values": [
+                        32.791107
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.deviceLocation.dmaCode",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.deviceLocation.postalCode",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.deviceDetails.targetPriorityType",
+                    "data_type": "string",
+                    "example_values": [
+                        "MEDIUM"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.registryValue",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.netFlow.service",
+                    "data_type": "string",
+                    "example_values": [
+                        "TCP/443"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.netFlow.peerSiteReputation",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.netFlow.peerIpAddress",
+                    "data_type": "string",
+                    "example_values": [
+                        "184.50.166.121"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.netFlow.peerLocation.city",
+                    "data_type": "string",
+                    "example_values": [
+                        "Amsterdam"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.netFlow.peerLocation.countryCode",
+                    "data_type": "string",
+                    "example_values": [
+                        "NL"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.netFlow.peerLocation.areaCode",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.netFlow.peerLocation.metroCode",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.netFlow.peerLocation.region",
+                    "data_type": "string",
+                    "example_values": [
+                        "07"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.netFlow.peerLocation.longitude",
+                    "data_type": "numeric",
+                    "example_values": [
+                        4.9167023
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.netFlow.peerLocation.countryName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Netherlands"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.netFlow.peerLocation.latitude",
+                    "data_type": "numeric",
+                    "example_values": [
+                        52.350006
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.netFlow.peerLocation.dmaCode",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.netFlow.peerLocation.postalCode",
+                    "data_type": "string",
+                    "example_values": [
+                        "1091"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.netFlow.sourcePort",
+                    "data_type": "string",
+                    "example_values": [
+                        "51038"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.netFlow.peerFqdn",
+                    "data_type": "string",
+                    "example_values": [
+                        "cdn.onenote.net"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.netFlow.destAddress",
+                    "data_type": "string",
+                    "example_values": [
+                        "184.50.166.121"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.netFlow.peerIpV4Address",
+                    "data_type": "string",
+                    "example_values": [
+                        "184.50.166.121"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.netFlow.sourceAddress",
+                    "data_type": "string",
+                    "example_values": [
+                        "172.21.2.104"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.netFlow.destPort",
+                    "data_type": "string",
+                    "example_values": [
+                        "443"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.incidentId",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.shortDescription",
+                    "data_type": "string",
+                    "example_values": [
+                        "The application \"<share><link hash=\"b868487f8edbd0571d30d89573f087bfeac3da190652344afd351b1868ea0f8b\">svchost.exe</link></share>\" successfully established a <accent>TCP/443</accent> connection to <share><accent>184.50.166.121</accent></share><accent>:443</accent> (<share><accent>cdn.onenote.net</accent></share>, located in Amsterdam 07, Netherlands)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.createTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1522963249923
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.alertScore",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventInfo.alertCategory",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.success",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Successfully retrieved event data."
+                    ],
+                    "column_name": "Message",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.parameter.id",
+                    "data_type": "string",
+                    "example_values": [
+                        "3077d242391711e8b9b1afced5871817"
+                    ],
+                    "contains": [
+                        "md5"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "get alert",
+            "identifier": "get_alert",
+            "description": "Get information about an alert",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "id": {
+                    "description": "Alert ID",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "cb defense alert id"
+                    ],
+                    "order": 0
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.success",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.assignedToName",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.deviceName",
+                    "data_type": "string",
+                    "example_values": [
+                        "OPSWATs-Mac-mini.local"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.adGroupId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.avEngine",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.adGroupName",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.linuxKernelVersion",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.registeredTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1522844259491
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.policyName",
+                    "data_type": "string",
+                    "example_values": [
+                        "default"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.deregisteredTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.deviceType",
+                    "data_type": "string",
+                    "example_values": [
+                        "MAC"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.scanLastActionTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.avStatus",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.sensorStates",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "REGISTERED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.scanStatus",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.importance",
+                    "data_type": "string",
+                    "example_values": [
+                        "MEDIUM"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.deviceId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        824341
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.osVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "MAC OS X 10.11.6"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.userName",
+                    "data_type": "string",
+                    "example_values": [
+                        "opswat"
+                    ],
+                    "contains": [
+                        "user name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.sensorVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "3.0.2.8"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.success",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.policyOverride",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.assignedToId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.policyId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        6525
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.avLastScanTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.scanLastCompleteTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.orgId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1105
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.events.*.eventId",
+                    "data_type": "string",
+                    "example_values": [
+                        "3e7a00bd3e3211e8a36b77c521bd3166"
+                    ],
+                    "contains": [
+                        "md5"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.events.*.userName",
+                    "data_type": "string",
+                    "example_values": [
+                        "opswat"
+                    ],
+                    "contains": [
+                        "user name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.events.*.eventTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1523523323464
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.events.*.parentPid",
+                    "data_type": "numeric",
+                    "example_values": [
+                        671
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.events.*.processId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        672
+                    ],
+                    "contains": [
+                        "pid"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.events.*.processHash",
+                    "data_type": "string",
+                    "example_values": [
+                        "68df5c70b8b9911bf40d642fb0ef0a150f385f564b0c3891afd72fd90111a8ce"
+                    ],
+                    "contains": [
+                        "sha256"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.events.*.eventType",
+                    "data_type": "string",
+                    "example_values": [
+                        "FILE_CREATE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.events.*.parentHash",
+                    "data_type": "string",
+                    "example_values": [
+                        "68df5c70b8b9911bf40d642fb0ef0a150f385f564b0c3891afd72fd90111a8ce"
+                    ],
+                    "contains": [
+                        "sha256"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.events.*.parentName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Keka"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.events.*.longDescription",
+                    "data_type": "string",
+                    "example_values": [
+                        "The file \"<share><link hash=\"830b77d2eb109fd8119ec8f95f656ef110fc67ffe2702352e17447ae308d2a40\">/Users/opswat/Desktop/s3_mac 5/New Folder With Items/fdb072460a164710980a0b6f3685c364</link></share>\" was first detected on a local disk. The device was off the corporate network using the public address 31.14.16.146 (located in Timisoara 36, Romania). The file is not signed.  The file was created by the application \"<share><link hash=\"68df5c70b8b9911bf40d642fb0ef0a150f385f564b0c3891afd72fd90111a8ce\">/Applications/Keka.app/Contents/MacOS/Keka</link></share>\"."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.events.*.parentCommandLine",
+                    "data_type": "string",
+                    "example_values": [
+                        "xpcproxy com.aone.keka.106912"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.events.*.applicationPath",
+                    "data_type": "string",
+                    "example_values": [
+                        "/Applications/Keka.app/Contents/MacOS/Keka"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.events.*.threatIndicators",
+                    "data_type": "string",
+                    "example_values": [
+                        "CODE_DROP"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.events.*.parentPPid",
+                    "data_type": "string",
+                    "example_values": [
+                        "671-1523523204180-824"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.events.*.killChainStatus",
+                    "data_type": "string",
+                    "example_values": [
+                        "DELIVER_EXPLOIT"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.events.*.processMd5Hash",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.events.*.processPPid",
+                    "data_type": "string",
+                    "example_values": [
+                        "672-1523523204431-825"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.events.*.commandLine",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.events.*.policyState",
+                    "data_type": "string",
+                    "example_values": [
+                        "NOT_APPLIED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threatInfo.threatId",
+                    "data_type": "string",
+                    "example_values": [
+                        "74c92c0ba07f8135de5d03a96ba910a1"
+                    ],
+                    "contains": [
+                        "md5"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threatInfo.threatScore",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threatInfo.summary",
+                    "data_type": "string",
+                    "example_values": [
+                        "A PUP or Potentially Unwanted Program (Adware: VSearch) was detected."
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threatInfo.time",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1523523323464
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threatInfo.indicators.*.applicationName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Keka"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threatInfo.indicators.*.indicatorName",
+                    "data_type": "string",
+                    "example_values": [
+                        "DETECTED_PUP_APP"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threatInfo.indicators.*.sha256Hash",
+                    "data_type": "string",
+                    "example_values": [
+                        "68df5c70b8b9911bf40d642fb0ef0a150f385f564b0c3891afd72fd90111a8ce"
+                    ],
+                    "contains": [
+                        "sha256"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threatInfo.incidentId",
+                    "data_type": "string",
+                    "example_values": [
+                        "N9MSZL9A"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Device: OPSWATs-Mac-mini.local, Num events: 1"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.id",
+                    "data_type": "string",
+                    "example_values": [
+                        "N9MSZL9A"
+                    ],
+                    "contains": [
+                        "cb defense alert id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.device",
+                    "data_type": "string",
+                    "example_values": [
+                        "OPSWATs-Mac-mini.local"
+                    ],
+                    "column_name": "Device Name",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.summary.num_events",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ],
+                    "column_name": "Number of events",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "get notifications",
+            "identifier": "get_notifications",
+            "description": "Get notfications from CB Defense",
+            "verbose": "This action retrieves the current list of notifiactions from CB Defense. Once a notification is retrieved, it cannot be retrieved again.",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {},
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventTime",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1526409575253
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.eventDescription",
+                    "data_type": "string",
+                    "example_values": [
+                        "[Global Alert Notification] [Confer has detected a threat against your company.] [https://defense.conferdeploy.net#device/844355/incident/38AW1VQY] [The application sh invoked a system application (ifconfig).] [Incident id: 38AW1VQY] [Threat score: 3] [Group: default] [Email: cberninger] [Name: cberninger-mac2] [Type and OS: MAC MAC OS X 10.10.5] [Severity: Monitored]\n"
+                    ],
+                    "column_name": "Event Description",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.data.*.url",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://defense.conferdeploy.net/investigate?s[searchWindow]=ALL&s[c][DEVICE_ID][0]=844355&s[c][INCIDENT_ID][0]=38AW1VQY"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.deviceName",
+                    "data_type": "string",
+                    "example_values": [
+                        "cberninger-mac2"
+                    ],
+                    "column_name": "Device Name",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.targetPriorityCode",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.internalIpAddress",
+                    "data_type": "string",
+                    "example_values": [
+                        "192.168.1.2"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.deviceHostName",
+                    "data_type": "string",
+                    "contains": [
+                        "host name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.groupName",
+                    "data_type": "string",
+                    "example_values": [
+                        "default"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.externalIpAddress",
+                    "data_type": "string",
+                    "example_values": [
+                        "174.227.142.150"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.deviceType",
+                    "data_type": "string",
+                    "example_values": [
+                        "MAC"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.deviceId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        844355
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.deviceVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "MAC OS X 10.10.5"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.email",
+                    "data_type": "string",
+                    "example_values": [
+                        "cberninger"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.deviceInfo.targetPriorityType",
+                    "data_type": "string",
+                    "example_values": [
+                        "MEDIUM"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ruleName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Global Alert Notification"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "THREAT"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threatInfo.indicators.*.applicationName",
+                    "data_type": "string",
+                    "example_values": [
+                        "sh"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threatInfo.indicators.*.indicatorName",
+                    "data_type": "string",
+                    "example_values": [
+                        "RUN_SYSTEM_UTILITY"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threatInfo.indicators.*.sha256Hash",
+                    "data_type": "string",
+                    "example_values": [
+                        "035ee8aaff5c5282925974215e7bd28cad51e788c64431bb933364011e637fcd"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threatInfo.time",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1526410075759
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threatInfo.incidentId",
+                    "data_type": "string",
+                    "example_values": [
+                        "38AW1VQY"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threatInfo.score",
+                    "data_type": "numeric",
+                    "example_values": [
+                        3
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threatInfo.summary",
+                    "data_type": "string",
+                    "example_values": [
+                        "The application sh invoked a system application (ifconfig)."
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Num notifications: 2"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.num_notifications",
+                    "data_type": "numeric",
+                    "example_values": [
+                        2
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        }
+    ]
+}
