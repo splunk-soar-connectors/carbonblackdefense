@@ -294,7 +294,13 @@ class CarbonBlackDefenseConnector(BaseConnector):
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        ret_val, response = self._make_rest_call('/integrationServices/v3/device', action_result)
+        params = {}
+        if 'start' in param:
+            params['start'] = param['start']
+        if 'limit' in param:
+            params['rows'] = param['limit']
+
+        ret_val, response = self._make_rest_call('/integrationServices/v3/device', action_result, params=params)
 
         if phantom.is_fail(ret_val):
             return ret_val
@@ -303,6 +309,8 @@ class CarbonBlackDefenseConnector(BaseConnector):
 
         for result in results:
             action_result.add_data(result)
+
+        action_result.set_summary({'num_devices': len(results)})
 
         return action_result.set_status(phantom.APP_SUCCESS)
 
@@ -332,6 +340,10 @@ class CarbonBlackDefenseConnector(BaseConnector):
             params['hostName'] = param['host_name']
         if 'owner' in param:
             params['ownerName'] = param['owner']
+        if 'start' in param:
+            params['start'] = param['start']
+        if 'limit' in param:
+            params['rows'] = param['limit']
         if 'search_span' in param:
             span_map = {'one day': '1d', 'one week': '1w', 'two weeks': '2w', 'one month': '1m'}
             params['searchWindow'] = span_map[param['search_span']]

@@ -43,13 +43,13 @@
             "order": 3
         },
         "siem_connector_id": {
-            "description": "SIEM Connector ID",
+            "description": "SIEM Connector ID (only used for 'get notifications')",
             "data_type": "password",
             "required": false,
             "order": 4
         },
         "siem_key": {
-            "description": "SIEM Key",
+            "description": "SIEM Key (only used for 'get notifications')",
             "data_type": "password",
             "required": false,
             "order": 5
@@ -70,9 +70,23 @@
             "action": "list devices",
             "identifier": "list_devices",
             "description": "List devices conntected to CB Defense",
+            "verbose": "The results of this action can be paged using the <b>start</b> and <b>limit</b> parameters. For example, to return the first 10 results, set <b>start</b> to 1 and <b>limit</b> to 10. To return the next 10 results, set <b>start</b> to 11 and keep <b>limit</b> at 10.",
             "type": "investigate",
             "read_only": true,
-            "parameters": {},
+            "parameters": {
+                "start": {
+                    "description": "Number of first result to return",
+                    "data_type": "numeric",
+                    "required": false,
+                    "order": 0
+                },
+                "limit": {
+                    "description": "Maximum number of results to return",
+                    "data_type": "numeric",
+                    "required": false,
+                    "order": 1
+                }
+            },
             "output": [
                 {
                     "data_path": "action_result.status",
@@ -83,11 +97,13 @@
                 },
                 {
                     "data_path": "action_result.data.*.assignedToName",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.macAddress",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.adGroupId",
@@ -108,19 +124,25 @@
                     "data_type": "string",
                     "contains": [
                         "ip"
-                    ]
+                    ],
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.rootedByAnalyticsTime",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": [
+                        1506577430375
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.linuxKernelVersion",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.rootedBySensorTime",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.passiveMode",
@@ -132,40 +154,48 @@
                 },
                 {
                     "data_path": "action_result.data.*.currentSensorPolicyName",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.deviceGuid",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.lastDevicePolicyRequestedTime",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.lastPolicyUpdatedTime",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.registeredTime",
                     "data_type": "numeric",
                     "example_values": [
-                        1523552410489
+                        1523552410489,
+                        1490880796962
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.deviceSessionId",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.lastDevicePolicyChangedTime",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.policyName",
                     "data_type": "string",
                     "example_values": [
-                        "default"
+                        "default",
+                        "Resolve_Systems_Policy"
                     ],
                     "column_name": "Policy Name",
                     "column_order": 3
@@ -181,14 +211,16 @@
                     "data_path": "action_result.data.*.osVersion",
                     "data_type": "string",
                     "example_values": [
-                        "MAC OS X 10.10.5"
+                        "MAC OS X 10.10.5",
+                        "Windows 7 x64 SP: 1"
                     ],
                     "column_name": "OS",
                     "column_order": 4
                 },
                 {
                     "data_path": "action_result.data.*.avUpdateServers",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.virtualMachine",
@@ -202,20 +234,24 @@
                     "data_path": "action_result.data.*.lastContact",
                     "data_type": "numeric",
                     "example_values": [
-                        1525989801253
+                        1525989801253,
+                        1526598626204
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.middleName",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.activationCode",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.deregisteredTime",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.lastResetTime",
@@ -228,7 +264,8 @@
                     "data_path": "action_result.data.*.lastInternalIpAddress",
                     "data_type": "string",
                     "example_values": [
-                        "192.168.2.125"
+                        "192.168.2.125",
+                        "192.168.51.151"
                     ],
                     "contains": [
                         "ip"
@@ -248,7 +285,8 @@
                     "data_path": "action_result.data.*.policyId",
                     "data_type": "numeric",
                     "example_values": [
-                        6525
+                        6525,
+                        12210
                     ],
                     "contains": [
                         "cb defense policy id"
@@ -267,12 +305,14 @@
                     "data_path": "action_result.data.*.deviceType",
                     "data_type": "string",
                     "example_values": [
-                        "MAC"
+                        "MAC",
+                        "WINDOWS"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.encodedActivationCode",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.organizationId",
@@ -292,33 +332,38 @@
                     "data_path": "action_result.data.*.avStatus",
                     "data_type": "string",
                     "example_values": [
-                        "AV_DEREGISTERED"
+                        "AV_DEREGISTERED",
+                        "AV_BYPASS"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.sensorStates",
                     "data_type": "string",
                     "example_values": [
-                        "ACTIVE"
+                        "ACTIVE",
+                        "SECURITY_CENTER_OPTLN_DISABLED"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.email",
                     "data_type": "string",
                     "example_values": [
-                        "cberninger"
+                        "cberninger",
+                        "LRPMBD\\sheila"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.virtualizationProvider",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.avPackVersion",
                     "data_type": "string",
                     "contains": [
                         "ip"
-                    ]
+                    ],
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.status",
@@ -331,24 +376,28 @@
                 },
                 {
                     "data_path": "action_result.data.*.scanStatus",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.messages",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.name",
                     "data_type": "string",
                     "example_values": [
-                        "cberninger-mac2"
+                        "cberninger-mac2",
+                        "LRPMBD\\psb-wrks1"
                     ],
                     "column_name": "Device Name",
                     "column_order": 1
                 },
                 {
                     "data_path": "action_result.data.*.windowsPlatform",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.scanLastActionTime",
@@ -359,11 +408,13 @@
                 },
                 {
                     "data_path": "action_result.data.*.createTime",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.vdiBaseDevice",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.rootedByAnalytics",
@@ -385,13 +436,15 @@
                     "data_type": "string",
                     "contains": [
                         "ip"
-                    ]
+                    ],
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.lastExternalIpAddress",
                     "data_type": "string",
                     "example_values": [
-                        "67.143.209.15"
+                        "67.143.209.15",
+                        "65.127.112.131"
                     ],
                     "contains": [
                         "ip"
@@ -403,7 +456,8 @@
                     "data_path": "action_result.data.*.lastShutdownTime",
                     "data_type": "numeric",
                     "example_values": [
-                        1525540260438
+                        1525540260438,
+                        0
                     ]
                 },
                 {
@@ -418,14 +472,16 @@
                     "data_path": "action_result.data.*.deviceOwnerId",
                     "data_type": "numeric",
                     "example_values": [
-                        278380
+                        278380,
+                        138914
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.deviceId",
                     "data_type": "numeric",
                     "example_values": [
-                        844355
+                        844355,
+                        111123
                     ],
                     "contains": [
                         "cb defense device id"
@@ -437,7 +493,11 @@
                     "data_path": "action_result.data.*.sensorVersion",
                     "data_type": "string",
                     "example_values": [
-                        "3.0.2.8"
+                        "3.0.2.8",
+                        "3.0.2.2"
+                    ],
+                    "contains": [
+                        "ip"
                     ]
                 },
                 {
@@ -451,24 +511,29 @@
                     "data_path": "action_result.data.*.lastReportedTime",
                     "data_type": "numeric",
                     "example_values": [
-                        1525963397592
+                        1525963397592,
+                        1526578081480
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.firstName",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.uninstallCode",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.uninstalledTime",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.assignedToId",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.policyOverride",
@@ -491,26 +556,31 @@
                     "data_type": "string",
                     "contains": [
                         "ip"
-                    ]
+                    ],
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.activationCodeExpiryTime",
                     "data_type": "numeric",
                     "example_values": [
-                        1524157210454
+                        1524157210454,
+                        1491423197164
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.deviceMetaDataItemList",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.lastName",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.originEventHash",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": []
                 },
                 {
                     "data_path": "action_result.data.*.avLastScanTime",
@@ -545,7 +615,8 @@
                     "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
-                        ""
+                        "",
+                        "Num devices: 2"
                     ]
                 },
                 {
@@ -564,6 +635,27 @@
                     "data_type": "numeric",
                     "example_values": [
                         1
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.start",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.limit",
+                    "data_type": "numeric",
+                    "example_values": [
+                        2
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.num_devices",
+                    "data_type": "numeric",
+                    "example_values": [
+                        2
                     ]
                 }
             ],
@@ -1850,7 +1942,7 @@
             "action": "list processes",
             "identifier": "list_processes",
             "description": "List processes that match supplied filter criteria",
-            "verbose": "Due to a limitation in the API, the only options for the <b>search_span</b> parameter are <b>one day</b>, <b>one week</b>, or <b>two weeks</b>.",
+            "verbose": "Due to a limitation in the API, the only options for the <b>search_span</b> parameter are <b>one day</b>, <b>one week</b>, or <b>two weeks</b>. The results of this action can be paged using the <b>start</b> and <b>limit</b> parameters. For example, to return the first 10 results, set <b>start</b> to 1 and <b>limit</b> to 10. To return the next 10 results, set <b>start</b> to 11 and keep <b>limit</b> at 10.",
             "type": "investigate",
             "read_only": true,
             "parameters": {
@@ -1892,6 +1984,18 @@
                     ],
                     "default": "one day",
                     "order": 3
+                },
+                "start": {
+                    "description": "Number of first result to return",
+                    "data_type": "numeric",
+                    "required": false,
+                    "order": 4
+                },
+                "limit": {
+                    "description": "Maximum number of results to return",
+                    "data_type": "numeric",
+                    "required": false,
+                    "order": 5
                 }
             },
             "output": [
@@ -1906,7 +2010,8 @@
                     "data_path": "action_result.data.*.applicationName",
                     "data_type": "string",
                     "example_values": [
-                        "msiexec.exe"
+                        "msiexec.exe",
+                        "Google Chrome"
                     ],
                     "contains": [
                         "file name"
@@ -1918,7 +2023,8 @@
                     "data_path": "action_result.data.*.processId",
                     "data_type": "numeric",
                     "example_values": [
-                        2764
+                        2764,
+                        53785
                     ],
                     "contains": [
                         "pid"
@@ -1930,7 +2036,8 @@
                     "data_path": "action_result.data.*.numEvents",
                     "data_type": "numeric",
                     "example_values": [
-                        115
+                        115,
+                        5356
                     ],
                     "column_name": "Number of Events",
                     "column_order": 3
@@ -1939,7 +2046,8 @@
                     "data_path": "action_result.data.*.applicationPath",
                     "data_type": "string",
                     "example_values": [
-                        "C:\\Windows\\System32\\msiexec.exe"
+                        "C:\\Windows\\System32\\msiexec.exe",
+                        "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
                     ],
                     "contains": [
                         "file path",
@@ -1950,14 +2058,16 @@
                     "data_path": "action_result.data.*.privatePid",
                     "data_type": "string",
                     "example_values": [
-                        "2764-1526029242314-632"
+                        "2764-1526029242314-632",
+                        "53785-1526353257926-148"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.sha256Hash",
                     "data_type": "string",
                     "example_values": [
-                        "8a78beaf0cb03715193503afd114e5b094c41b2ed58662fcd204ab2cb4d728e6"
+                        "8a78beaf0cb03715193503afd114e5b094c41b2ed58662fcd204ab2cb4d728e6",
+                        "f60cbaaa61ff31f0fe728accb5f7264e1c120343accad365c4eeb5b9e8c8d28a"
                     ],
                     "contains": [
                         "sha256"
@@ -1969,7 +2079,8 @@
                     "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
-                        "Num results: 85"
+                        "Num results: 85",
+                        "Num results: 3"
                     ]
                 },
                 {
@@ -2010,7 +2121,8 @@
                     "data_path": "action_result.summary.num_results",
                     "data_type": "numeric",
                     "example_values": [
-                        85
+                        85,
+                        3
                     ]
                 },
                 {
@@ -2025,6 +2137,20 @@
                     "data_type": "numeric",
                     "example_values": [
                         1
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.start",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.limit",
+                    "data_type": "numeric",
+                    "example_values": [
+                        3
                     ]
                 }
             ],
