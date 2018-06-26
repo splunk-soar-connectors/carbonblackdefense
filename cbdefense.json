@@ -348,8 +348,7 @@
                     "data_path": "action_result.data.*.email",
                     "data_type": "string",
                     "example_values": [
-                        "cberninger",
-                        "LRPMBD\\sheila"
+                        "hedwards"
                     ]
                 },
                 {
@@ -388,8 +387,7 @@
                     "data_path": "action_result.data.*.name",
                     "data_type": "string",
                     "example_values": [
-                        "cberninger-mac2",
-                        "LRPMBD\\psb-wrks1"
+                        "hedwards-mac2"
                     ],
                     "column_name": "Device Name",
                     "column_order": 1
@@ -443,8 +441,7 @@
                     "data_path": "action_result.data.*.lastExternalIpAddress",
                     "data_type": "string",
                     "example_values": [
-                        "67.143.209.15",
-                        "65.127.112.131"
+                        "10.10.10.10"
                     ],
                     "contains": [
                         "ip"
@@ -504,7 +501,7 @@
                     "data_path": "action_result.data.*.organizationName",
                     "data_type": "string",
                     "example_values": [
-                        "cb-internal-alliances.com"
+                        "phantom"
                     ]
                 },
                 {
@@ -981,7 +978,7 @@
                     "data_path": "action_result.data.*.deviceInfo.lastExternalIpAddress",
                     "data_type": "string",
                     "example_values": [
-                        "73.243.20.18"
+                        "10.10.10.10"
                     ],
                     "contains": [
                         "ip"
@@ -1037,7 +1034,7 @@
                     "data_path": "action_result.data.*.deviceInfo.organizationName",
                     "data_type": "string",
                     "example_values": [
-                        "cb-internal-alliances.com"
+                        "phantom"
                     ]
                 },
                 {
@@ -1055,7 +1052,7 @@
                     "data_path": "action_result.data.*.deviceInfo.uninstallCode",
                     "data_type": "string",
                     "example_values": [
-                        "DJ4VJ49H"
+                        "EF4VF47H"
                     ]
                 },
                 {
@@ -1271,7 +1268,7 @@
                     "data_path": "action_result.data.*.policy.avSettings.updateServers.serversForOffSiteDevices",
                     "data_type": "string",
                     "example_values": [
-                        "http://updates.cdc.carbonblack.io/update"
+                        "http://defense.phantom.local"
                     ]
                 },
                 {
@@ -1289,7 +1286,7 @@
                     "data_path": "action_result.data.*.policy.avSettings.updateServers.servers.*.server",
                     "data_type": "string",
                     "example_values": [
-                        "http://updates.cdc.carbonblack.io/update"
+                        "http://defense.phantom.local"
                     ]
                 },
                 {
@@ -2098,7 +2095,7 @@
                     "data_path": "action_result.parameter.ip",
                     "data_type": "string",
                     "example_values": [
-                        "73.243.20.18"
+                        "10.10.10.10"
                     ],
                     "contains": [
                         "ip"
@@ -2256,7 +2253,7 @@
                         "ip"
                     ],
                     "example_values": [
-                        "73.243.20.18"
+                        "10.10.10.10"
                     ]
                 },
                 {
@@ -2539,7 +2536,7 @@
                     "data_path": "action_result.data.*.processDetails.parentPrivatePid",
                     "data_type": "string",
                     "example_values": [
-                        "2240-1522884884012-2740"
+                        "2340-1622874887012-3740"
                     ]
                 },
                 {
@@ -2569,7 +2566,7 @@
                     "data_path": "action_result.data.*.processDetails.privatePid",
                     "data_type": "string",
                     "example_values": [
-                        "2872-1522884884152-2742"
+                        "3772-4522884884352-2542"
                     ]
                 },
                 {
@@ -3346,7 +3343,7 @@
                     "data_path": "action_result.data.*.eventInfo.longDescription",
                     "data_type": "string",
                     "example_values": [
-                        "The application \"<share><link hash=\"b868487f8edbd0571d30d89573f087bfeac3da190652344afd351b1868ea0f8b\">c:\\windows\\system32\\svchost.exe -k unistacksvcgroup -s WpnUserService</link></share>\" established a <accent>TCP/443</accent> connection to <share><accent>184.50.166.121</accent></share><accent>:443</accent> (<share><accent>cdn.onenote.net</accent></share>, located in Amsterdam 07, Netherlands) from <share><accent>172.21.2.104</accent></share><accent>:51038</accent>. The device was off the corporate network using the public address <accent>37.142.34.66</accent> (<accent>CBR-Agent.MVDev.local</accent>, located in Kfar Hamaccabi 04, Israel). The operation was successful."
+                        "The application \"<share><link hash=\"b868487f8edbd0571d30d89573f087bfeac3da190652344afd351b1868ea0f8b\">c:\\windows\\system32\\svchost.exe -k unistacksvcgroup -s WpnUserService</link></share>\" established a <accent>TCP/443</accent> connection to <share><accent>10.10.10.10</accent></share><accent>:443</accent> (<share><accent>cdn.onenote.net</accent></share>, located in Amsterdam, Netherlands) from <share><accent>172.21.2.104</accent></share><accent>:51038</accent>. The device was off the corporate network using the public address <accent>10.10.10.10</accent> (<accent>CBR-Agent.MVDev.local</accent>, located in Jerusalem, Israel). The operation was successful."
                     ]
                 },
                 {
@@ -3392,7 +3389,7 @@
                     "data_path": "action_result.data.*.eventInfo.deviceDetails.deviceIpAddress",
                     "data_type": "string",
                     "example_values": [
-                        "37.142.34.66"
+                        "10.10.10.10"
                     ],
                     "contains": [
                         "ip"
@@ -3441,7 +3438,7 @@
                     "data_path": "action_result.data.*.eventInfo.deviceDetails.deviceIpV4Address",
                     "data_type": "string",
                     "example_values": [
-                        "37.142.34.66"
+                        "10.10.10.10"
                     ],
                     "contains": [
                         "ip"
@@ -3451,7 +3448,7 @@
                     "data_path": "action_result.data.*.eventInfo.deviceDetails.deviceLocation.city",
                     "data_type": "string",
                     "example_values": [
-                        "Kfar Hamaccabi"
+                        "Jerusalem"
                     ]
                 },
                 {
@@ -3540,7 +3537,7 @@
                     "data_path": "action_result.data.*.eventInfo.netFlow.peerIpAddress",
                     "data_type": "string",
                     "example_values": [
-                        "184.50.166.121"
+                        "10.10.10.10"
                     ],
                     "contains": [
                         "ip"
@@ -3578,7 +3575,7 @@
                     "data_path": "action_result.data.*.eventInfo.netFlow.peerLocation.region",
                     "data_type": "string",
                     "example_values": [
-                        "07"
+                        "99"
                     ]
                 },
                 {
@@ -3634,7 +3631,7 @@
                     "data_path": "action_result.data.*.eventInfo.netFlow.destAddress",
                     "data_type": "string",
                     "example_values": [
-                        "184.50.166.121"
+                        "10.10.10.10"
                     ],
                     "contains": [
                         "ip"
@@ -3644,7 +3641,7 @@
                     "data_path": "action_result.data.*.eventInfo.netFlow.peerIpV4Address",
                     "data_type": "string",
                     "example_values": [
-                        "184.50.166.121"
+                        "10.10.10.10"
                     ],
                     "contains": [
                         "ip"
@@ -3654,7 +3651,7 @@
                     "data_path": "action_result.data.*.eventInfo.netFlow.sourceAddress",
                     "data_type": "string",
                     "example_values": [
-                        "172.21.2.104"
+                        "10.10.10.10"
                     ],
                     "contains": [
                         "ip"
@@ -4207,7 +4204,7 @@
                     "data_path": "action_result.summary.device",
                     "data_type": "string",
                     "example_values": [
-                        "OPSWATs-Mac-mini.local"
+                        "hedwards-Mac-mini.local"
                     ],
                     "column_name": "Device Name",
                     "column_order": 0
@@ -4268,7 +4265,7 @@
                     "data_path": "action_result.data.*.eventDescription",
                     "data_type": "string",
                     "example_values": [
-                        "[Global Alert Notification] [Confer has detected a threat against your company.] [https://defense.conferdeploy.net#device/844355/incident/38AW1VQY] [The application sh invoked a system application (ifconfig).] [Incident id: 38AW1VQY] [Threat score: 3] [Group: default] [Email: cberninger] [Name: cberninger-mac2] [Type and OS: MAC MAC OS X 10.10.5] [Severity: Monitored]\n"
+                        "[Global Alert Notification] [Confer has detected a threat against your company.] [https://defense.phantom.local#device/844355/incident/38AW1VQY] [The application sh invoked a system application (ifconfig).] [Incident id: 38AW1VQY] [Threat score: 3] [Group: default] [Email: hedwards] [Name: hedwards-mac2] [Type and OS: MAC MAC OS X 10.10.5] [Severity: Monitored]\n"
                     ],
                     "column_name": "Event Description",
                     "column_order": 1
@@ -4277,7 +4274,7 @@
                     "data_path": "action_result.data.*.url",
                     "data_type": "string",
                     "example_values": [
-                        "https://defense.conferdeploy.net/investigate?s[searchWindow]=ALL&s[c][DEVICE_ID][0]=844355&s[c][INCIDENT_ID][0]=38AW1VQY"
+                        "https://defense.phantom.local/investigate?s[searchWindow]=ALL&s[c][DEVICE_ID][0]=844355&s[c][INCIDENT_ID][0]=38AW1VQY"
                     ],
                     "contains": [
                         "url"
@@ -4287,7 +4284,7 @@
                     "data_path": "action_result.data.*.deviceInfo.deviceName",
                     "data_type": "string",
                     "example_values": [
-                        "cberninger-mac2"
+                        "hedwards-mac2"
                     ],
                     "column_name": "Device Name",
                     "column_order": 0
@@ -4327,7 +4324,7 @@
                     "data_path": "action_result.data.*.deviceInfo.externalIpAddress",
                     "data_type": "string",
                     "example_values": [
-                        "174.227.142.150"
+                        "10.10.10.10"
                     ],
                     "contains": [
                         "ip"
@@ -4358,7 +4355,7 @@
                     "data_path": "action_result.data.*.deviceInfo.email",
                     "data_type": "string",
                     "example_values": [
-                        "cberninger"
+                        "hedwards"
                     ]
                 },
                 {
