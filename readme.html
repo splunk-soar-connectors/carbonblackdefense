@@ -1,0 +1,12 @@
+<!-- 
+File: readme.html
+
+Copyright (c) 2018 Splunk Inc.
+
+SPLUNK CONFIDENTIAL – Use or disclosure of this material in whole or in part
+without a valid written license from Splunk Inc. is PROHIBITED.
+-->
+
+There are two different sets of credentials for this app - a SIEM key and an API key. The action <b>get notifications</b> uses the SIEM key. This means the <b>siem_connector_id</b> and the <b>siem_key</b> asset configuration parameters are required to run the <b>get notifications</b> action. All other actions require use of the API key, meaning that the <b>api_connector_id</b> and <b>api_key</b> asset configuration parameters are required for those actions.
+<br><br>
+NOTE: Test connectivity will only check the API credentials, it will NOT check the SIEM credentials
