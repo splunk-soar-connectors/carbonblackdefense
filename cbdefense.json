@@ -4465,7 +4465,7 @@
         {
             "action": "update policy",
             "description": "Updates an existing policy on the Carbon Black Defense server",
-            "type": "corrective",
+            "type": "correct",
             "identifier": "update_policy",
             "read_only": false,
             "parameters": {
@@ -4516,10 +4516,13 @@
             "parameters": {
                 "policy_id": {
                     "data_type": "numeric",
-                    "order": 1,
-                    "description": "The ID of the policy to retrieve.",
+                    "order": 0,
+                    "description": "The ID of the policy to retrieve",
                     "required": true,
-                    "primary": true
+                    "primary": true,
+                    "contains": [
+                        "cbdefense policy id"
+                    ]
                 }
             },
             "output": [
