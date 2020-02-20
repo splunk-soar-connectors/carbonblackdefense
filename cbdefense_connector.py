@@ -457,6 +457,43 @@ class CarbonBlackDefenseConnector(BaseConnector):
 
         return action_result.set_status(phantom.APP_SUCCESS)
 
+    def _handle_update_policy(self, param):
+
+        action_result = self.add_action_result(ActionResult(param))
+        policy_id = param["policy_id"]
+        endpoint = "/integrationServices/v3/policy/" + str(policy_id)
+
+        try:
+            data = json.loads(param["policy"])
+        except Exception as e:
+            return action_result.set_status(phantom.APP_ERROR, "Policy needs to be valid JSON data: " + str(e))
+
+        ret_val, response = self._make_rest_call(endpoint, action_result, data=data, method="put")
+        # action_result.add_data(response)
+
+        if phantom.is_fail(ret_val):
+            return action_result.set_status(phantom.APP_ERROR,
+                                            'Error updating policy: {0}'
+                                            .format(response))
+        action_result.add_data(response)
+
+        return action_result.set_status(phantom.APP_SUCCESS, "Policy updated successfully")
+
+    def _handle_get_policy(self, param):
+
+        action_result = self.add_action_result(ActionResult(param))
+        policy_id = param["policy_id"]
+        endpoint = "/integrationServices/v3/policy/" + str(policy_id)
+        ret_val, response = self._make_rest_call(endpoint, action_result)
+
+        if phantom.is_fail(ret_val):
+            return action_result.set_status(phantom.APP_ERROR,
+                                            'Error retrieving policy: {0}'
+                                            .format(response))
+        action_result.add_data(response)
+
+        return action_result.set_status(phantom.APP_SUCCESS, "Policy retrieved successfully")
+
     def handle_action(self, param):
 
         ret_val = phantom.APP_SUCCESS
@@ -492,6 +529,10 @@ class CarbonBlackDefenseConnector(BaseConnector):
             ret_val = self._handle_get_alert(param)
         elif action_id == 'add_rule':
             ret_val = self._handle_add_rule(param)
+        elif action_id == 'get_policy':
+            ret_val = self._handle_get_policy(param)
+        elif action_id == 'update_policy':
+            ret_val = self._handle_update_policy(param)
 
         return ret_val
 

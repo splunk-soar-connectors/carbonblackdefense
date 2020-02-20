@@ -11,7 +11,7 @@
     "publisher": "Phantom",
     "license": "Copyright (c) 2018 Splunk Inc.",
     "app_version": "1.0.5",
-    "utctime_updated": "2018-12-07T01:45:45.000000Z",
+    "utctime_updated": "2018-06-26T21:36:11.000000Z",
     "package_name": "phantom_carbonblackdefense",
     "main_module": "cbdefense_connector.pyc",
     "min_phantom_version": "3.0.284",
@@ -4459,6 +4459,235 @@
             ],
             "render": {
                 "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "update policy",
+            "description": "Updates an existing policy on the Carbon Black Defense server",
+            "type": "correct",
+            "identifier": "update_policy",
+            "read_only": false,
+            "parameters": {
+                "policy": {
+                    "data_type": "string",
+                    "order": 0,
+                    "description": "JSON object containing the policy details (see https://developer.carbonblack.com/reference/cb-defense/1/rest-api/#create-new-policy)",
+                    "required": true,
+                    "primary": true
+                },
+                "policy_id": {
+                    "data_type": "numeric",
+                    "order": 1,
+                    "description": "The ID of the policy to replace. This ID must match the ID in the request URL",
+                    "required": true,
+                    "primary": true
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.success",
+                    "data_type": "string"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "get policy",
+            "description": "Retrieves an existing policy from the Carbon Black Defense server",
+            "type": "generic",
+            "identifier": "get_policy",
+            "read_only": true,
+            "parameters": {
+                "policy_id": {
+                    "data_type": "numeric",
+                    "order": 0,
+                    "description": "The ID of the policy to retrieve",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "cbdefense policy id"
+                    ]
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.description",
+                    "data_type": "string",
+                    "column_name": "Policy Description",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.id",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.latestRevision",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.name",
+                    "data_type": "string",
+                    "column_name": "Policy Name",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.apc.enabled",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.apc.maxExeDelay",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.apc.maxFileSize",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.apc.riskLevel",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.features.*.enabled",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.features.*.name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.onAccessScan.profile",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.onDemandScan.scanCdDvd",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.onDemandScan.scanUsb",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.onDemandScan.schedule.days",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.onDemandScan.schedule.rangeHours",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.onDemandScan.schedule.recoveryScanIfMissed",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.onDemandScan.schedule.startHour",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.signatureUpdate.schedule.fullIntervalHours",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.signatureUpdate.schedule.initialRandomDelayHours",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.signatureUpdate.schedule.intervalHours",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.updateServers.servers.*.flags",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.updateServers.servers.*.regId",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.updateServers.servers.*.server.*.name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.updateServers.serversForOffSiteDevices.*.name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.id",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.rules.*.action",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.rules.*.application.type",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.rules.*.application.value",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.rules.*.id",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.rules.*.operation",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.rules.*.required",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.sensorSettings.*.name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.sensorSettings.*.value",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.priorityLevel",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.systemPolicy",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.version",
+                    "data_type": "numeric"
+                }
+            ],
+            "render": {
+                "type": "table",
+                "width": 12,
+                "height": 5,
+                "title": "Get Policy"
             },
             "versions": "EQ(*)"
         }
