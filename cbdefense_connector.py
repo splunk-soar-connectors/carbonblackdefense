@@ -468,13 +468,17 @@ class CarbonBlackDefenseConnector(BaseConnector):
         except Exception as e:
             return action_result.set_status(phantom.APP_ERROR, "Policy needs to be valid JSON data: " + str(e))
 
+        if "policyInfo" not in data:
+            data = {"policyInfo": data}
+
+        if "id" not in data.get("policyInfo", {}):
+            data["policyInfo"]["id"] = policy_id
+
         ret_val, response = self._make_rest_call(endpoint, action_result, data=data, method="put")
-        # action_result.add_data(response)
 
         if phantom.is_fail(ret_val):
-            return action_result.set_status(phantom.APP_ERROR,
-                                            'Error updating policy: {0}'
-                                            .format(response))
+            return ret_val
+
         action_result.add_data(response)
 
         return action_result.set_status(phantom.APP_SUCCESS, "Policy updated successfully")
