@@ -9,12 +9,16 @@
     "product_name": "Defense",
     "product_version_regex": ".*",
     "publisher": "Phantom",
-    "license": "Copyright (c) 2018 Splunk Inc.",
-    "app_version": "1.0.5",
+    "license": "Copyright (c) 2018-2020 Splunk Inc.",
+    "app_version": "2.0.0",
     "utctime_updated": "2018-06-26T21:36:11.000000Z",
     "package_name": "phantom_carbonblackdefense",
-    "main_module": "cbdefense_connector.pyc",
-    "min_phantom_version": "3.0.284",
+    "main_module": "cbdefense_connector.py",
+    "python_version": "3",
+    "latest_tested_versions": [
+        "Cloud, February 21 2020"
+    ],
+    "min_phantom_version": "4.6.19142",
     "app_wizard_version": "1.0.0",
     "configuration": {
         "api_url": {
@@ -3717,7 +3721,7 @@
                         "3077d242391711e8b9b1afced5871817"
                     ],
                     "contains": [
-                        "md5"
+                        "cb defense event id"
                     ]
                 },
                 {
@@ -4490,17 +4494,26 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.status",
+                    "data_path": "action_result.summary",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.message",
+                    "data_path": "action_result.message",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.success",
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.policy",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.policy_id",
                     "data_type": "string"
                 }
+
             ],
             "render": {
                 "type": "table"
@@ -4533,6 +4546,17 @@
                 {
                     "data_path": "action_result.message",
                     "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.policy_id",
+                    "data_type": "string",
+                    "contains": [
+                        "cbdefense policy id"
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.policyInfo.description",
