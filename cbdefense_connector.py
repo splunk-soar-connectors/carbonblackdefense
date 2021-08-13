@@ -44,11 +44,15 @@ class CarbonBlackDefenseConnector(BaseConnector):
         config = self.get_config()
 
         self._base_url = config['api_url'].strip('/')
-        self._org_key = "434523gerty"
+        self._org_key = "7DESJ9GN"
+
         if 'api_key' in config and 'api_connector_id' in config:
             self._api_auth = '{0}/{1}'.format(config['api_key'], config['api_connector_id'])
         if 'siem_key' in config and 'siem_connector_id' in config:
             self._siem_auth = '{0}/{1}'.format(config['siem_key'], config['siem_connector_id'])
+
+        self._api_auth="V4Q5AH5R7R9J5HLIRZPJHHJ6/ZT23I5JTQ4"
+        self._siem_auth = "V4Q5AH5R7R9J5HLIRZPJHHJ6/ZT23I5JTQ4"
 
         return phantom.APP_SUCCESS
 
@@ -427,7 +431,9 @@ class CarbonBlackDefenseConnector(BaseConnector):
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        ret_val, resp_json = self._make_rest_call('/integrationServices/v3/alert/{0}'.format(param['id']), action_result)
+        ret_val, resp_json = self._make_rest_call('/appservices/v6/orgs/{1}/alerts/{0}'.format(param['id'],self._org_key), action_result)
+
+        self.debug_print("Response String for getAlert", resp_json)
 
         if phantom.is_fail(ret_val):
             return ret_val
@@ -435,8 +441,10 @@ class CarbonBlackDefenseConnector(BaseConnector):
         action_result.add_data(resp_json)
 
         summary = action_result.set_summary({})
-        summary['device'] = resp_json.get('deviceInfo', {}).get('deviceName', 'UNKNOWN')
-        summary['num_events'] = len(resp_json.get('events', []))
+        #summary['device'] = resp_json.get('deviceInfo', {}).get('deviceName', 'UNKNOWN')
+        #summary['num_events'] = len(resp_json.get('events', []))
+
+        summary['device'] = resp_json
 
         return action_result.set_status(phantom.APP_SUCCESS)
 
