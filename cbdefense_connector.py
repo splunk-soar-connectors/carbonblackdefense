@@ -35,6 +35,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
         self._base_url = None
         self._api_auth = None
         self._siem_auth = None
+        self._org_key = None
 
     def initialize(self):
 
@@ -43,6 +44,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
         config = self.get_config()
 
         self._base_url = config['api_url'].strip('/')
+        self._org_key = "434523gerty"
         if 'api_key' in config and 'api_connector_id' in config:
             self._api_auth = '{0}/{1}'.format(config['api_key'], config['api_connector_id'])
         if 'siem_key' in config and 'siem_connector_id' in config:
