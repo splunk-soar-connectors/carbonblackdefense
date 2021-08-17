@@ -510,21 +510,15 @@ class CarbonBlackDefenseConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             return ret_val
 
-        action_result.add_data(resp_json_search_result_data.get('results', []))
+        results = resp_json_search_result_data.get('results', [])
 
-        if resp_json_search_result_data.get('results'):
-            count = 0
-            for result in resp_json_search_result_data.get('results', []):
-                if 'event_description' in param:
-                    if param['event_description'] in result['longDescription']:
-                        action_result.add_data(result)
-                        count += 1
-                else:
-                    action_result.add_data(result)
-                    count += 1
+        if results:
+            for result in results:
+                action_result.add_data(result)
 
             summary = action_result.update_summary({})
-            summary['num_results'] = count
+            summary['num_results'] = len(results)
+
             return action_result.set_status(phantom.APP_SUCCESS)
         else:
             self.debug_print("No Record Found")
@@ -589,8 +583,12 @@ class CarbonBlackDefenseConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             return ret_val
 
-        action_result.add_data(resp_json_search_result_data.get('results', []))
         if resp_json_search_result_data.get('results'):
+            for result in resp_json_search_result_data.get('results'):
+                action_result.add_data(result)
+
+            summary = action_result.update_summary({})
+            summary['num_results'] = len(resp_json_search_result_data.get('results'))
             return action_result.set_status(phantom.APP_SUCCESS,"Successfully retrieved event data")
         else:
             self.debug_print("No Record Found")
