@@ -498,7 +498,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
         params["query"] = query
         self.debug_print("query parameters are", format(params))
 
-        ret_val, resp_json = self._make_rest_call('/api/investigate/v2/orgs/{0}/enriched_events/search_jobs'.format(self._org_key),action_result, data=params,method='post',is_new_api=True)
+        ret_val, resp_json = self._make_rest_call('/api/investigate/v2/orgs/{0}/enriched_events/search_jobs'.format(self._org_key),action_result, data=params, method='post', is_new_api=True)
         self.debug_print('Response Body for ListEvent Action', resp_json.get("job_id"))
 
         if not resp_json.get("job_id"):
@@ -533,11 +533,11 @@ class CarbonBlackDefenseConnector(BaseConnector):
             try:
                 self.debug_print("while retrying $$$$")
                 if job_name == "search_jobs":
-                    ret_val_search_event, resp_json_search_event = self._make_rest_call('/api/investigate/v1/orgs/{1}/enriched_events/{2}/{0}'.format(job_id,self._org_key,job_name), action_result,is_new_api=True)
+                    ret_val_search_event, resp_json_search_event = self._make_rest_call('/api/investigate/v1/orgs/{1}/enriched_events/{2}/{0}'.format(job_id,self._org_key,job_name), action_result, is_new_api=True)
                     self.debug_print("Response String for Event for completed Search Status",resp_json_search_event.get("completed"))
                     self.debug_print("Response String for Event for contactedSearch Status",resp_json_search_event.get("contacted"))
                 elif job_name == "detail_jobs":
-                    ret_val_search_event, resp_json_search_event = self._make_rest_call('/api/investigate/v2/orgs/{1}/enriched_events/{2}/{0}'.format(job_id, self._org_key, job_name),action_result,is_new_api=True)
+                    ret_val_search_event, resp_json_search_event = self._make_rest_call('/api/investigate/v2/orgs/{1}/enriched_events/{2}/{0}'.format(job_id, self._org_key, job_name),action_result, is_new_api=True)
                     self.debug_print("Response String for Event for completed Search Status",resp_json_search_event.get("completed"))
                     self.debug_print("Response String for Event for contactedSearch Status",resp_json_search_event.get("contacted"))
 
@@ -557,7 +557,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
                 break;
 
         self.debug_print("Before calling result")
-        ret_val_search_result, resp_json_search_result = self._make_rest_call('/api/investigate/v2/orgs/{1}/enriched_events/{2}/{0}/results'.format(job_id,self._org_key,job_name), action_result)
+        ret_val_search_result, resp_json_search_result = self._make_rest_call('/api/investigate/v2/orgs/{1}/enriched_events/{2}/{0}/results'.format(job_id,self._org_key,job_name), action_result,is_new_api=True )
         self.debug_print("resp_json_search_result", resp_json_search_result)
         return resp_json_search_result
 
@@ -566,7 +566,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
         params = {}
-        my_list = param['id'].split(",")
+        my_list = list(filter(None, param['id'].split(",")))
         params["event_ids"] = my_list
         self.debug_print("query parameters for getEvent are", format(params))
 
@@ -599,7 +599,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        ret_val, resp_json = self._make_rest_call('/appservices/v6/orgs/{1}/alerts/{0}'.format(param['id'],self._org_key), action_result,is_new_api=True)
+        ret_val, resp_json = self._make_rest_call('/appservices/v6/orgs/{1}/alerts/{0}'.format(param['id'],self._org_key), action_result, is_new_api=True)
 
         self.debug_print("Response String for getAlert", resp_json)
 
@@ -716,7 +716,6 @@ class CarbonBlackDefenseConnector(BaseConnector):
             ret_val = self._handle_update_policy(param)
 
         return ret_val
-
 
 if __name__ == '__main__':
 
