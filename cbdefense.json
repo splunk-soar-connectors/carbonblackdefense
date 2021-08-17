@@ -9,16 +9,16 @@
     "product_name": "Defense",
     "product_version_regex": ".*",
     "publisher": "Phantom",
-    "license": "Copyright (c) 2018-2020 Splunk Inc.",
-    "app_version": "2.0.15",
+    "license": "Copyright (c) 2018-2021 Splunk Inc.",
+    "app_version": "2.1.0",
     "utctime_updated": "2020-11-23T08:14:16.000000Z",
     "package_name": "phantom_carbonblackdefense",
     "main_module": "cbdefense_connector.py",
     "python_version": "3",
     "latest_tested_versions": [
-        "Cloud, February 21 2020"
+        "Cloud, August 17 2021"
     ],
-    "min_phantom_version": "4.6.19142",
+    "min_phantom_version": "4.9.39220",
     "app_wizard_version": "1.0.0",
     "configuration": {
         "api_url": {
@@ -30,59 +30,51 @@
         "verify_server_cert": {
             "description": "Verify Server Certificate",
             "data_type": "boolean",
-            "required": true,
             "default": false,
             "order": 1
         },
         "api_connector_id": {
             "description": "API Connector ID",
             "data_type": "password",
-            "required": false,
             "order": 2
         },
         "api_key": {
             "description": "API Key",
             "data_type": "password",
-            "required": false,
             "order": 3
         },
         "siem_connector_id": {
             "description": "SIEM Connector ID (only used for 'get notifications')",
             "data_type": "password",
-            "required": false,
             "order": 4
         },
         "siem_key": {
             "description": "SIEM Key (only used for 'get notifications')",
             "data_type": "password",
-            "required": false,
             "order": 5
         },
         "custom_api_connector_id": {
             "description": "Custom API Connector ID (for new API)",
             "data_type": "password",
-            "required": false,
             "order": 6
         },
         "custom_api_key": {
             "description": "Custom API Key (for new API)",
             "data_type": "password",
-            "required": false,
             "order": 7
         },
         "org_key": {
             "description": "Organization Key",
             "data_type": "string",
-            "required": false,
             "order": 8
         }
     },
     "actions": [
         {
             "action": "test connectivity",
-            "identifier": "test_connectivity",
             "description": "Validate the supplied API Key",
             "type": "test",
+            "identifier": "test_connectivity",
             "read_only": true,
             "parameters": {},
             "output": [],
@@ -90,22 +82,20 @@
         },
         {
             "action": "list devices",
-            "identifier": "list_devices",
             "description": "List devices conntected to CB Defense",
             "verbose": "The results of this action can be paged using the <b>start</b> and <b>limit</b> parameters. For example, to return the first 10 results, set <b>start</b> to 1 and <b>limit</b> to 10. To return the next 10 results, set <b>start</b> to 11 and keep <b>limit</b> at 10.",
             "type": "investigate",
+            "identifier": "list_devices",
             "read_only": true,
             "parameters": {
                 "start": {
                     "description": "Number of first result to return",
                     "data_type": "numeric",
-                    "required": false,
                     "order": 0
                 },
                 "limit": {
                     "description": "Maximum number of results to return",
                     "data_type": "numeric",
-                    "required": false,
                     "order": 1
                 }
             },
@@ -114,14 +104,14 @@
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ]
                 },
                 {
                     "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
-                        "",
                         "Num devices: 2",
                         "Num devices: 10"
                     ]
@@ -174,7 +164,7 @@
                     "example_values": [
                         4486274
                     ],
-                    "column_name": "device id",
+                    "column_name": "Device ID",
                     "column_order": 0
                 },
                 {
@@ -207,7 +197,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.av_master",
-                    "data_type": "numeric",
+                    "data_type": "boolean",
                     "example_values": [
                         false
                     ]
@@ -232,7 +222,7 @@
                     "example_values": [
                         6525
                     ],
-                    "column_name": "policy id",
+                    "column_name": "Policy ID",
                     "column_order": 2
                 },
                 {
@@ -284,7 +274,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.passive_mode",
-                    "data_type": "numeric",
+                    "data_type": "boolean",
                     "example_values": [
                         false
                     ]
@@ -420,7 +410,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.policy_override",
-                    "data_type": "numeric",
+                    "data_type": "boolean",
                     "example_values": [
                         false
                     ]
@@ -452,7 +442,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.virtual_machine",
-                    "data_type": "numeric",
+                    "data_type": "boolean",
                     "example_values": [
                         true
                     ]
@@ -518,7 +508,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.sensor_out_of_date",
-                    "data_type": "numeric",
+                    "data_type": "boolean",
                     "example_values": [
                         false
                     ]
@@ -540,7 +530,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.sensor_pending_update",
-                    "data_type": "numeric",
+                    "data_type": "boolean",
                     "example_values": [
                         false
                     ]
@@ -648,9 +638,9 @@
         },
         {
             "action": "update device",
-            "identifier": "update_device",
-            "description": "Change the policy of a device conntected to CB Defense",
+            "description": "Change the policy of a device connected to CB Defense",
             "type": "generic",
+            "identifier": "update_device",
             "read_only": false,
             "parameters": {
                 "device_id": {
@@ -679,7 +669,8 @@
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ],
                     "column_name": "Status",
                     "column_order": 0
@@ -740,9 +731,9 @@
         },
         {
             "action": "list policies",
-            "identifier": "list_policies",
             "description": "List polcies that exist on CB Defense",
             "type": "investigate",
+            "identifier": "list_policies",
             "read_only": true,
             "parameters": {},
             "output": [
@@ -750,7 +741,8 @@
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ]
                 },
                 {
@@ -763,10 +755,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.description",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.priorityLevel",
@@ -982,9 +971,6 @@
                     "example_values": [
                         6525
                     ],
-                    "contains": [
-                        "cb defense policy id"
-                    ],
                     "column_name": "ID",
                     "column_order": 1
                 },
@@ -1080,23 +1066,20 @@
                 {
                     "data_path": "action_result.data.*.policy.directoryActionRules.*.path",
                     "data_type": "string",
-                    "example_values": [
-                        ""
-                    ],
                     "contains": [
                         "file path"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.policy.directoryActionRules.*.actions.PROTECTION",
-                    "data_type": "numeric",
+                    "data_type": "boolean",
                     "example_values": [
                         false
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.policy.directoryActionRules.*.actions.FILE_UPLOAD",
-                    "data_type": "numeric",
+                    "data_type": "boolean",
                     "example_values": [
                         false
                     ]
@@ -1109,10 +1092,10 @@
         },
         {
             "action": "add policy",
-            "identifier": "create_policy",
             "description": "Create a new policy on CB Defense",
             "verbose": "The <b>json_fields</b> parameter can be used to configure other fields in the created policy. This parameter takes a JSON dictionary with the format of the policy field seen <a href=\"https://developer.carbonblack.com/reference/cb-defense/1/rest-api/#create-new-policy\">here</a>.",
             "type": "generic",
+            "identifier": "create_policy",
             "read_only": false,
             "parameters": {
                 "name": {
@@ -1142,7 +1125,6 @@
                 "json_fields": {
                     "description": "Other configuration fields in JSON format",
                     "data_type": "string",
-                    "required": false,
                     "order": 3
                 }
             },
@@ -1151,7 +1133,8 @@
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ],
                     "column_name": "Status",
                     "column_order": 0
@@ -1168,9 +1151,6 @@
                     "data_type": "numeric",
                     "example_values": [
                         13145
-                    ],
-                    "contains": [
-                        "cb defense policy id"
                     ],
                     "column_name": "ID",
                     "column_order": 1
@@ -1223,9 +1203,6 @@
                     "data_type": "numeric",
                     "example_values": [
                         13145
-                    ],
-                    "contains": [
-                        "cb defense policy id"
                     ]
                 },
                 {
@@ -1250,9 +1227,9 @@
         },
         {
             "action": "delete policy",
-            "identifier": "delete_policy",
             "description": "Delete a policy on CB Defense",
             "type": "generic",
+            "identifier": "delete_policy",
             "read_only": false,
             "parameters": {
                 "id": {
@@ -1262,7 +1239,8 @@
                     "contains": [
                         "cb defense policy id"
                     ],
-                    "order": 0
+                    "order": 0,
+                    "primary": true
                 }
             },
             "output": [
@@ -1270,7 +1248,8 @@
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ],
                     "column_name": "Status",
                     "column_order": 0
@@ -1311,8 +1290,7 @@
                 },
                 {
                     "data_path": "action_result.summary",
-                    "data_type": "string",
-                    "example_values": []
+                    "data_type": "string"
                 },
                 {
                     "data_path": "summary.total_objects",
@@ -1336,9 +1314,9 @@
         },
         {
             "action": "add rule",
-            "identifier": "add_rule",
             "description": "Add a rule to a policy on CB Defense",
             "type": "generic",
+            "identifier": "add_rule",
             "read_only": false,
             "parameters": {
                 "id": {
@@ -1348,7 +1326,8 @@
                     "contains": [
                         "cb defense policy id"
                     ],
-                    "order": 0
+                    "order": 0,
+                    "primary": true
                 },
                 "rules": {
                     "description": "JSON dictionary containing rules configuration",
@@ -1362,7 +1341,8 @@
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ],
                     "column_name": "Status",
                     "column_order": 0
@@ -1444,9 +1424,9 @@
         },
         {
             "action": "delete rule",
-            "identifier": "delete_rule",
             "description": "Delete a rule from a policy on CB Defense",
             "type": "generic",
+            "identifier": "delete_rule",
             "read_only": false,
             "parameters": {
                 "policy_id": {
@@ -1456,7 +1436,8 @@
                     "contains": [
                         "cb defense policy id"
                     ],
-                    "order": 0
+                    "order": 0,
+                    "primary": true
                 },
                 "rule_id": {
                     "description": "Rule ID",
@@ -1470,7 +1451,8 @@
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ],
                     "column_name": "Status",
                     "column_order": 0
@@ -1542,16 +1524,15 @@
         },
         {
             "action": "list processes",
-            "identifier": "list_processes",
             "description": "List processes that match supplied filter criteria",
             "verbose": "Due to a limitation in the API, the only options for the <b>search_span</b> parameter are <b>one day</b>, <b>one week</b>, or <b>two weeks</b>. The results of this action can be paged using the <b>start</b> and <b>limit</b> parameters. For example, to return the first 10 results, set <b>start</b> to 1 and <b>limit</b> to 10. To return the next 10 results, set <b>start</b> to 11 and keep <b>limit</b> at 10.",
             "type": "investigate",
+            "identifier": "list_processes",
             "read_only": true,
             "parameters": {
                 "ip": {
                     "description": "IP",
                     "data_type": "string",
-                    "required": false,
                     "primary": true,
                     "contains": [
                         "ip"
@@ -1561,7 +1542,6 @@
                 "host_name": {
                     "description": "Host Name",
                     "data_type": "string",
-                    "required": false,
                     "primary": true,
                     "contains": [
                         "host name"
@@ -1571,25 +1551,21 @@
                 "owner": {
                     "description": "Owner",
                     "data_type": "string",
-                    "required": false,
                     "order": 2
                 },
                 "search_span": {
                     "description": "Number of days back to search",
                     "data_type": "string",
-                    "required": false,
                     "order": 3
                 },
                 "start": {
                     "description": "Number of first result to return",
                     "data_type": "numeric",
-                    "required": false,
                     "order": 4
                 },
                 "limit": {
                     "description": "Maximum number of results to return",
                     "data_type": "numeric",
-                    "required": false,
                     "order": 5
                 }
             },
@@ -1598,7 +1574,8 @@
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ]
                 },
                 {
@@ -1696,7 +1673,7 @@
                     "example_values": [
                         4242869
                     ],
-                    "column_name": "device id",
+                    "column_name": "Device ID",
                     "column_order": 2
                 },
                 {
@@ -1712,7 +1689,7 @@
                     "example_values": [
                         "bas\\bas-carbonblack"
                     ],
-                    "column_name": "device name",
+                    "column_name": "Device Name",
                     "column_order": 1
                 },
                 {
@@ -1763,7 +1740,7 @@
                         "file name",
                         "file path"
                     ],
-                    "column_name": "process name",
+                    "column_name": "Process Name",
                     "column_order": 0
                 },
                 {
@@ -1852,7 +1829,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.process_terminated",
-                    "data_type": "numeric",
+                    "data_type": "boolean",
                     "example_values": [
                         true
                     ]
@@ -1886,16 +1863,15 @@
         },
         {
             "action": "list events",
-            "identifier": "list_events",
             "description": "List events that match supplied filter criteria",
             "verbose": "Use the <b>description</b> parameter to search for a substring in the description of an event. The description of an event will include general information about the event such as fields like destination URL and commandline entries.<br><br>The parameter <b>ip</b>, <b>host_name</b>, <b>hash</b>, <b>application</b>, and <b>owner</b> apply only to the device the event came from. Thus, for example, the <b>ip</b> paramters cannot be used to search for a destination IP. To search for a certain destination IP, or other fields, use the <b>description</b> parameter instead.<br><br>Due to a limitation in the API, the only options for the <b>search_span</b> parameter are <b>one day</b>, <b>one week</b>, or <b>two weeks</b>.",
             "type": "investigate",
+            "identifier": "list_events",
             "read_only": true,
             "parameters": {
                 "ip": {
                     "description": "IP",
                     "data_type": "string",
-                    "required": false,
                     "primary": true,
                     "contains": [
                         "ip"
@@ -1905,7 +1881,6 @@
                 "host_name": {
                     "description": "Host Name",
                     "data_type": "string",
-                    "required": false,
                     "primary": true,
                     "contains": [
                         "host name"
@@ -1915,7 +1890,6 @@
                 "hash": {
                     "description": "SHA-256 Hash",
                     "data_type": "string",
-                    "required": false,
                     "primary": true,
                     "contains": [
                         "hash",
@@ -1926,13 +1900,11 @@
                 "application": {
                     "description": "Application Name",
                     "data_type": "string",
-                    "required": false,
                     "order": 4
                 },
                 "event_type": {
                     "description": "Event Type",
                     "data_type": "string",
-                    "required": false,
                     "value_list": [
                         "NETWORK",
                         "FILE_CREATE",
@@ -1947,20 +1919,18 @@
                 "owner": {
                     "description": "Owner",
                     "data_type": "string",
-                    "required": false,
                     "order": 5
                 },
                 "search_span": {
                     "description": "Number of days back to search",
                     "data_type": "string",
-                    "required": false,
                     "order": 6
                 }
             },
             "output": [
                 {
                     "data_path": "action_result.data.*.legacy",
-                    "data_type": "numeric",
+                    "data_type": "boolean",
                     "example_values": [
                         true
                     ]
@@ -1974,7 +1944,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.enriched",
-                    "data_type": "numeric",
+                    "data_type": "boolean",
                     "example_values": [
                         true
                     ]
@@ -1988,7 +1958,7 @@
                     "contains": [
                         "md5"
                     ],
-                    "column_name": "event id",
+                    "column_name": "Event ID",
                     "column_order": 0
                 },
                 {
@@ -1997,7 +1967,7 @@
                     "example_values": [
                         4486274
                     ],
-                    "column_name": "device id",
+                    "column_name": "Device ID",
                     "column_order": 1
                 },
                 {
@@ -2020,7 +1990,7 @@
                     "example_values": [
                         "corp\\controlcenter"
                     ],
-                    "column_name": "device name",
+                    "column_name": "Device Name",
                     "column_order": 2
                 },
                 {
@@ -2125,7 +2095,8 @@
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ]
                 },
                 {
@@ -2217,9 +2188,9 @@
         },
         {
             "action": "get event",
-            "identifier": "get_event",
             "description": "Get information about an event",
             "type": "investigate",
+            "identifier": "get_event",
             "read_only": true,
             "parameters": {
                 "id": {
@@ -2238,7 +2209,8 @@
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ],
                     "column_name": "Status",
                     "column_order": 0
@@ -2284,7 +2256,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.legacy",
-                    "data_type": "numeric",
+                    "data_type": "boolean",
                     "example_values": [
                         true
                     ]
@@ -2298,7 +2270,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.enriched",
-                    "data_type": "numeric",
+                    "data_type": "boolean",
                     "example_values": [
                         true
                     ]
@@ -2703,9 +2675,9 @@
         },
         {
             "action": "get alert",
-            "identifier": "get_alert",
             "description": "Get information about an alert",
             "type": "investigate",
+            "identifier": "get_alert",
             "read_only": true,
             "parameters": {
                 "id": {
@@ -2850,7 +2822,7 @@
                     "example_values": [
                         4483137
                     ],
-                    "column_name": "device id",
+                    "column_name": "Device ID",
                     "column_order": 0
                 },
                 {
@@ -2925,8 +2897,8 @@
                     "example_values": [
                         "KognosCBTest-1"
                     ],
-                    "column_name": "device name",
-                    "column_order": 0
+                    "column_name": "Device Name",
+                    "column_order": 1
                 },
                 {
                     "data_path": "action_result.data.*.policy_name",
@@ -2975,7 +2947,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.notes_present",
-                    "data_type": "numeric",
+                    "data_type": "boolean",
                     "example_values": [
                         false
                     ]
@@ -3128,10 +3100,10 @@
         },
         {
             "action": "get notifications",
-            "identifier": "get_notifications",
             "description": "Get notfications from CB Defense",
             "verbose": "This action retrieves the current list of notifiactions from CB Defense. Once a notification is retrieved, it cannot be retrieved again.",
             "type": "investigate",
+            "identifier": "get_notifications",
             "read_only": true,
             "parameters": {},
             "output": [
@@ -3139,7 +3111,8 @@
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ]
                 },
                 {
@@ -3361,21 +3334,23 @@
                     "data_type": "string",
                     "order": 0,
                     "description": "JSON object containing the policy details (see https://developer.carbonblack.com/reference/cb-defense/1/rest-api/#create-new-policy)",
-                    "required": true,
-                    "primary": true
+                    "required": true
                 },
                 "policy_id": {
                     "data_type": "numeric",
                     "order": 1,
                     "description": "The ID of the policy to replace. This ID must match the ID in the request URL",
-                    "required": true,
-                    "primary": true
+                    "required": true
                 }
             },
             "output": [
                 {
                     "data_path": "action_result.status",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
                 },
                 {
                     "data_path": "action_result.summary",
@@ -3432,7 +3407,11 @@
             "output": [
                 {
                     "data_path": "action_result.status",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
                 },
                 {
                     "data_path": "action_result.message",
