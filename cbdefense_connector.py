@@ -15,6 +15,7 @@ from phantom.action_result import ActionResult
 # Usage of the consts file is recommended
 # from carbonblackdefense_consts import *
 import requests
+import time
 import json
 from bs4 import BeautifulSoup
 
@@ -451,63 +452,156 @@ class CarbonBlackDefenseConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         params = {}
+        query = ""
 
         if 'ip' in param:
-            params['ipAddress'] = param['ip']
+            query += "(device_external_ip:{0} OR device_internal_ip:{0})".format(param['ip'])
         if 'host_name' in param:
-            params['hostName'] = param['host_name']
-        if 'hash' in param:
-            params['sha256Hash'] = param['hash']
-        if 'application' in param:
-            params['applicationName'] = param['application']
+            query_added = "device_name:{0}".format(param['host_name'])
+            if query:
+                query += " AND " + query_added
+            else:
+                query += query_added
         if 'owner' in param:
-            params['ownerName'] = param['owner']
+            query_added = "device_installed_by:{0}".format(param['owner'])
+            if query:
+                query += " AND " + query_added
+            else:
+                query += query_added
+        if 'application' in param:
+             query_added = "process_original_filename:{0}".format(param['application'])
+             if query:
+                 query += " AND " + query_added
+             else:
+                 query += query_added
         if 'event_type' in param:
-            params['eventType'] = param['event_type']
+             query_added = "enriched_event_type:{0}".format(param['event_type'])
+             if query:
+                query += " AND " + query_added
+             else:
+                query += query_added
+        if 'hash' in param:
+            query_added = "process_hash:{0}".format(param['hash'])
+            if query:
+                query += " AND " + query_added
+            else:
+                query += query_added
         if 'search_span' in param:
-            span_map = {'one day': '1d', 'one week': '1w', 'two weeks': '2w'}
-            params['searchWindow'] = span_map[param['search_span']]
+            span_map = {'one day': '-1d', 'one week': '-1w', 'two weeks': '-2w'}
+            params['time_range']={
+                "windows":span_map[param['search_span']]
+            }
+        if not query:
+            self.debug_print("No Mandatory Field selected")
+            return action_result.set_status(phantom.APP_SUCCESS, "Add atleast value in one of following fields: event_type,ip,host name,hsh,application,owner")
 
-        ret_val, resp_json = self._make_rest_call('/integrationServices/v3/event', action_result, params=params)
+        params["query"] = query
+        self.debug_print("query parameters are", format(params))
+
+        ret_val, resp_json = self._make_rest_call('/api/investigate/v2/orgs/{0}/enriched_events/search_jobs'.format(self._org_key),action_result, data=params,method='post',is_new_api=True)
+        self.debug_print('Response Body for ListEvent Action', resp_json.get("job_id"))
+
+        if not resp_json.get("job_id"):
+            self.debug_print("Response String for Event Search Status failed")
+        else:
+            resp_json_search_result_data=self.retry_search_event(resp_json.get("job_id"),action_result,"search_jobs");
+            self.debug_print("*****resp_json_search_result_data",resp_json_search_result_data)
 
         if phantom.is_fail(ret_val):
             return ret_val
 
-        count = 0
-        for result in resp_json.get('results', []):
-            if 'description' in param:
-                if param['description'] in result['longDescription']:
+        action_result.add_data(resp_json_search_result_data.get('results', []))
+
+        if resp_json_search_result_data.get('results'):
+            count = 0
+            for result in resp_json_search_result_data.get('results', []):
+                if 'event_description' in param:
+                    if param['event_description'] in result['longDescription']:
+                        action_result.add_data(result)
+                        count += 1
+                else:
                     action_result.add_data(result)
                     count += 1
-            else:
-                action_result.add_data(result)
-                count += 1
 
-        summary = action_result.update_summary({})
-        summary['num_results'] = count
+            summary = action_result.update_summary({})
+            summary['num_results'] = count
+            return action_result.set_status(phantom.APP_SUCCESS)
+        else:
+            self.debug_print("No Record Found")
+            return action_result.set_status(phantom.APP_SUCCESS, "No records found")
 
-        return action_result.set_status(phantom.APP_SUCCESS)
+    def retry_search_event(self,job_id,action_result,job_name):
+        self.save_progress("In retry_search_event for: {0}".format(self.get_action_identifier()))
+        max_retry = 3
+        retries = 0
+        i=0
+        for i in range(2):
+            try:
+                self.debug_print("while retrying $$$$")
+                if job_name == "search_jobs":
+                    ret_val_search_event, resp_json_search_event = self._make_rest_call('/api/investigate/v1/orgs/{1}/enriched_events/{2}/{0}'.format(job_id,self._org_key,job_name), action_result,is_new_api=True)
+                    self.debug_print("Response String for Event for completed Search Status",resp_json_search_event.get("completed"))
+                    self.debug_print("Response String for Event for contactedSearch Status",resp_json_search_event.get("contacted"))
+                elif job_name == "detail_jobs":
+                    ret_val_search_event, resp_json_search_event = self._make_rest_call('/api/investigate/v2/orgs/{1}/enriched_events/{2}/{0}'.format(job_id, self._org_key, job_name),action_result,is_new_api=True)
+                    self.debug_print("Response String for Event for completed Search Status",resp_json_search_event.get("completed"))
+                    self.debug_print("Response String for Event for contactedSearch Status",resp_json_search_event.get("contacted"))
+
+                if resp_json_search_event.get("completed") ^ resp_json_search_event.get("contacted"):
+                    self.debug_print("Completed and Contacted events are not verified")
+                    retries += 1
+                    if retries <= max_retry:
+                        self.debug_print("Retrying ... #%s", retries)
+                        time.sleep(5)
+                        continue
+                    else:
+                        break
+                else:
+                    break
+            except Exception as e:
+                self.debug_print("Exception Occured")
+                break;
+
+        self.debug_print("Before calling result")
+        ret_val_search_result, resp_json_search_result = self._make_rest_call('/api/investigate/v2/orgs/{1}/enriched_events/{2}/{0}/results'.format(job_id,self._org_key,job_name), action_result)
+        self.debug_print("resp_json_search_result", resp_json_search_result)
+        return resp_json_search_result
 
     def _handle_get_event(self, param):
 
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
+        params = {}
+        my_list = param['id'].split(",")
+        params["event_ids"] = my_list
+        self.debug_print("query parameters for getEvent are", format(params))
 
-        ret_val, resp_json = self._make_rest_call('/integrationServices/v3/event/{0}'.format(param['id']), action_result)
+        ret_val, resp_json = self._make_rest_call('/api/investigate/v2/orgs/{0}/enriched_events/detail_jobs'.format(self._org_key), action_result,
+            data=params, method='post',is_new_api=True)
+        self.debug_print('Response Body for GetEvent Action', resp_json.get("job_id"))
+
+        if not resp_json.get("job_id"):
+            self.debug_print("Response String for Get Event Search Status failed")
+        else:
+            resp_json_search_result_data = self.retry_search_event(resp_json.get("job_id"), action_result,"detail_jobs");
+            self.debug_print("get event resp_json_search_result_data", resp_json_search_result_data)
 
         if phantom.is_fail(ret_val):
             return ret_val
 
-        action_result.add_data(resp_json)
-
-        return action_result.set_status(phantom.APP_SUCCESS, "Successfully retrieved event data")
+        action_result.add_data(resp_json_search_result_data.get('results', []))
+        if resp_json_search_result_data.get('results'):
+            return action_result.set_status(phantom.APP_SUCCESS,"Successfully retrieved event data")
+        else:
+            self.debug_print("No Record Found")
+            return action_result.set_status(phantom.APP_SUCCESS, "No records found")
 
     def _handle_get_alert(self, param):
 
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        ret_val, resp_json = self._make_rest_call('/appservices/v6/orgs/{1}/alerts/{0}'.format(param['id'],self._org_key), action_result)
+        ret_val, resp_json = self._make_rest_call('/appservices/v6/orgs/{1}/alerts/{0}'.format(param['id'],self._org_key), action_result,is_new_api=True)
 
         self.debug_print("Response String for getAlert", resp_json)
 
@@ -515,12 +609,11 @@ class CarbonBlackDefenseConnector(BaseConnector):
             return ret_val
 
         action_result.add_data(resp_json)
-
         summary = action_result.set_summary({})
+        summary['device'] = resp_json.get('device_name','UNKNOWN')
+
         #summary['device'] = resp_json.get('deviceInfo', {}).get('deviceName', 'UNKNOWN')
         #summary['num_events'] = len(resp_json.get('events', []))
-
-        summary['device'] = resp_json
 
         return action_result.set_status(phantom.APP_SUCCESS)
 
