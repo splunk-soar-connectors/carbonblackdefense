@@ -57,6 +57,24 @@
             "data_type": "password",
             "required": false,
             "order": 5
+        },
+        "custom_api_connector_id": {
+            "description": "Custom API Connector ID (for new API)",
+            "data_type": "password",
+            "required": false,
+            "order": 6
+        },
+        "custom_api_key": {
+            "description": "Custom API Key (for new API)",
+            "data_type": "password",
+            "required": false,
+            "order": 7
+        },
+        "org_key": {
+            "description": "Organization Key",
+            "data_type": "string",
+            "required": false,
+            "order": 8
         }
     },
     "actions": [

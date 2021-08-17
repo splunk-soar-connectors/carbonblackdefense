@@ -23,6 +23,7 @@ class RetVal(tuple):
     def __new__(cls, val1, val2=None):
         return tuple.__new__(RetVal, (val1, val2))
 
+#todo -- add the exception handling for exception
 
 class CarbonBlackDefenseConnector(BaseConnector):
 
@@ -35,6 +36,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
         self._base_url = None
         self._api_auth = None
         self._siem_auth = None
+        self._custom_api_auth = None
         self._org_key = None
 
     def initialize(self):
@@ -44,15 +46,15 @@ class CarbonBlackDefenseConnector(BaseConnector):
         config = self.get_config()
 
         self._base_url = config['api_url'].strip('/')
-        self._org_key = "7DESJ9GN"
 
         if 'api_key' in config and 'api_connector_id' in config:
             self._api_auth = '{0}/{1}'.format(config['api_key'], config['api_connector_id'])
         if 'siem_key' in config and 'siem_connector_id' in config:
             self._siem_auth = '{0}/{1}'.format(config['siem_key'], config['siem_connector_id'])
-
-        self._api_auth="V4Q5AH5R7R9J5HLIRZPJHHJ6/ZT23I5JTQ4"
-        self._siem_auth = "V4Q5AH5R7R9J5HLIRZPJHHJ6/ZT23I5JTQ4"
+        if 'custom_api_key' in config and 'custom_api_connector_id' in config:
+            self._custom_api_auth = '{0}/{1}'.format(config['custom_api_key'], config['custom_api_connector_id'])
+        if 'org_key' in config:
+            self._org_key = config.get('org_key')
 
         return phantom.APP_SUCCESS
 
@@ -141,7 +143,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
-    def _make_rest_call(self, endpoint, action_result, headers=None, params=None, data=None, method="get"):
+    def _make_rest_call(self, endpoint, action_result, headers=None, params=None, data=None, method="get", is_new_api=False):
 
         config = self.get_config()
 
@@ -159,6 +161,11 @@ class CarbonBlackDefenseConnector(BaseConnector):
             if not self._siem_auth:
                 return RetVal(action_result.set_status(phantom.APP_ERROR, "The asset configuration parameters siem_key and siem_connector_id are required to run this action."))
             auth_header = {'X-Auth-Token': self._siem_auth}
+        elif is_new_api:
+            if not self._custom_api_auth:
+                return RetVal(action_result.set_status(phantom.APP_ERROR, "The asset configuration parameters custom_api_key and custom_api_connector_id are "
+                                                                          "required to run this action."))
+            auth_header = {'X-Auth-Token': self._custom_api_auth}
         else:
             if not self._api_auth:
                 return RetVal(action_result.set_status(phantom.APP_ERROR, "The asset configuration parameters api_key and api_connector_id are required to run this action."))
@@ -306,7 +313,8 @@ class CarbonBlackDefenseConnector(BaseConnector):
         if 'limit' in param:
             params['rows'] = param['limit']
 
-        ret_val, response = self._make_rest_call('/integrationServices/v3/device', action_result, params=params)
+        list_devices_api = "/appservices/v6/orgs/{0}/devices/_search".format(self._org_key)
+        ret_val, response = self._make_rest_call(list_devices_api, action_result, data=params, method="post", is_new_api=True)
 
         if phantom.is_fail(ret_val):
             return ret_val
@@ -324,11 +332,21 @@ class CarbonBlackDefenseConnector(BaseConnector):
 
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
+        # todo optimize below params
 
-        body = {'policyId': param['policy_id']}
+        body = {
+            "action_type": "UPDATE_POLICY",
+            "device_id": param['device_id'],
+            "options": {
+                'policy_id': param['policy_id']
+            }
+        }
 
-        ret_val, response = self._make_rest_call('/integrationServices/v3/device/{0}'.format(param['device_id']), action_result, data=body, method='patch')
+        update_policy_api = "/appservices/v6/orgs/{0}/device_actions".format(self._org_key)
+        ret_val, response = self._make_rest_call(update_policy_api, action_result, data=body, method='post', is_new_api=True)
 
+        if phantom.is_fail(ret_val):
+            return ret_val
         action_result.add_data(response)
 
         return action_result.set_status(phantom.APP_SUCCESS, "Successfully updated device's policy")
@@ -339,25 +357,83 @@ class CarbonBlackDefenseConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         params = {}
-
+        query = ""
+        result_params = {}
         if 'ip' in param:
-            params['ipAddress'] = param['ip']
+            query += "(device_external_ip:{0} OR device_internal_ip:{0})".format(param['ip'])
         if 'host_name' in param:
-            params['hostName'] = param['host_name']
+            query_added = "device_name:{0}".format(param['host_name'])
+            if query:
+                query += " AND " + query_added
+            else:
+                query += query_added
         if 'owner' in param:
-            params['ownerName'] = param['owner']
+            query_added = "device_installed_by:{0}".format(param['owner'])
+            if query:
+                query += " AND " + query_added
+            else:
+                query += query_added
         if 'start' in param:
-            params['start'] = param['start']
+            result_params["start"] = params['start'] = param['start']
         if 'limit' in param:
-            params['rows'] = param['limit']
+            result_params["rows"] = params['rows'] = param['limit']
         if 'search_span' in param:
-            span_map = {'one day': '1d', 'one week': '1w', 'two weeks': '2w', 'one month': '1m'}
-            params['searchWindow'] = span_map[param['search_span']]
+            span_map = {'one day': '-1d', 'one week': '-1w', 'two weeks': '-2w', 'one month': '-1m'}
+            params['time_range'] = {
+                "window": span_map[param['search_span']]
+            }
 
-        ret_val, resp_json = self._make_rest_call('/integrationServices/v3/process', action_result, params=params)
+        params["query"] = query
+
+        '''
+        def retry_search_event(self,job_id,action_result):
+        self.save_progress("In retry_search_event for: {0}".format(self.get_action_identifier()))
+        max_retry = 3
+        retries = 0
+        i=0
+        for i in range(2):
+            try:
+                self.debug_print("In try")
+                ret_val_search_event, resp_json_search_event = self._make_rest_call('/api/investigate/v1/orgs/{1}/enriched_events/search_jobs/{0}'.format(job_id,self._org_key), action_result)
+
+        '''
+
+        #todo --imp
+        # return error if user doesnot provide any one of the required parameter.
+        # todo - steps
+        # prepare the json data to be send with the api call.
+        # first make the api call to get the job id.
+        # then make the call to get the results for that job_id
+        # the result json returned by the 2nd step will be used for showing info to the user.
+
+        # process_query = {
+        #     "query": "enriched_event_type:SYSTEM_API_CALL"
+        # }
+        self.debug_print("sahils--- \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n{0}".format(params))
+        get_job_id_api = "/api/investigate/v2/orgs/{0}/processes/search_jobs".format(self._org_key)
+        ret_val, resp_json_job_id = self._make_rest_call(get_job_id_api, action_result, data=params, method="post", is_new_api=True)
+
+        self.debug_print("sahil res_json_data \n\n\n\n\n\n\n{0}".format(resp_json_job_id))
 
         if phantom.is_fail(ret_val):
             return ret_val
+        job_id = resp_json_job_id.get("job_id")
+
+        job_info_api = "/api/investigate/v1/orgs/{0}/processes/search_jobs/{1}".format(self._org_key, job_id)
+        ret_val, job_info = self._make_rest_call(job_info_api, action_result, is_new_api=True)
+        if phantom.is_fail(ret_val):
+            return ret_val
+        completed = job_info.get("completed")
+        contacted = job_info.get("contacted")
+
+        #todo try to optimize the below logic
+        if completed != contacted:
+            # if it is not equal then update the user with a proper message to retry after sometime.
+            # todo no need to add sleep or re-try the api call.
+            message = "process still not completed so results may vary. please re-try after sometime."
+
+        get_result_api = "/api/investigate/v2/orgs/{0}/processes/search_jobs/{1}/results".format(self._org_key, job_id)
+        ret_val, resp_json = self._make_rest_call(get_result_api, action_result, params=result_params, is_new_api=True)
 
         results = resp_json.get('results', [])
 
