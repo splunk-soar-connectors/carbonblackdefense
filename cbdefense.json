@@ -2192,10 +2192,6 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.parameter.description",
-                    "data_type": "string"
-                },
-                {
                     "data_path": "action_result.parameter.event_type",
                     "data_type": "string"
                 },
