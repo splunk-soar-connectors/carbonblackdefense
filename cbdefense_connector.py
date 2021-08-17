@@ -66,7 +66,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
 
     def _process_empty_reponse(self, response, action_result):
 
-        if response.status_code == 200:
+        if response.status_code == 200 or response.status_code == 204:
             return RetVal(phantom.APP_SUCCESS, {})
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, "Empty response and no information in the header"), None)
@@ -337,7 +337,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
 
         body = {
             "action_type": "UPDATE_POLICY",
-            "device_id": param['device_id'],
+            "device_id": [param['device_id']],
             "options": {
                 'policy_id': param['policy_id']
             }
@@ -379,25 +379,22 @@ class CarbonBlackDefenseConnector(BaseConnector):
         if 'limit' in param:
             result_params["rows"] = params['rows'] = param['limit']
         if 'search_span' in param:
-            span_map = {'one day': '-1d', 'one week': '-1w', 'two weeks': '-2w', 'one month': '-1m'}
+            search_span_val = param['search_span']
+            if 'one day' in search_span_val or 'one week' in search_span_val or 'two weeks' in search_span_val or 'one month' in search_span_val:
+                span_map = {'one day': '-1d', 'one week': '-1w', 'two weeks': '-2w', 'one month': '-1m'}
+                search_span_val = span_map[search_span_val]
+            else:
+                search_span_val = "-" + search_span_val
+
             params['time_range'] = {
-                "window": span_map[param['search_span']]
+                "window": search_span_val
             }
 
+        if not query:
+            self.debug_print("No Mandatory Field selected")
+            return action_result.set_status(phantom.APP_ERROR, "Add atleast value in one of following fields: ip, host name, owner")
+
         params["query"] = query
-
-        '''
-        def retry_search_event(self,job_id,action_result):
-        self.save_progress("In retry_search_event for: {0}".format(self.get_action_identifier()))
-        max_retry = 3
-        retries = 0
-        i=0
-        for i in range(2):
-            try:
-                self.debug_print("In try")
-                ret_val_search_event, resp_json_search_event = self._make_rest_call('/api/investigate/v1/orgs/{1}/enriched_events/search_jobs/{0}'.format(job_id,self._org_key), action_result)
-
-        '''
 
         #todo --imp
         # return error if user doesnot provide any one of the required parameter.
@@ -487,18 +484,25 @@ class CarbonBlackDefenseConnector(BaseConnector):
             else:
                 query += query_added
         if 'search_span' in param:
-            span_map = {'one day': '-1d', 'one week': '-1w', 'two weeks': '-2w'}
-            params['time_range']={
-                "windows":span_map[param['search_span']]
+            search_span_val = param['search_span']
+            if 'one day' in search_span_val or 'one week' in search_span_val or 'two weeks' in search_span_val:
+                span_map = {'one day': '-1d', 'one week': '-1w', 'two weeks': '-2w'}
+                search_span_val = span_map[search_span_val]
+            else:
+                search_span_val = "-" + search_span_val
+
+            params['time_range'] = {
+                "window": search_span_val
             }
+
         if not query:
             self.debug_print("No Mandatory Field selected")
-            return action_result.set_status(phantom.APP_SUCCESS, "Add atleast value in one of following fields: event_type,ip,host name,hsh,application,owner")
+            return action_result.set_status(phantom.APP_ERROR, "Add atleast value in one of following fields: event_type, ip, host name, hash, application, owner")
 
         params["query"] = query
         self.debug_print("query parameters are", format(params))
 
-        ret_val, resp_json = self._make_rest_call('/api/investigate/v2/orgs/{0}/enriched_events/search_jobs'.format(self._org_key),action_result, data=params, method='post', is_new_api=True)
+        ret_val, resp_json = self._make_rest_call('/api/investigate/v2/orgs/{0}/enriched_events/search_jobs'.format(self._org_key),action_result, data=params,method='post', is_new_api=True)
         self.debug_print('Response Body for ListEvent Action', resp_json.get("job_id"))
 
         if not resp_json.get("job_id"):
@@ -554,7 +558,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
                     break
             except Exception as e:
                 self.debug_print("Exception Occured")
-                break;
+                break
 
         self.debug_print("Before calling result")
         ret_val_search_result, resp_json_search_result = self._make_rest_call('/api/investigate/v2/orgs/{1}/enriched_events/{2}/{0}/results'.format(job_id,self._org_key,job_name), action_result,is_new_api=True )
@@ -608,7 +612,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
 
         action_result.add_data(resp_json)
         summary = action_result.set_summary({})
-        summary['device'] = resp_json.get('device_name','UNKNOWN')
+        summary['device'] = resp_json.get('device_name', 'UNKNOWN')
 
         #summary['device'] = resp_json.get('deviceInfo', {}).get('deviceName', 'UNKNOWN')
         #summary['num_events'] = len(resp_json.get('events', []))
