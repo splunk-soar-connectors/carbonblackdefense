@@ -9,20 +9,18 @@
 import phantom.app as phantom
 from phantom.base_connector import BaseConnector
 from phantom.action_result import ActionResult
-
-# Usage of the consts file is recommended
-# from carbonblackdefense_consts import *
+from cbdefense_consts import *
 import requests
 import time
 import json
 from bs4 import BeautifulSoup
+import ipaddress
 
 
 class RetVal(tuple):
     def __new__(cls, val1, val2=None):
         return tuple.__new__(RetVal, (val1, val2))
 
-#todo -- add the exception handling for exception
 
 class CarbonBlackDefenseConnector(BaseConnector):
 
@@ -55,6 +53,8 @@ class CarbonBlackDefenseConnector(BaseConnector):
         if 'org_key' in config:
             self._org_key = config.get('org_key')
 
+        self.set_validator("ipv6", self._is_ip)
+
         return phantom.APP_SUCCESS
 
     def finalize(self):
@@ -62,12 +62,53 @@ class CarbonBlackDefenseConnector(BaseConnector):
         self.save_state(self._state)
         return phantom.APP_SUCCESS
 
+    def _is_ip(self, input_ip_address):
+        """ Function that checks given address and return True if address is valid IPv4 or IPV6 address.
+
+        :param input_ip_address: IP address
+        :return: status (success/failure)
+        """
+
+        ip_address_input = input_ip_address
+
+        try:
+            ipaddress.ip_address(str(ip_address_input))
+        except Exception as e:
+            self.debug_print(EXCEPTION_OCCURRED, e)
+            return False
+
+        return True
+
+    def _get_error_message_from_exception(self, e):
+        """ This function is used to get appropriate error message from the exception.
+        :param e: Exception object
+        :return: error message
+        """
+        error_msg = ERROR_MSG_EXCEPTIOIN
+        error_code = ERROR_CODE_EXCEPTION
+        try:
+            if e.args:
+                if len(e.args) > 1:
+                    error_code = e.args[0]
+                    error_msg = e.args[1]
+                elif len(e.args) == 1:
+                    error_code = ERROR_CODE_EXCEPTION
+                    error_msg = e.args[0]
+            else:
+                error_code = ERROR_CODE_EXCEPTION
+                error_msg = ERROR_MSG_EXCEPTIOIN
+        except Exception:
+            error_code = ERROR_CODE_EXCEPTION
+            error_msg = ERROR_MSG_EXCEPTIOIN
+
+        return "Error Code: {0}. Error Message: {1}".format(error_code, error_msg)
+
     def _process_empty_reponse(self, response, action_result):
 
         if response.status_code == 200 or response.status_code == 204:
             return RetVal(phantom.APP_SUCCESS, {})
 
-        return RetVal(action_result.set_status(phantom.APP_ERROR, "Empty response and no information in the header"), None)
+        return RetVal(action_result.set_status(phantom.APP_ERROR, CBD_EMPTY_RESPONSE_NO_HEADER), None)
 
     def _process_html_response(self, response, action_result):
 
@@ -81,10 +122,10 @@ class CarbonBlackDefenseConnector(BaseConnector):
             split_lines = [x.strip() for x in split_lines if x.strip()]
             error_text = '\n'.join(split_lines)
         except:
-            error_text = "Cannot parse error details"
+            error_text = CBD_ERROR_TEXT
 
         message = "Status Code: {0}. Data from server:\n{1}\n".format(status_code,
-                error_text)
+                                                                      error_text)
 
         message = message.replace('{', '{{').replace('}', '}}')
 
@@ -96,7 +137,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
         try:
             resp_json = r.json()
         except Exception as e:
-            return RetVal(action_result.set_status(phantom.APP_ERROR, "Unable to parse JSON response. Error: {0}".format(str(e))), None)
+            return RetVal(action_result.set_status(phantom.APP_ERROR, "Unable to parse JSON response. Error: {0}".format(self._get_error_message_from_exception(e))), None)
 
         # Please specify the status codes here
         if 200 <= r.status_code < 399:
@@ -107,7 +148,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
             message = resp_json['message']
         else:
             message = "Error from server. Status Code: {0} Data from server: {1}".format(
-                    r.status_code, r.text.replace('{', '{{').replace('}', '}}'))
+                r.status_code, r.text.replace('{', '{{').replace('}', '}}'))
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
@@ -138,7 +179,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
 
         # everything else is actually an error at this point
         message = "Can't process response from server. Status Code: {0} Data from server: {1}".format(
-                r.status_code, r.text.replace('{', '{{').replace('}', '}}'))
+            r.status_code, r.text.replace('{', '{{').replace('}', '}}'))
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
@@ -158,16 +199,15 @@ class CarbonBlackDefenseConnector(BaseConnector):
 
         if 'notification' in endpoint:
             if not self._siem_auth:
-                return RetVal(action_result.set_status(phantom.APP_ERROR, "The asset configuration parameters siem_key and siem_connector_id are required to run this action."))
+                return RetVal(action_result.set_status(phantom.APP_ERROR, CBD_SEIM_ERROR))
             auth_header = {'X-Auth-Token': self._siem_auth}
         elif is_new_api:
             if not self._custom_api_auth:
-                return RetVal(action_result.set_status(phantom.APP_ERROR, "The asset configuration parameters custom_api_key and custom_api_connector_id are "
-                                                                          "required to run this action."))
+                return RetVal(action_result.set_status(phantom.APP_ERROR, CBD_CUSTOM_API_ERROR))
             auth_header = {'X-Auth-Token': self._custom_api_auth}
         else:
             if not self._api_auth:
-                return RetVal(action_result.set_status(phantom.APP_ERROR, "The asset configuration parameters api_key and api_connector_id are required to run this action."))
+                return RetVal(action_result.set_status(phantom.APP_ERROR, CBD_API_ERROR))
             auth_header = {'X-Auth-Token': self._api_auth}
 
         if headers:
@@ -177,13 +217,13 @@ class CarbonBlackDefenseConnector(BaseConnector):
 
         try:
             r = request_func(
-                            url,
-                            json=data,
-                            headers=headers,
-                            verify=config.get('verify_server_cert', False),
-                            params=params)
+                url,
+                json=data,
+                headers=headers,
+                verify=config.get('verify_server_cert', False),
+                params=params)
         except Exception as e:
-            return RetVal(action_result.set_status( phantom.APP_ERROR, "Error Connecting to server. Details: {0}".format(str(e))), resp_json)
+            return RetVal(action_result.set_status(phantom.APP_ERROR, "Error Connecting to server. Details: {0}".format(self._get_error_message_from_exception(e))), resp_json)
 
         return self._process_response(r, action_result)
 
@@ -192,13 +232,13 @@ class CarbonBlackDefenseConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
         self.save_progress("Querying policies to test connectivity")
 
-        ret_val, response = self._make_rest_call('/integrationServices/v3/policy', action_result)
+        ret_val, response = self._make_rest_call(CBD_POLICY_API, action_result)
 
         if phantom.is_fail(ret_val):
-            self.save_progress("Test Connectivity Failed")
+            self.save_progress(TEST_CONNECTIVITY_FAILED)
             return ret_val
 
-        self.save_progress("Test Connectivity Passed")
+        self.save_progress(TEST_CONNECTIVITY_PASSED)
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_list_policies(self, param):
@@ -206,7 +246,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        ret_val, response = self._make_rest_call('/integrationServices/v3/policy', action_result)
+        ret_val, response = self._make_rest_call(CBD_POLICY_API, action_result)
 
         if phantom.is_fail(ret_val):
             return ret_val
@@ -226,13 +266,13 @@ class CarbonBlackDefenseConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         body = {
-                "policyInfo": {
-                    "name": param['name'],
-                    "description": param['description'],
-                    "priorityLevel": param['priority'],
-                    "version": 2  # This is required to be 2 by the API
-                }
+            "policyInfo": {
+                "name": param['name'],
+                "description": param['description'],
+                "priorityLevel": param['priority'],
+                "version": 2  # This is required to be 2 by the API
             }
+        }
 
         if 'json_fields' in param:
             try:
@@ -241,7 +281,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
                 return action_result.set_status(phantom.APP_ERROR, "Could not parse JSON from 'json_fields' parameter: {0}".format(e))
             body['policy'] = policy_info
 
-        ret_val, response = self._make_rest_call('/integrationServices/v3/policy', action_result, data=body, method='post')
+        ret_val, response = self._make_rest_call(CBD_POLICY_API, action_result, data=body, method='post')
 
         if phantom.is_fail(ret_val):
             return ret_val
@@ -256,14 +296,14 @@ class CarbonBlackDefenseConnector(BaseConnector):
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        ret_val, response = self._make_rest_call('/integrationServices/v3/policy/{0}'.format(param['id']), action_result, method='delete')
+        ret_val, response = self._make_rest_call(CBD_POLICY_API_DEL.format(param['id']), action_result, method='delete')
 
         if phantom.is_fail(ret_val):
             return ret_val
 
         action_result.add_data(response)
 
-        return action_result.set_status(phantom.APP_SUCCESS, "Policy successfully deleted")
+        return action_result.set_status(phantom.APP_SUCCESS, CBD_POLICY_DELETED)
 
     def _handle_add_rule(self, param):
 
@@ -273,11 +313,11 @@ class CarbonBlackDefenseConnector(BaseConnector):
         try:
             rule_info = json.loads(param['rules'])
         except Exception as e:
-            return action_result.set_status(phantom.APP_ERROR, "Could not parse JSON from rules parameter: {0}".format(e))
+            return action_result.set_status(phantom.APP_ERROR, "Could not parse JSON from rules parameter: {0}".format(self._get_error_message_from_exception(e)))
 
         body = {"ruleInfo": rule_info}
 
-        ret_val, response = self._make_rest_call('/integrationServices/v3/policy/{0}/rule'.format(param['id']), action_result, data=body, method='post')
+        ret_val, response = self._make_rest_call(CBD_ADD_RULE_API.format(param['id']), action_result, data=body, method='post')
 
         if phantom.is_fail(ret_val):
             return ret_val
@@ -292,14 +332,14 @@ class CarbonBlackDefenseConnector(BaseConnector):
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        ret_val, response = self._make_rest_call('/integrationServices/v3/policy/{0}/rule/{1}'.format(param['policy_id'], param['rule_id']), action_result, method='delete')
+        ret_val, response = self._make_rest_call(CBD_DEL_RULE_API.format(param['policy_id'], param['rule_id']), action_result, method='delete')
 
         if phantom.is_fail(ret_val):
             return ret_val
 
         action_result.add_data(response)
 
-        return action_result.set_status(phantom.APP_SUCCESS, "Rule successfully deleted")
+        return action_result.set_status(phantom.APP_SUCCESS, CBD_RULE_DELETED)
 
     def _handle_list_devices(self, param):
 
@@ -312,7 +352,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
         if 'limit' in param:
             params['rows'] = param['limit']
 
-        list_devices_api = "/appservices/v6/orgs/{0}/devices/_search".format(self._org_key)
+        list_devices_api = CBD_LIST_DEVICE_API.format(self._org_key)
         ret_val, response = self._make_rest_call(list_devices_api, action_result, data=params, method="post", is_new_api=True)
 
         if phantom.is_fail(ret_val):
@@ -331,24 +371,26 @@ class CarbonBlackDefenseConnector(BaseConnector):
 
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
-        # todo optimize below params
+        device_id = param['device_id']
+        policy_id = param['policy_id']
 
         body = {
             "action_type": "UPDATE_POLICY",
-            "device_id": [param['device_id']],
+            "device_id": [device_id],
             "options": {
-                'policy_id': param['policy_id']
+                'policy_id': policy_id
             }
         }
 
-        update_policy_api = "/appservices/v6/orgs/{0}/device_actions".format(self._org_key)
+        update_policy_api = CBD_UPDATE_DEVICE_API.format(self._org_key)
         ret_val, response = self._make_rest_call(update_policy_api, action_result, data=body, method='post', is_new_api=True)
 
         if phantom.is_fail(ret_val):
             return ret_val
         action_result.add_data(response)
+        action_result.set_summary({'device_id': device_id})
 
-        return action_result.set_status(phantom.APP_SUCCESS, "Successfully updated device's policy")
+        return action_result.set_status(phantom.APP_SUCCESS, CBD_UPDATED_DEVICE_POLICY)
 
     def _handle_list_processes(self, param):
 
@@ -389,46 +431,31 @@ class CarbonBlackDefenseConnector(BaseConnector):
             }
 
         if not query:
-            self.debug_print("No Mandatory Field selected")
-            return action_result.set_status(phantom.APP_ERROR, "Add atleast value in one of following fields: ip, host name, owner")
+            return action_result.set_status(phantom.APP_ERROR, CBD_REQUIRED_FIELD_MESSAGE_PROCESS)
 
         params["query"] = query
 
-        #todo --imp
-        # return error if user doesnot provide any one of the required parameter.
-        # todo - steps
-        # prepare the json data to be send with the api call.
-        # first make the api call to get the job id.
-        # then make the call to get the results for that job_id
-        # the result json returned by the 2nd step will be used for showing info to the user.
-
-        # process_query = {
-        #     "query": "enriched_event_type:SYSTEM_API_CALL"
-        # }
-        self.debug_print("sahils--- \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n{0}".format(params))
-        get_job_id_api = "/api/investigate/v2/orgs/{0}/processes/search_jobs".format(self._org_key)
+        get_job_id_api = CBD_LIST_PROCESS_GET_JOB_API.format(self._org_key)
         ret_val, resp_json_job_id = self._make_rest_call(get_job_id_api, action_result, data=params, method="post", is_new_api=True)
-
-        self.debug_print("sahil res_json_data \n\n\n\n\n\n\n{0}".format(resp_json_job_id))
 
         if phantom.is_fail(ret_val):
             return ret_val
         job_id = resp_json_job_id.get("job_id")
 
-        job_info_api = "/api/investigate/v1/orgs/{0}/processes/search_jobs/{1}".format(self._org_key, job_id)
+        job_info_api = CBD_LIST_PROCESS_VERIFY_JOB_API.format(self._org_key, job_id)
         ret_val, job_info = self._make_rest_call(job_info_api, action_result, is_new_api=True)
         if phantom.is_fail(ret_val):
             return ret_val
         completed = job_info.get("completed")
         contacted = job_info.get("contacted")
 
-        #todo try to optimize the below logic
+        # todo try to optimize the below logic
         if completed != contacted:
             # if it is not equal then update the user with a proper message to retry after sometime.
             # todo no need to add sleep or re-try the api call.
             message = "process still not completed so results may vary. please re-try after sometime."
 
-        get_result_api = "/api/investigate/v2/orgs/{0}/processes/search_jobs/{1}/results".format(self._org_key, job_id)
+        get_result_api = CBD_LIST_PROCESS_RESULT_API.format(self._org_key, job_id)
         ret_val, resp_json = self._make_rest_call(get_result_api, action_result, params=result_params, is_new_api=True)
 
         results = resp_json.get('results', [])
@@ -464,16 +491,16 @@ class CarbonBlackDefenseConnector(BaseConnector):
             else:
                 query += query_added
         if 'application' in param:
-             query_added = "process_original_filename:{0}".format(param['application'])
-             if query:
-                 query += " AND " + query_added
-             else:
-                 query += query_added
-        if 'event_type' in param:
-             query_added = "enriched_event_type:{0}".format(param['event_type'])
-             if query:
+            query_added = "process_original_filename:{0}".format(param['application'])
+            if query:
                 query += " AND " + query_added
-             else:
+            else:
+                query += query_added
+        if 'event_type' in param:
+            query_added = "enriched_event_type:{0}".format(param['event_type'])
+            if query:
+                query += " AND " + query_added
+            else:
                 query += query_added
         if 'hash' in param:
             query_added = "process_hash:{0}".format(param['hash'])
@@ -494,23 +521,16 @@ class CarbonBlackDefenseConnector(BaseConnector):
             }
 
         if not query:
-            self.debug_print("No Mandatory Field selected")
-            return action_result.set_status(phantom.APP_ERROR, "Add atleast value in one of following fields: event_type, ip, host name, hash, application, owner")
+            return action_result.set_status(phantom.APP_ERROR, CBD_REQUIRED_FIELD_MESSAGE)
 
         params["query"] = query
-        self.debug_print("query parameters are", format(params))
 
-        ret_val, resp_json = self._make_rest_call('/api/investigate/v2/orgs/{0}/enriched_events/search_jobs'.format(self._org_key),action_result, data=params,method='post', is_new_api=True)
-        self.debug_print('Response Body for ListEvent Action', resp_json.get("job_id"))
-
-        if not resp_json.get("job_id"):
-            self.debug_print("Response String for Event Search Status failed")
-        else:
-            resp_json_search_result_data=self.retry_search_event(resp_json.get("job_id"),action_result,"search_jobs");
-            self.debug_print("*****resp_json_search_result_data",resp_json_search_result_data)
-
+        ret_val, resp_json = self._make_rest_call(CBD_LIST_EVENT_GET_JOB_API.format(self._org_key), action_result, data=params, method='post',
+                                                  is_new_api=True)
         if phantom.is_fail(ret_val):
             return ret_val
+        job_id = resp_json.get("job_id")
+        resp_json_search_result_data = self.retry_search_event(job_id, action_result, "search_jobs")
 
         results = resp_json_search_result_data.get('results', [])
 
@@ -523,25 +543,20 @@ class CarbonBlackDefenseConnector(BaseConnector):
 
             return action_result.set_status(phantom.APP_SUCCESS)
         else:
-            self.debug_print("No Record Found")
-            return action_result.set_status(phantom.APP_SUCCESS, "No records found")
+            return action_result.set_status(phantom.APP_ERROR, "No records found")
 
-    def retry_search_event(self,job_id,action_result,job_name):
-        self.save_progress("In retry_search_event for: {0}".format(self.get_action_identifier()))
+    def retry_search_event(self, job_id, action_result, job_name):
         max_retry = 3
         retries = 0
-        i=0
+        resp_json_search_event = None
         for i in range(2):
             try:
-                self.debug_print("while retrying $$$$")
                 if job_name == "search_jobs":
-                    ret_val_search_event, resp_json_search_event = self._make_rest_call('/api/investigate/v1/orgs/{1}/enriched_events/{2}/{0}'.format(job_id,self._org_key,job_name), action_result, is_new_api=True)
-                    self.debug_print("Response String for Event for completed Search Status",resp_json_search_event.get("completed"))
-                    self.debug_print("Response String for Event for contactedSearch Status",resp_json_search_event.get("contacted"))
+                    ret_val_search_event, resp_json_search_event = self._make_rest_call(
+                        '/api/investigate/v1/orgs/{1}/enriched_events/{2}/{0}'.format(job_id, self._org_key, job_name), action_result, is_new_api=True)
                 elif job_name == "detail_jobs":
-                    ret_val_search_event, resp_json_search_event = self._make_rest_call('/api/investigate/v2/orgs/{1}/enriched_events/{2}/{0}'.format(job_id, self._org_key, job_name),action_result, is_new_api=True)
-                    self.debug_print("Response String for Event for completed Search Status",resp_json_search_event.get("completed"))
-                    self.debug_print("Response String for Event for contactedSearch Status",resp_json_search_event.get("contacted"))
+                    ret_val_search_event, resp_json_search_event = self._make_rest_call(
+                        '/api/investigate/v2/orgs/{1}/enriched_events/{2}/{0}'.format(job_id, self._org_key, job_name), action_result, is_new_api=True)
 
                 if resp_json_search_event.get("completed") ^ resp_json_search_event.get("contacted"):
                     self.debug_print("Completed and Contacted events are not verified")
@@ -558,13 +573,11 @@ class CarbonBlackDefenseConnector(BaseConnector):
                 self.debug_print("Exception Occured")
                 break
 
-        self.debug_print("Before calling result")
-        ret_val_search_result, resp_json_search_result = self._make_rest_call('/api/investigate/v2/orgs/{1}/enriched_events/{2}/{0}/results'.format(job_id,self._org_key,job_name), action_result,is_new_api=True )
-        self.debug_print("resp_json_search_result", resp_json_search_result)
+        ret_val_search_result, resp_json_search_result = self._make_rest_call(
+            '/api/investigate/v2/orgs/{1}/enriched_events/{2}/{0}/results'.format(job_id, self._org_key, job_name), action_result, is_new_api=True)
         return resp_json_search_result
 
     def _handle_get_event(self, param):
-
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
         params = {}
@@ -572,18 +585,13 @@ class CarbonBlackDefenseConnector(BaseConnector):
         params["event_ids"] = my_list
         self.debug_print("query parameters for getEvent are", format(params))
 
-        ret_val, resp_json = self._make_rest_call('/api/investigate/v2/orgs/{0}/enriched_events/detail_jobs'.format(self._org_key), action_result,
-            data=params, method='post',is_new_api=True)
-        self.debug_print('Response Body for GetEvent Action', resp_json.get("job_id"))
-
-        if not resp_json.get("job_id"):
-            self.debug_print("Response String for Get Event Search Status failed")
-        else:
-            resp_json_search_result_data = self.retry_search_event(resp_json.get("job_id"), action_result,"detail_jobs");
-            self.debug_print("get event resp_json_search_result_data", resp_json_search_result_data)
+        ret_val, resp_json = self._make_rest_call(CBD_GET_EVENT_API.format(self._org_key), action_result,
+                                                  data=params, method='post', is_new_api=True)
 
         if phantom.is_fail(ret_val):
             return ret_val
+        job_id = resp_json.get("job_id")
+        resp_json_search_result_data = self.retry_search_event(job_id, action_result, "detail_jobs")
 
         if resp_json_search_result_data.get('results'):
             for result in resp_json_search_result_data.get('results'):
@@ -591,19 +599,15 @@ class CarbonBlackDefenseConnector(BaseConnector):
 
             summary = action_result.update_summary({})
             summary['num_results'] = len(resp_json_search_result_data.get('results'))
-            return action_result.set_status(phantom.APP_SUCCESS,"Successfully retrieved event data")
+            return action_result.set_status(phantom.APP_SUCCESS, "Successfully retrieved event data")
         else:
-            self.debug_print("No Record Found")
-            return action_result.set_status(phantom.APP_SUCCESS, "No records found")
+            return action_result.set_status(phantom.APP_ERROR, "No records found")
 
     def _handle_get_alert(self, param):
-
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        ret_val, resp_json = self._make_rest_call('/appservices/v6/orgs/{1}/alerts/{0}'.format(param['id'],self._org_key), action_result, is_new_api=True)
-
-        self.debug_print("Response String for getAlert", resp_json)
+        ret_val, resp_json = self._make_rest_call(CBD_GET_ALERT_API.format(param['id'], self._org_key), action_result, is_new_api=True)
 
         if phantom.is_fail(ret_val):
             return ret_val
@@ -612,17 +616,13 @@ class CarbonBlackDefenseConnector(BaseConnector):
         summary = action_result.set_summary({})
         summary['device'] = resp_json.get('device_name', 'UNKNOWN')
 
-        #summary['device'] = resp_json.get('deviceInfo', {}).get('deviceName', 'UNKNOWN')
-        #summary['num_events'] = len(resp_json.get('events', []))
-
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_get_notifications(self, param):
-
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        ret_val, resp_json = self._make_rest_call('/integrationServices/v3/notification', action_result)
+        ret_val, resp_json = self._make_rest_call(CBD_NOTIFICATION_API, action_result)
 
         if phantom.is_fail(ret_val):
             return ret_val
@@ -640,12 +640,12 @@ class CarbonBlackDefenseConnector(BaseConnector):
 
         action_result = self.add_action_result(ActionResult(param))
         policy_id = param["policy_id"]
-        endpoint = "/integrationServices/v3/policy/" + str(policy_id)
+        endpoint = CBD_POLICY_API + str(policy_id)
 
         try:
             data = json.loads(param["policy"])
         except Exception as e:
-            return action_result.set_status(phantom.APP_ERROR, "Policy needs to be valid JSON data: " + str(e))
+            return action_result.set_status(phantom.APP_ERROR, "Policy needs to be valid JSON data: " + self._get_error_message_from_exception(e))
 
         if "policyInfo" not in data:
             data = {"policyInfo": data}
@@ -659,23 +659,23 @@ class CarbonBlackDefenseConnector(BaseConnector):
             return ret_val
 
         action_result.add_data(response)
+        action_result.set_summary({'policy_id': policy_id})
 
-        return action_result.set_status(phantom.APP_SUCCESS, "Policy updated successfully")
+        return action_result.set_status(phantom.APP_SUCCESS, CBD_POLICY_UPDATED_SUCCESS)
 
     def _handle_get_policy(self, param):
 
         action_result = self.add_action_result(ActionResult(param))
         policy_id = param["policy_id"]
-        endpoint = "/integrationServices/v3/policy/" + str(policy_id)
+        endpoint = CBD_POLICY_API + str(policy_id)
         ret_val, response = self._make_rest_call(endpoint, action_result)
 
         if phantom.is_fail(ret_val):
             return action_result.set_status(phantom.APP_ERROR,
-                                            'Error retrieving policy: {0}'
-                                            .format(response))
+                                            'Error retrieving policy: {0}'.format(response))
         action_result.add_data(response)
 
-        return action_result.set_status(phantom.APP_SUCCESS, "Policy retrieved successfully")
+        return action_result.set_status(phantom.APP_SUCCESS, CBD_POLICY_RETRIEVED_SUCCESS)
 
     def handle_action(self, param):
 
@@ -719,6 +719,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
 
         return ret_val
 
+
 if __name__ == '__main__':
 
     import pudb
@@ -734,17 +735,16 @@ if __name__ == '__main__':
 
     args = argparser.parse_args()
     session_id = None
-
+    csrftoken = None
+    headers = None
     username = args.username
     password = args.password
 
-    if (username is not None and password is None):
-
+    if username is not None and password is None:
         # User specified a username but not a password, so ask
         import getpass
         password = getpass.getpass("Password: ")
-
-    if (username and password):
+    if username and password:
         try:
             print("Accessing the Login page")
             login_url = BaseConnector._get_phantom_base_url() + '/login'
@@ -775,7 +775,7 @@ if __name__ == '__main__':
         connector = CarbonBlackDefenseConnector()
         connector.print_progress_message = True
 
-        if (session_id is not None):
+        if session_id is not None:
             in_json['user_session_token'] = session_id
             connector._set_csrf_info(csrftoken, headers['Referer'])
 

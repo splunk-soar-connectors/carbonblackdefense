@@ -2160,11 +2160,17 @@
                 },
                 {
                     "data_path": "action_result.parameter.application",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": [
+                        "chrome.exe"
+                    ]
                 },
                 {
                     "data_path": "action_result.parameter.event_type",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": [
+                        "NETWORK"
+                    ]
                 },
                 {
                     "data_path": "summary.total_objects",
@@ -3366,11 +3372,17 @@
                 },
                 {
                     "data_path": "action_result.parameter.policy",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": [
+                        "{\"key\": \"value\"}"
+                    ]
                 },
                 {
                     "data_path": "action_result.parameter.policy_id",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": [
+                        "2343456356"
+                    ]
                 },
                 {
                     "data_path": "summary.total_objects_successful",
@@ -3426,6 +3438,9 @@
                     "data_type": "string",
                     "contains": [
                         "cbdefense policy id"
+                    ],
+                    "example_values": [
+                        "3436345"
                     ]
                 },
                 {
