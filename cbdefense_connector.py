@@ -532,14 +532,13 @@ class CarbonBlackDefenseConnector(BaseConnector):
         job_id = resp_json.get("job_id")
         resp_json_search_result_data = self.retry_search_event(job_id, action_result, "search_jobs")
 
-        results = resp_json_search_result_data.get('results', [])
 
-        if results:
-            for result in results:
+        if resp_json_search_result_data.get('results', []):
+            for result in resp_json_search_result_data.get('results', []):
                 action_result.add_data(result)
 
             summary = action_result.update_summary({})
-            summary['num_results'] = len(results)
+            summary['num_results'] = len(resp_json_search_result_data.get('results', []))
 
             return action_result.set_status(phantom.APP_SUCCESS)
         else:
