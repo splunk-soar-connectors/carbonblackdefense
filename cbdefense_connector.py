@@ -454,7 +454,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
             # if it is not equal then update the user with a proper message to retry after sometime.
             # todo no need to add sleep or re-try the api call.
             message = "process still not completed so results may vary. please re-try after sometime."
-
+        self.debug_print(message)
         get_result_api = CBD_LIST_PROCESS_RESULT_API.format(self._org_key, job_id)
         ret_val, resp_json = self._make_rest_call(get_result_api, action_result, params=result_params, is_new_api=True)
 

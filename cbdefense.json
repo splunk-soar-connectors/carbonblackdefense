@@ -65,7 +65,7 @@
         },
         "org_key": {
             "description": "Organization Key",
-            "data_type": "string",
+            "data_type": "password",
             "order": 8
         }
     },
