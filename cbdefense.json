@@ -25,42 +25,42 @@
             "description": "API URL",
             "data_type": "string",
             "required": true,
-            "order": 0
+            "order": 1
         },
         "api_connector_id": {
             "description": "API Connector ID",
             "data_type": "password",
-            "order": 1
+            "order": 2
         },
         "api_key": {
             "description": "API Key",
             "data_type": "password",
-            "order": 2
+            "order": 3
         },
         "siem_connector_id": {
             "description": "SIEM Connector ID (only used for 'get notifications')",
             "data_type": "password",
-            "order": 3
+            "order": 4
         },
         "siem_key": {
             "description": "SIEM Key (only used for 'get notifications')",
             "data_type": "password",
-            "order": 4
+            "order": 5
         },
         "custom_api_connector_id": {
             "description": "Custom API Connector ID",
             "data_type": "password",
-            "order": 5
+            "order": 6
         },
         "custom_api_key": {
             "description": "Custom API Key",
             "data_type": "password",
-            "order": 6
+            "order": 7
         },
         "org_key": {
             "description": "Organization Key",
             "data_type": "password",
-            "order": 7
+            "order": 0
         }
     },
     "actions": [
