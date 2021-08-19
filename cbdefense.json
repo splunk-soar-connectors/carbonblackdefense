@@ -1898,7 +1898,7 @@
                     "contains": [
                         "ip"
                     ],
-                    "order": 1
+                    "order": 0
                 },
                 "host_name": {
                     "description": "Host Name",
@@ -1907,7 +1907,7 @@
                     "contains": [
                         "host name"
                     ],
-                    "order": 2
+                    "order": 1
                 },
                 "hash": {
                     "description": "SHA-256 Hash",
@@ -1917,12 +1917,12 @@
                         "hash",
                         "sha256"
                     ],
-                    "order": 3
+                    "order": 2
                 },
                 "application": {
                     "description": "Application Name",
                     "data_type": "string",
-                    "order": 4
+                    "order": 3
                 },
                 "event_type": {
                     "description": "Event Type",
@@ -1936,7 +1936,7 @@
                         "DATA_ACCESS",
                         "INJECT_CODE"
                     ],
-                    "order": 0
+                    "order": 4
                 },
                 "owner": {
                     "description": "Owner",
@@ -2038,7 +2038,7 @@
                         4486274
                     ],
                     "column_name": "Device ID",
-                    "column_order": 1
+                    "column_order": 0
                 },
                 {
                     "data_path": "action_result.data.*.device_name",
@@ -2047,7 +2047,7 @@
                         "corp\\controlcenter"
                     ],
                     "column_name": "Device Name",
-                    "column_order": 2
+                    "column_order": 1
                 },
                 {
                     "data_path": "action_result.data.*.device_policy_id",
@@ -2094,7 +2094,7 @@
                         "md5"
                     ],
                     "column_name": "Event ID",
-                    "column_order": 0
+                    "column_order": 2
                 },
                 {
                     "data_path": "action_result.data.*.event_type",
@@ -2103,7 +2103,7 @@
                         "crossproc"
                     ],
                     "column_name": "Event Type",
-                    "column_order": 2
+                    "column_order": 3
                 },
                 {
                     "data_path": "action_result.data.*.ingress_time",
