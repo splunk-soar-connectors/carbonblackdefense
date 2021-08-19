@@ -77,7 +77,7 @@
         {
             "action": "list devices",
             "description": "List devices connected to CB Defense",
-            "verbose": "The results of this action can be paged using the <b>start</b> and <b>limit</b> parameters. For example, to return the first 10 results, set <b>start</b> to 1 and <b>limit</b> to 10. To return the next 10 results, set <b>start</b> to 11 and keep <b>limit</b> at 10.",
+            "verbose": "The results of this action can be paged using the <b>start</b> and <b>limit</b> parameters. For example, to return the first 10 results, set <b>start</b> to 1 and <b>limit</b> to 10. To return the next 10 results, set <b>start</b> to 11 and keep <b>limit</b> at 10. This Action depends on custom_api key, custom_api_connector id and org key.",
             "type": "investigate",
             "identifier": "list_devices",
             "read_only": true,
@@ -295,6 +295,9 @@
                     "example_values": [
                         4486274
                     ],
+                    "contains": [
+                        "cb defense device id"
+                    ],
                     "column_name": "Device ID",
                     "column_order": 0
                 },
@@ -437,6 +440,9 @@
                     "data_type": "numeric",
                     "example_values": [
                         6525
+                    ],
+                    "contains": [
+                        "cb defense policy id"
                     ],
                     "column_name": "Policy ID",
                     "column_order": 2
@@ -623,6 +629,7 @@
         {
             "action": "update device",
             "description": "Change the policy of a device connected to CB Defense",
+            "verbose": "This Action depends on custom_api key, custom_api_connector id and org key.",
             "type": "generic",
             "identifier": "update_device",
             "read_only": false,
@@ -688,6 +695,9 @@
                     "data_type": "string",
                     "example_values": [
                         "123445234"
+                    ],
+                    "contains": [
+                        "cb defense device id"
                     ]
                 },
                 {
@@ -722,6 +732,7 @@
         {
             "action": "list policies",
             "description": "List policies that exist on CB Defense",
+            "verbose": "This Action depends on api key and api_connector id.",
             "type": "investigate",
             "identifier": "list_policies",
             "read_only": true,
@@ -1061,13 +1072,6 @@
                     "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
-                        "Num policies: 93"
-                    ]
-                },
-                {
-                    "data_path": "action_result.message",
-                    "data_type": "string",
-                    "example_values": [
                         "Num policies: 33",
                         "Num policies: 93"
                     ]
@@ -1095,7 +1099,7 @@
         {
             "action": "add policy",
             "description": "Create a new policy on CB Defense",
-            "verbose": "The <b>json_fields</b> parameter can be used to configure other fields in the created policy. This parameter takes a JSON dictionary with the format of the policy field seen <a href=\"https://developer.carbonblack.com/reference/cb-defense/1/rest-api/#create-new-policy\">here</a>.",
+            "verbose": "The <b>json_fields</b> parameter can be used to configure other fields in the created policy. This parameter takes a JSON dictionary with the format of the policy field seen <a href=\"https://developer.carbonblack.com/reference/cb-defense/1/rest-api/#create-new-policy\">here</a>. This Action depends on api key and api_connector id.",
             "type": "generic",
             "identifier": "create_policy",
             "read_only": false,
@@ -1214,13 +1218,6 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.message",
-                    "data_type": "string",
-                    "example_values": [
-                        "Policy id: 13145"
-                    ]
-                },
-                {
                     "data_path": "summary.total_objects",
                     "data_type": "numeric",
                     "example_values": [
@@ -1243,6 +1240,7 @@
         {
             "action": "delete policy",
             "description": "Delete a policy on CB Defense",
+            "verbose": "This Action depends on api key and api_connector id.",
             "type": "generic",
             "identifier": "delete_policy",
             "read_only": false,
@@ -1299,6 +1297,9 @@
                     "data_type": "string",
                     "example_values": [
                         "13145"
+                    ],
+                    "contains": [
+                        "cb defense policy id"
                     ]
                 },
                 {
@@ -1333,6 +1334,7 @@
         {
             "action": "add rule",
             "description": "Add a rule to a policy on CB Defense",
+            "verbose": "This Action depends on api key and api_connector id.",
             "type": "generic",
             "identifier": "add_rule",
             "read_only": false,
@@ -1443,6 +1445,7 @@
         {
             "action": "delete rule",
             "description": "Delete a rule from a policy on CB Defense",
+            "verbose": "This Action depends on api key and api_connector id.",
             "type": "generic",
             "identifier": "delete_rule",
             "read_only": false,
@@ -1546,7 +1549,7 @@
         {
             "action": "list processes",
             "description": "List processes that match supplied filter criteria",
-            "verbose": "The examples for the <b>search_span</b> parameter are <b>1d</b>, <b>1w</b>, or <b>2y</b>. The results of this action can be paged using the <b>start</b> and <b>limit</b> parameters. For example, to return the first 10 results, set <b>start</b> to 1 and <b>limit</b> to 10. To return the next 10 results, set <b>start</b> to 11 and keep <b>limit</b> at 10.",
+            "verbose": "The examples for the <b>search_span</b> parameter are <b>1d</b>, <b>1w</b>, or <b>2y</b>. The results of this action can be paged using the <b>start</b> and <b>limit</b> parameters. For example, to return the first 10 results, set <b>start</b> to 1 and <b>limit</b> to 10. To return the next 10 results, set <b>start</b> to 11 and keep <b>limit</b> at 10. This Action depends on custom_api key, custom_api_connector id and org key.",
             "type": "investigate",
             "identifier": "list_processes",
             "read_only": true,
@@ -1661,6 +1664,9 @@
                     "data_type": "string",
                     "example_values": [
                         "469db8ea-f9e5-49d3-88f5-ac596da1fb24"
+                    ],
+                    "contains": [
+                        "cb defense alert id"
                     ]
                 },
                 {
@@ -1696,6 +1702,9 @@
                     "data_type": "numeric",
                     "example_values": [
                         4242869
+                    ],
+                    "contains": [
+                        "cb defense device id"
                     ],
                     "column_name": "Device ID",
                     "column_order": 2
@@ -1886,7 +1895,7 @@
         {
             "action": "list events",
             "description": "List events that match supplied filter criteria",
-            "verbose": "<br><br>The parameter <b>ip</b>, <b>host_name</b>, <b>hash</b>, <b>application</b>, and <b>owner</b> apply only to the device the event came from. Thus, for example, the <b>ip</b> parameters cannot be used to search for a destination IP. The examples for the <b>search_span</b> parameter are <b>1d</b>, <b>2w</b>, or <b>1y</b>.",
+            "verbose": "<br><br>The parameter <b>ip</b>, <b>host_name</b>, <b>hash</b>, <b>application</b>, and <b>owner</b> apply only to the device the event came from. Thus, for example, the <b>ip</b> parameters cannot be used to search for a destination IP. The examples for the <b>search_span</b> parameter are <b>1d</b>, <b>2w</b>, or <b>1y</b>. This Action depends on custom_api key, custom_api_connector id and org key.",
             "type": "investigate",
             "identifier": "list_events",
             "read_only": true,
@@ -2037,6 +2046,9 @@
                     "example_values": [
                         4486274
                     ],
+                    "contains": [
+                        "cb defense device id"
+                    ],
                     "column_name": "Device ID",
                     "column_order": 0
                 },
@@ -2067,7 +2079,8 @@
                     "data_path": "action_result.data.*.enriched",
                     "data_type": "boolean",
                     "example_values": [
-                        true
+                        true,
+                        false
                     ]
                 },
                 {
@@ -2091,7 +2104,7 @@
                         "f39a55e8feac11eb9c368d6106d24432"
                     ],
                     "contains": [
-                        "md5"
+                        "cb defense event id"
                     ],
                     "column_name": "Event ID",
                     "column_order": 2
@@ -2220,6 +2233,7 @@
         {
             "action": "get event",
             "description": "Get information about an event",
+            "verbose": "This Action depends on custom_api key, custom_api_connector id and org key.",
             "type": "investigate",
             "identifier": "get_event",
             "read_only": true,
@@ -2704,6 +2718,7 @@
         {
             "action": "get alert",
             "description": "Get information about an alert",
+            "verbose": "This Action depends on custom_api key, custom_api_connector id and org key.",
             "type": "investigate",
             "identifier": "get_alert",
             "read_only": true,
@@ -2765,6 +2780,9 @@
                     "example_values": [
                         4483137
                     ],
+                    "contains": [
+                        "cb defense device id"
+                    ],
                     "column_name": "Device ID",
                     "column_order": 0
                 },
@@ -2818,6 +2836,9 @@
                     "data_type": "string",
                     "example_values": [
                         "e56278e1-a480-4de4-b70a-10df6b96b37b"
+                    ],
+                    "contains": [
+                        "cb defense alert id"
                     ]
                 },
                 {
@@ -3132,8 +3153,8 @@
         },
         {
             "action": "get notifications",
-            "description": "Get notfications from CB Defense",
-            "verbose": "This action retrieves the current list of notifiactions from CB Defense. Once a notification is retrieved, it cannot be retrieved again.",
+            "description": "Get notifications from CB Defense",
+            "verbose": "This action retrieves the current list of notifications from CB Defense. Once a notification is retrieved, it cannot be retrieved again.",
             "type": "investigate",
             "identifier": "get_notifications",
             "read_only": true,
@@ -3159,6 +3180,9 @@
                     "data_type": "numeric",
                     "example_values": [
                         844355
+                    ],
+                    "contains": [
+                        "cb defense device id"
                     ]
                 },
                 {
@@ -3281,6 +3305,9 @@
                     "data_type": "string",
                     "example_values": [
                         "035ee8aaff5c5282925974215e7bd28cad51e788c64431bb933364011e637fcd"
+                    ],
+                    "contains": [
+                        "sha256"
                     ]
                 },
                 {
@@ -3358,6 +3385,7 @@
         {
             "action": "update policy",
             "description": "Updates an existing policy on the Carbon Black Defense server",
+            "verbose": "This Action depends on api key and api_connector id.",
             "type": "generic",
             "identifier": "update_policy",
             "read_only": false,
@@ -3372,7 +3400,11 @@
                     "data_type": "numeric",
                     "order": 1,
                     "description": "The ID of the policy to replace. This ID must match the ID in the request URL",
-                    "required": true
+                    "required": true,
+                    "contains": [
+                        "cb defense policy id"
+                    ],
+                    "primary": true
                 }
             },
             "output": [
@@ -3396,6 +3428,9 @@
                     "data_type": "string",
                     "example_values": [
                         "2343456356"
+                    ],
+                    "contains": [
+                        "cb defense policy id"
                     ]
                 },
                 {
@@ -3406,7 +3441,10 @@
                     "data_path": "action_result.summary.policy_id",
                     "data_type": "string",
                     "example_values": [
-                        "13145"
+                        "53253"
+                    ],
+                    "contains": [
+                        "cb defense policy id"
                     ]
                 },
                 {
@@ -3433,6 +3471,7 @@
         {
             "action": "get policy",
             "description": "Retrieves an existing policy from the Carbon Black Defense server",
+            "verbose": "This Action depends on api key and api_connector id.",
             "type": "investigate",
             "identifier": "get_policy",
             "read_only": true,
@@ -3569,7 +3608,10 @@
                 },
                 {
                     "data_path": "action_result.data.*.policyInfo.policy.id",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "contains": [
+                        "cb defense policy id"
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.policyInfo.policy.rules.*.action",
@@ -3620,6 +3662,9 @@
                     "data_type": "string",
                     "example_values": [
                         "13145"
+                    ],
+                    "contains": [
+                        "cb defense policy id"
                     ]
                 },
                 {
