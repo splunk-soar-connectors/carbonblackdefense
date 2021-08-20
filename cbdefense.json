@@ -3163,7 +3163,7 @@
         {
             "action": "get notifications",
             "description": "Get notifications from CB Defense",
-            "verbose": "This action retrieves the current list of notifications from CB Defense. Once a notification is retrieved, it cannot be retrieved again. This Action requires SIEM Key and SIEM Connector ID",
+            "verbose": "This action retrieves the current list of notifications from CB Defense. Once a notification is retrieved, it cannot be retrieved again. This Action requires SIEM Key and SIEM Connector ID.",
             "type": "investigate",
             "identifier": "get_notifications",
             "read_only": true,
