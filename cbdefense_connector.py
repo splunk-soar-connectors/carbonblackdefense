@@ -375,9 +375,15 @@ class CarbonBlackDefenseConnector(BaseConnector):
 
         params = {}
         if 'start' in param:
-            params['start'] = param['start']
+            start = self._validate_integer(action_result, param.get('start', None), "start", allow_zero=True)
+            if start is None:
+                return action_result.get_status()
+            params['start'] = start
         if 'limit' in param:
-            params['rows'] = param['limit']
+            limit = self._validate_integer(action_result, param.get('limit', None), "limit", allow_zero=False)
+            if limit is None:
+                return action_result.get_status()
+            params['rows'] = limit
 
         list_devices_api = CBD_LIST_DEVICE_API.format(self._org_key)
         ret_val, response = self._make_rest_call(list_devices_api, action_result, data=params, method="post", is_new_api=True)
