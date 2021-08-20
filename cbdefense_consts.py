@@ -46,5 +46,9 @@ CBD_POLICY_RETRIEVED_SUCCESS = "Policy retrieved successfully"
 CBD_REQUIRED_FIELD_MESSAGE = "Add at-least value in one of following fields: event_type, ip, host name, hash, application, owner"
 CBD_REQUIRED_FIELD_MESSAGE_PROCESS = "Add at-least value in one of following fields: ip, host name, owner"
 
+INVALID_INT = "Please provide a valid integer value in the {param}"
+ERR_NEGATIVE_INT_PARAM = "Please provide a valid non-negative integer value in the {param}"
+NON_ZERO_ERROR = "Please provide non-zero positive integer in {param}"
+
 TEST_CONNECTIVITY_FAILED = "Test Connectivity Failed"
 TEST_CONNECTIVITY_PASSED = "Test Connectivity Passed"

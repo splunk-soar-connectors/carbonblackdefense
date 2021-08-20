@@ -5,20 +5,54 @@
   without a valid written license from Splunk Inc. is PROHIBITED.
 -->
 
-There are three different sets of credentials for this app - a SIEM key, a CUSTOM_API key, an ORG key key and an API key. The action <b>get notifications</b> uses the SIEM key. This means the <b>siem_connector_id</b> and the <b>siem_key</b> asset configuration parameters are required to run the <b>get notifications</b> action. Some Actions requires CUSTOM_API key along with ORG key and All other actions require use of the API key, meaning that the <b>api_connector_id</b> and <b>api_key</b> asset configuration parameters are required for those actions.
-<br><br> <b>Process to create CUSTOM API key</b> <br><br> <b>For list processes action</b> Access Level: Before you create your API Key, you need to create a 'Custom' Access Level:
-for the category Search > Events > 'org.search.events', allow permission to CREATE to start a job, READ to get results, DELETE to cancel a search and UPDATE for watchlist actions. (See each call below for individual requirements)
-API Key: When you create your API Key, use the Access Level Type of 'Custom', then select the Access Level you created. <br><br> <b>For Action 'list devices' and 'update device'</b> Access Level: Before you create your API Key, you need to create a custom Access Level
-for the category Device > General Information > 'device' allow permissions for 'READ'
-for the category Device > Policy assignment > 'device.policy' allow permissions for 'UPDATE'
-for the category Device > Background scan > 'device.bg-scan' allow permissions for 'EXECUTE'
-for the category Device > Bypass > 'device.bypass' allow permissions for 'EXECUTE'
-for the category Device > Quarantine > 'device.quarantine' allow permissions for 'EXECUTE'
-for the category Device > Sensor kits > 'org.kits' allow permissions for 'EXECUTE'
-for the category Device > Uninstall > 'device.uninstall' allow permissions for 'EXECUTE'
-for the category Device > Deregistered > device.deregistered allow permissions for 'DELETE' <br><br> <b>For Action 'get alert'</b> Access Level: Before you create your API Key, you need to create a custom Access Level
-for the category Alerts > General Information > 'org.alerts' allow permissions for 'READ'
-for the category Alerts > Dismiss > 'org.alerts.dismiss' allow permissions for 'EXECUTE'
-for the category Alerts > Notes > 'org.alerts.notes' allow permissions for 'CREATE', 'READ', and 'DELETE' <br><br> <b>For Action 'get event' and 'list events'</b> Access Level: Before you create your API Key, you need to create a 'Custom' Access Level:
-for the category Search > Events > 'org.search.events', allow permission to CREATE to start a job, and READ to get results (See each call below for individual requirements) <br> <br>
-NOTE: Test connectivity will only check the API credentials, it will NOT check the SIEM credentials, ORG key and CUSTOM_API credentials
+There are four different sets of credentials for this app - a SIEM key, a Custom API Key, an Organization Key and an API key. The action <b>get notifications</b> uses the SIEM key. This means the <b>siem_connector_id</b> and the <b>siem_key</b> asset configuration parameters are required to run the <b>get notifications</b> action. The actions
+<b>list processes</b>, <b>get event</b>, <b>list events</b>, <b>list devices</b>, <b>update device</b>, <b>get alert</b>
+requires Custom API Key along with Organization Key meaning the <b>custom_api_connecter_id</b>, <b>custom_api_key</b>, <b>org_key</b> are required to run these actions. All other actions require use of the API key, meaning that the <b>api_connector_id</b> and <b>api_key</b> asset configuration parameters are required for those actions.
+
+<br><br>
+<b>General Process to create Key</b>
+<br>
+To get started with the Carbon black Defense API to integrate with Phantom, log into the Carbon black Defense web portal and go to Settings then API Access. From here you can retrieve your API ID and have the opportunity to create your API Keys. Click on Add API Key >> Access Level type - Generic.
+<br><br>
+<b>Process to create API Key</b>
+<br>
+Click on Add API Key >> Access Level type >> Live Response.
+<br><br>
+<b>Process to create SIEM Key</b>
+<br>
+Click on Add API Key >> Access Level type >> SIEM.
+<br><br>
+<b>Process to create Custom API Key</b>
+<br>
+Click on Add API Key >> Access Level type >> Custom. Select Access Levels >> Add Access Level - Generic.
+<br><br>
+
+<b>Custom Access Levels required for following actions:</b>
+<br><br>
+<b>'list processes'</b>
+<br>Access Level:
+<br>-> Events > 'org.search.events', allow permission to CREATE to start a job, READ to get results.
+<br><br>
+<b>'list devices' and 'update device':</b>
+<br>Access Level:
+<br>-> General Information > 'device' allow permissions for 'READ'
+<br>-> Policy assignment > 'device.policy' allow permissions for 'UPDATE'
+<br>-> Background scan > 'device.bg-scan' allow permissions for 'EXECUTE'
+<br>-> Bypass > 'device.bypass' allow permissions for 'EXECUTE'
+<br>-> Quarantine > 'device.quarantine' allow permissions for 'EXECUTE'
+<br>-> Sensor kits > 'org.kits' allow permissions for 'EXECUTE'
+<br>-> Uninstall > 'device.uninstall' allow permissions for 'EXECUTE'
+<br>-> Deregistered > device.deregistered allow permissions for 'DELETE'
+<br><br>
+<b>'get alert'</b>
+<br>Access Level:
+<br>-> General Information > 'org.alerts' allow permissions for 'READ'
+<br>-> Dismiss > 'org.alerts.dismiss' allow permissions for 'EXECUTE'
+<br>-> Notes > 'org.alerts.notes' allow permissions for 'CREATE', 'READ', and 'DELETE'
+<br><br>
+<b>'get event' and 'list events'</b>
+<br>Access Level:
+<br>-> Events > 'org.search.events', allow permission to CREATE to start a job, and READ to get results.
+
+<br> <br>
+NOTE: Test connectivity will only check the API credentials, it will NOT check the SIEM credentials, Organization Key and Custom credentials

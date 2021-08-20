@@ -74,10 +74,32 @@ class CarbonBlackDefenseConnector(BaseConnector):
         try:
             ipaddress.ip_address(str(ip_address_input))
         except Exception as e:
-            self.debug_print(EXCEPTION_OCCURRED, e)
+            self.debug_print(EXCEPTION_OCCURRED, self._get_error_message_from_exception(e))
             return False
 
         return True
+
+    def _validate_integer(self, action_result, parameter, key, allow_zero=False):
+        if parameter is not None:
+            try:
+                if not float(parameter).is_integer():
+                    action_result.set_status(phantom.APP_ERROR, INVALID_INT.format(param=key))
+                    return None
+
+                parameter = int(parameter)
+            except Exception:
+                action_result.set_status(phantom.APP_ERROR, INVALID_INT.format(param=key))
+                return None
+
+            if parameter < 0:
+                action_result.set_status(phantom.APP_ERROR, ERR_NEGATIVE_INT_PARAM.format(param=key))
+                return None
+
+            if not allow_zero and parameter == 0:
+                action_result.set_status(phantom.APP_ERROR, NON_ZERO_ERROR.format(param=key))
+                return None
+
+        return parameter
 
     def _get_error_message_from_exception(self, e):
         """ This function is used to get appropriate error message from the exception.
@@ -414,10 +436,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
                 query += " AND " + query_added
             else:
                 query += query_added
-        if 'start' in param:
-            result_params["start"] = params['start'] = param['start']
-        if 'limit' in param:
-            result_params["rows"] = params['rows'] = param['limit']
+
         if 'search_span' in param:
             search_span_val = param['search_span']
             if 'one day' in search_span_val or 'one week' in search_span_val or 'two weeks' in search_span_val or 'one month' in search_span_val:
@@ -443,6 +462,16 @@ class CarbonBlackDefenseConnector(BaseConnector):
         result_params = {}
 
         params, query, result_params = self.create_process_request(param, params, query, result_params)
+        if 'start' in param:
+            start = self._validate_integer(action_result, param['start'], "start", allow_zero=True)
+            if start is None:
+                return action_result.get_status()
+            result_params["start"] = params['start'] = start
+        if 'limit' in param:
+            limit = self._validate_integer(action_result, param.get('limit', None), "limit", allow_zero=False)
+            if limit is None:
+                return action_result.get_status()
+            result_params["rows"] = params['rows'] = limit
 
         if not query:
             return action_result.set_status(phantom.APP_ERROR, CBD_REQUIRED_FIELD_MESSAGE_PROCESS)
