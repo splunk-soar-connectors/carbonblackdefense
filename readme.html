@@ -5,54 +5,43 @@
   without a valid written license from Splunk Inc. is PROHIBITED.
 -->
 
-There are four different sets of credentials for this app - a SIEM key, a Custom API Key, an Organization Key and an API key. The action <b>get notifications</b> uses the SIEM key. This means the <b>siem_connector_id</b> and the <b>siem_key</b> asset configuration parameters are required to run the <b>get notifications</b> action. The actions
-<b>list processes</b>, <b>get event</b>, <b>list events</b>, <b>list devices</b>, <b>update device</b>, <b>get alert</b>
-requires Custom API Key along with Organization Key meaning the <b>custom_api_connecter_id</b>, <b>custom_api_key</b>, <b>org_key</b> are required to run these actions. All other actions require use of the API key, meaning that the <b>api_connector_id</b> and <b>api_key</b> asset configuration parameters are required for those actions.
+There are four different sets of credentials for this app - a SIEM key, a Custom API Key, an Organization Key, and an API key. The action <b>get notifications</b> uses the SIEM key. This means the <b>siem_connector_id</b> and the <b>siem_key</b> asset configuration parameters are required to run the <b>get notifications</b> action. The actions
+<b>list processes</b>, <b>get event</b>, <b>list events</b>, <b>list devices</b>, <b>update device</b>, and <b>get alert</b>
+requires Custom API Key along with Organization Key meaning the <b>custom_api_connecter_id</b>, <b>custom_api_key</b>, and <b>org_key</b> are required to run these actions. All other actions use the API key, meaning that the <b>api_connector_id</b> and <b>api_key</b> asset configuration parameters are required for those actions.
+<br><br>
+<b>NOTE:</b> Test connectivity will only check the API credentials, it will NOT check the SIEM Key credentials, Organization Key, and Custom Key credentials.
 
 <br><br>
-<b>General Process to create Key</b>
+<b>To Generate Keys</b>
 <br>
-To get started with the Carbon black Defense API to integrate with Phantom, log into the Carbon black Defense web portal and go to Settings then API Access. From here you can retrieve your API ID and have the opportunity to create your API Keys. Click on Add API Key >> Access Level type - Generic.
+To get started with the Carbon black Defense API to integrate with Phantom, log into the Carbon black Defense web portal and go to Settings then API Access. From here you can retrieve ORG KEY, API ID which is used as API Connector ID in Phantom app asset, and API Secret Key which is used as API Key in Phantom app asset. To Generate SIEM Connector ID 
+and SIEM Key select SIEM in the <b>Access Level type</b>. To Generate API Connector ID and API Key select Live Response in the <b>Access Level type</b>. To Generate Custom API Connector ID and Custom API Key select Custom in the <b>Access Level type</b> and accordingly select <b>Custom Access Level</b> which has appropriate permissions.
 <br><br>
-<b>Process to create API Key</b>
-<br>
-Click on Add API Key >> Access Level type >> Live Response.
-<br><br>
-<b>Process to create SIEM Key</b>
-<br>
-Click on Add API Key >> Access Level type >> SIEM.
-<br><br>
-<b>Process to create Custom API Key</b>
-<br>
-Click on Add API Key >> Access Level type >> Custom. Select Access Levels >> Add Access Level - Generic.
-<br><br>
-
-<b>Custom Access Levels required for following actions:</b>
-<br><br>
-<b>'list processes'</b>
-<br>Access Level:
-<br>-> Events > 'org.search.events', allow permission to CREATE to start a job, READ to get results.
-<br><br>
-<b>'list devices' and 'update device':</b>
-<br>Access Level:
-<br>-> General Information > 'device' allow permissions for 'READ'
-<br>-> Policy assignment > 'device.policy' allow permissions for 'UPDATE'
-<br>-> Background scan > 'device.bg-scan' allow permissions for 'EXECUTE'
-<br>-> Bypass > 'device.bypass' allow permissions for 'EXECUTE'
-<br>-> Quarantine > 'device.quarantine' allow permissions for 'EXECUTE'
-<br>-> Sensor kits > 'org.kits' allow permissions for 'EXECUTE'
-<br>-> Uninstall > 'device.uninstall' allow permissions for 'EXECUTE'
-<br>-> Deregistered > device.deregistered allow permissions for 'DELETE'
-<br><br>
-<b>'get alert'</b>
-<br>Access Level:
-<br>-> General Information > 'org.alerts' allow permissions for 'READ'
-<br>-> Dismiss > 'org.alerts.dismiss' allow permissions for 'EXECUTE'
-<br>-> Notes > 'org.alerts.notes' allow permissions for 'CREATE', 'READ', and 'DELETE'
-<br><br>
-<b>'get event' and 'list events'</b>
-<br>Access Level:
-<br>-> Events > 'org.search.events', allow permission to CREATE to start a job, and READ to get results.
-
-<br> <br>
-NOTE: Test connectivity will only check the API credentials, it will NOT check the SIEM credentials, Organization Key and Custom credentials
+<b>Custom Access Levels required the following permissions for the related actions</b>
+<ul>
+    <li>list processes</li>
+    <ul>
+        <li>For 'org.search.events' allow permission to 'CREATE' and 'READ'.</li>
+    </ul>
+    <li>list devices and update device</li>
+    <ul>
+        <li>For 'device' allow permissions for 'READ'.</li>
+        <li>For 'device.policy' allow permissions for 'UPDATE'.</li>
+        <li>For 'device.bg-scan' allow permissions for 'EXECUTE'.</li>
+        <li>For 'device.bypass' allow permissions for 'EXECUTE'.</li>
+        <li>For 'device.quarantine' allow permissions for 'EXECUTE'.</li>
+        <li>For 'org.kits' allow permissions for 'EXECUTE'.</li>
+        <li>For 'device.uninstall' allow permissions for 'EXECUTE'.</li>
+        <li>For 'device.deregistered' allow permissions for 'DELETE'.</li>
+    </ul>
+    <li>get alert</li>
+    <ul>
+        <li>For 'org.alerts' allow permissions for 'READ'.</li>
+        <li>For 'org.alerts.dismiss' allow permissions for 'EXECUTE'.</li>
+        <li>For 'org.alerts.notes' allow permissions for 'CREATE', 'READ', and 'DELETE'.</li>
+    </ul>
+    <li>get event and list events</li>
+    <ul>
+        <li>For 'org.search.events', allow permission for 'CREATE' and 'READ'.</li>
+    </ul>
+</ul>

@@ -1,7 +1,7 @@
 {
     "appid": "4d5a3ff3-5d68-4682-9209-73ffbe487c71",
     "name": "Carbon Black Defense",
-    "description": "This app integrates with an instance of Carbon Black defense to run investigative actions",
+    "description": "This app integrates with an instance of Carbon Black defense to run investigative and generic actions",
     "type": "endpoint",
     "product_vendor": "Carbon Black",
     "logo": "logo_carbonblack.svg",
@@ -77,7 +77,7 @@
         {
             "action": "list devices",
             "description": "List devices connected to CB Defense",
-            "verbose": "The results of this action can be paged using the <b>start</b> and <b>limit</b> parameters. For example, to return the first 10 results, set <b>start</b> to 1 and <b>limit</b> to 10. To return the next 10 results, set <b>start</b> to 11 and keep <b>limit</b> at 10. This Action requires Custom API Key, Custom API Connector ID and Organization Key.",
+            "verbose": "The results of this action can be paged using the <b>start</b> and the <b>limit</b> parameters. For example, to return the first 10 results, set the <b>start</b> to 1 and the <b>limit</b> to 10. To return the next 10 results, set the <b>start</b> to 11 and keep the <b>limit</b> at 10. This Action requires Custom API Key, Custom API Connector ID, and Organization Key.",
             "type": "investigate",
             "identifier": "list_devices",
             "read_only": true,
@@ -631,7 +631,7 @@
         {
             "action": "update device",
             "description": "Change the policy of a device connected to CB Defense",
-            "verbose": "This Action requires Custom API Key, Custom API Connector ID and Organization Key.",
+            "verbose": "This Action requires Custom API Key, Custom API Connector ID, and Organization Key.",
             "type": "generic",
             "identifier": "update_device",
             "read_only": false,
@@ -1551,7 +1551,7 @@
         {
             "action": "list processes",
             "description": "List processes that match supplied filter criteria",
-            "verbose": "The examples for the <b>search_span</b> parameter are <b>1d</b>, <b>1w</b>, <b>2y</b>, <b>2h</b>, <b>1m</b> or <b>50s</b>. The results of this action can be paged using the <b>start</b> and <b>limit</b> parameters. For example, to return the first 10 results, set <b>start</b> to 1 and <b>limit</b> to 10. To return the next 10 results, set <b>start</b> to 11 and keep <b>limit</b> at 10. This Action requires Custom API Key, Custom API Connector ID and Organization Key.",
+            "verbose": "The examples for the <b>search_span</b> parameter are <b>1d</b>, <b>1w</b>, <b>2y</b>, <b>2h</b>, <b>1m</b>, or <b>50s</b> (where y=year, w=week, d=day, h=hour, m=minute, s=second). The results of this action can be paged using the <b>start</b> and <b>limit</b> parameters. For example, to return the first 10 results, set the <b>start</b> to 1 and the <b>limit</b> to 10. To return the next 10 results, set the <b>start</b> to 11 and keep the <b>limit</b> at 10. This Action requires Custom API Key, Custom API Connector ID, and Organization Key.",
             "type": "investigate",
             "identifier": "list_processes",
             "read_only": true,
@@ -1899,7 +1899,7 @@
         {
             "action": "list events",
             "description": "List events that match supplied filter criteria",
-            "verbose": "<br><br>The parameter <b>ip</b>, <b>host_name</b>, <b>hash</b>, <b>application</b>, and <b>owner</b> apply only to the device the event came from. Thus, for example, the <b>ip</b> parameters cannot be used to search for a destination IP. The examples for the <b>search_span</b> parameter are <b>1d</b>, <b>1w</b>, <b>2y</b>, <b>2h</b>, <b>1m</b> or <b>50s</b>. This Action requires Custom API Key, Custom API Connector ID and Organization Key.",
+            "verbose": "The parameters <b>ip</b>, <b>host_name</b>, <b>hash</b>, <b>application</b>, and <b>owner</b> apply only to the device the event came from. Thus, for example, the <b>ip</b> parameters cannot be used to search for a destination IP. The examples for the <b>search_span</b> parameter are <b>1d</b>, <b>1w</b>, <b>2y</b>, <b>2h</b>, <b>1m</b>, or <b>50s</b> (where y=year, w=week, d=day, h=hour, m=minute, s=second). This Action requires Custom API Key, Custom API Connector ID, and Organization Key.",
             "type": "investigate",
             "identifier": "list_events",
             "read_only": true,
@@ -2239,7 +2239,7 @@
         {
             "action": "get event",
             "description": "Get information about an event",
-            "verbose": "This Action requires Custom API Key, Custom API Connector ID and Organization Key.",
+            "verbose": "This Action requires Custom API Key, Custom API Connector ID, and Organization Key.",
             "type": "investigate",
             "identifier": "get_event",
             "read_only": true,
@@ -2726,7 +2726,7 @@
         {
             "action": "get alert",
             "description": "Get information about an alert",
-            "verbose": "This Action requires Custom API Key, Custom API Connector ID and Organization Key.",
+            "verbose": "This Action requires Custom API Key, Custom API Connector ID, and Organization Key.",
             "type": "investigate",
             "identifier": "get_alert",
             "read_only": true,
