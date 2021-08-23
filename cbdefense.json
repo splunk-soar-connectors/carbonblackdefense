@@ -22,7 +22,7 @@
     "app_wizard_version": "1.0.0",
     "configuration": {
         "api_url": {
-            "description": "API URL",
+            "description": "API URL (e.g. https://defense.conferdeploy.net)",
             "data_type": "string",
             "required": true,
             "order": 0
@@ -3500,7 +3500,7 @@
                     "required": true,
                     "primary": true,
                     "contains": [
-                        "cbdefense policy id"
+                        "cb defense policy id"
                     ]
                 }
             },
@@ -3517,7 +3517,7 @@
                     "data_path": "action_result.parameter.policy_id",
                     "data_type": "string",
                     "contains": [
-                        "cbdefense policy id"
+                        "cb defense policy id"
                     ],
                     "example_values": [
                         "3436345"

@@ -4,7 +4,7 @@
 # SPLUNK CONFIDENTIAL - Use or disclosure of this material in whole or in part
 # without a valid written license from Splunk Inc. is PROHIBITED.
 
-CBD_POLICY_API = "/integrationServices/v3/policy"
+CBD_POLICY_API = "/integrationServices/v3/policy/"
 CBD_POLICY_API_DEL = "/integrationServices/v3/policy/{0}"
 CBD_POLICY_DELETED = "Policy successfully deleted"
 CBD_RULE_DELETED = "Rule successfully deleted"
@@ -36,8 +36,8 @@ CBD_COMPLETED_NOT_EQ_CONTACTED = ", process still not completed so results may v
 CBD_NOTIFICATION_API = "/integrationServices/v3/notification"
 CBD_POLICY_UPDATED_SUCCESS = "Policy updated successfully"
 CBD_POLICY_RETRIEVED_SUCCESS = "Policy retrieved successfully"
-CBD_REQUIRED_FIELD_MESSAGE = "Add at-least value in one of following fields: event_type, ip, host name, hash, application, owner"
-CBD_REQUIRED_FIELD_MESSAGE_PROCESS = "Add at-least value in one of following fields: ip, host name, owner"
+CBD_REQUIRED_FIELD_MESSAGE = "Add at least value in one of the following fields: event_type, ip, host name, hash, application, owner"
+CBD_REQUIRED_FIELD_MESSAGE_PROCESS = "Add at least value in one of the following fields: ip, host name, owner"
 INVALID_INT = "Please provide a valid integer value in the {param}"
 ERR_NEGATIVE_INT_PARAM = "Please provide a valid non-negative integer value in the {param}"
 NON_ZERO_ERROR = "Please provide non-zero positive integer in {param}"
