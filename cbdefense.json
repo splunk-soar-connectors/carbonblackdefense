@@ -25,6 +25,12 @@
             "description": "API URL",
             "data_type": "string",
             "required": true,
+            "order": 0
+        },
+        "ph_0": {
+            "description": "Placeholder",
+            "data_type": "ph",
+            "required": false,
             "order": 1
         },
         "api_connector_id": {
@@ -60,7 +66,7 @@
         "org_key": {
             "description": "Organization Key",
             "data_type": "password",
-            "order": 0
+            "order": 8
         }
     },
     "actions": [
