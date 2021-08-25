@@ -3437,7 +3437,9 @@
                     "example_values": [
                         "success",
                         "failed"
-                    ]
+                    ],
+                    "column_name": "Status",
+                    "column_order": 1
                 },
                 {
                     "data_path": "action_result.parameter.policy",
@@ -3454,7 +3456,9 @@
                     ],
                     "contains": [
                         "cb defense policy id"
-                    ]
+                    ],
+                    "column_name": "Policy ID",
+                    "column_order": 0
                 },
                 {
                     "data_path": "action_result.data",
