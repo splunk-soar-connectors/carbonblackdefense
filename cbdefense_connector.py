@@ -719,7 +719,10 @@ class CarbonBlackDefenseConnector(BaseConnector):
             data = {"policyInfo": data}
 
         if "id" not in data.get("policyInfo", {}):
-            data["policyInfo"]["id"] = policy_id
+            try:
+                data["policyInfo"]["id"] = policy_id
+            except TypeError:
+                return action_result.set_status(phantom.APP_ERROR, CBD_JSON_FORMAT_ERROR)
 
         ret_val, response = self._make_rest_call(endpoint, action_result, data=data, method="put")
 

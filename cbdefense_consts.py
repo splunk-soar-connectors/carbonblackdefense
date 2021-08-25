@@ -24,6 +24,7 @@ CBD_GET_ALERT_API = "/appservices/v6/orgs/{1}/alerts/{0}"
 CBD_GET_EVENT_API = "/api/investigate/v2/orgs/{0}/enriched_events/detail_jobs"
 
 ERROR_CODE_EXCEPTION = "Error code unavailable"
+CBD_JSON_FORMAT_ERROR = "Please provide data in correct json format"
 ERROR_MSG_EXCEPTIOIN = "Unknown error occurred. Please check the asset configuration and|or action parameters."
 EXCEPTION_OCCURRED = "Exception occured: "
 CBD_EMPTY_RESPONSE_NO_HEADER = "Empty response and no information in the header"

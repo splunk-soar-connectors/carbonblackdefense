@@ -766,9 +766,7 @@
                     ],
                     "contains": [
                         "cb defense policy id"
-                    ],
-                    "column_name": "ID",
-                    "column_order": 1
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.latestRevision",
@@ -783,9 +781,7 @@
                     "data_type": "string",
                     "example_values": [
                         "default"
-                    ],
-                    "column_name": "Name",
-                    "column_order": 0
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.policy.avSettings.apc.enabled",
@@ -1100,7 +1096,11 @@
                 }
             ],
             "render": {
-                "type": "table"
+                "width": 12,
+                "title": "List Policies",
+                "type": "custom",
+                "height": 5,
+                "view": "cbdefense_views.display_view"
             },
             "versions": "EQ(*)"
         },
@@ -1373,7 +1373,7 @@
                         "failed"
                     ],
                     "column_name": "Status",
-                    "column_order": 0
+                    "column_order": 1
                 },
                 {
                     "data_path": "action_result.parameter.id",
@@ -1397,16 +1397,16 @@
                     "data_type": "string",
                     "example_values": [
                         "Success"
-                    ],
-                    "column_name": "Message",
-                    "column_order": 1
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.ruleId",
                     "data_type": "numeric",
                     "example_values": [
                         1
-                    ]
+                    ],
+                    "column_name": "Rule ID",
+                    "column_order": 0
                 },
                 {
                     "data_path": "action_result.data.*.success",
@@ -2270,7 +2270,7 @@
                         "failed"
                     ],
                     "column_name": "Status",
-                    "column_order": 0
+                    "column_order": 4
                 },
                 {
                     "data_path": "action_result.parameter.id",
@@ -2386,7 +2386,9 @@
                     "data_type": "numeric",
                     "example_values": [
                         4486274
-                    ]
+                    ],
+                    "column_name": "Device ID",
+                    "column_order": 1
                 },
                 {
                     "data_path": "action_result.data.*.device_installed_by",
@@ -2421,7 +2423,9 @@
                     "data_type": "string",
                     "example_values": [
                         "controlcenter"
-                    ]
+                    ],
+                    "column_name": "Device Name",
+                    "column_order": 2
                 },
                 {
                     "data_path": "action_result.data.*.device_os",
@@ -2502,7 +2506,9 @@
                     ],
                     "contains": [
                         "md5"
-                    ]
+                    ],
+                    "column_name": "Event ID",
+                    "column_order": 0
                 },
                 {
                     "data_path": "action_result.data.*.event_report_code",
@@ -2538,7 +2544,9 @@
                     "data_type": "string",
                     "example_values": [
                         "7DESJ9GN"
-                    ]
+                    ],
+                    "column_name": "ORG ID",
+                    "column_order": 3
                 },
                 {
                     "data_path": "action_result.data.*.parent_effective_reputation",
@@ -2705,9 +2713,7 @@
                     "data_type": "string",
                     "example_values": [
                         "Successfully retrieved event data."
-                    ],
-                    "column_name": "Message",
-                    "column_order": 1
+                    ]
                 },
                 {
                     "data_path": "summary.total_objects",
@@ -2796,18 +2802,14 @@
                     ],
                     "contains": [
                         "cb defense device id"
-                    ],
-                    "column_name": "Device ID",
-                    "column_order": 0
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.device_name",
                     "data_type": "string",
                     "example_values": [
                         "KognosCBTest-1"
-                    ],
-                    "column_name": "Device Name",
-                    "column_order": 1
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.device_os",
@@ -3162,7 +3164,11 @@
                 }
             ],
             "render": {
-                "type": "table"
+                "width": 12,
+                "title": "Get Alert",
+                "type": "custom",
+                "height": 5,
+                "view": "cbdefense_views.display_view"
             },
             "versions": "EQ(*)"
         },
