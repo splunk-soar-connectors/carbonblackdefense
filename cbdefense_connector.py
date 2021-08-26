@@ -106,7 +106,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
         :param e: Exception object
         :return: error message
         """
-        error_msg = ERROR_MSG_EXCEPTIOIN
+        error_msg = ERROR_MSG_EXCEPTION
         error_code = ERROR_CODE_EXCEPTION
         try:
             if e.args:
@@ -118,10 +118,10 @@ class CarbonBlackDefenseConnector(BaseConnector):
                     error_msg = e.args[0]
             else:
                 error_code = ERROR_CODE_EXCEPTION
-                error_msg = ERROR_MSG_EXCEPTIOIN
+                error_msg = ERROR_MSG_EXCEPTION
         except Exception:
             error_code = ERROR_CODE_EXCEPTION
-            error_msg = ERROR_MSG_EXCEPTIOIN
+            error_msg = ERROR_MSG_EXCEPTION
 
         return "Error Code: {0}. Error Message: {1}".format(error_code, error_msg)
 
@@ -221,7 +221,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
 
         if 'notification' in endpoint:
             if not self._siem_auth:
-                return RetVal(action_result.set_status(phantom.APP_ERROR, CBD_SEIM_ERROR))
+                return RetVal(action_result.set_status(phantom.APP_ERROR, CBD_SIEM_ERROR))
             auth_header = {'X-Auth-Token': self._siem_auth}
         elif is_new_api:
             if not self._custom_api_auth:
