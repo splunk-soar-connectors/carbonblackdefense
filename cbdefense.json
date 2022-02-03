@@ -1137,8 +1137,9 @@
                     "order": 2
                 },
                 "json_fields": {
-                    "description": "Other configuration fields in JSON format",
+                    "description": "Other configuration fields in JSON format. Defaults to '{\"sensorSettings\": []}' if left empty",
                     "data_type": "string",
+                    "default": "{\"sensorSettings\": []}",
                     "order": 3
                 }
             },
