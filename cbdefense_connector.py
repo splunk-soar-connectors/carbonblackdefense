@@ -255,7 +255,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
             headers = auth_header
 
         try:
-            r = request_func(
+            r = request_func(  # nosemgrep
                 url,
                 json=data,
                 headers=headers,
@@ -821,6 +821,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
 if __name__ == '__main__':
 
     import argparse
+    from sys import exit
 
     import pudb
 
@@ -847,7 +848,7 @@ if __name__ == '__main__':
         try:
             print("Accessing the Login page")
             login_url = BaseConnector._get_phantom_base_url() + '/login'
-            r = requests.get(login_url, verify=False)
+            r = requests.get(login_url, verify=False)  # nosemgrep
             csrftoken = r.cookies['csrftoken']
 
             data = dict()
@@ -860,7 +861,7 @@ if __name__ == '__main__':
             headers['Referer'] = login_url
 
             print("Logging into Platform to get the session id")
-            r2 = requests.post(login_url, verify=False, data=data, headers=headers)
+            r2 = requests.post(login_url, verify=False, data=data, headers=headers)  # nosemgrep
             session_id = r2.cookies['sessionid']
         except Exception as e:
             print("Unable to get session id from the platfrom. Error: " + str(e))
