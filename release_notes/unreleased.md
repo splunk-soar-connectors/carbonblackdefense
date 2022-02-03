@@ -1,4 +1,4 @@
 **Unreleased**
 
-* Fixed issue with add policy action [PAPP-23656]
-* FIPS compliant
+* Bug fix in the 'add policy' action [PAPP-23656]
+* Marked the app as FIPS Compliant
