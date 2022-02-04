@@ -1108,7 +1108,7 @@
         {
             "action": "add policy",
             "description": "Create a new policy on CB Defense",
-            "verbose": "The <b>json_fields</b> parameter can be used to configure other fields in the created policy. This parameter takes a JSON dictionary with the format of the policy field seen <a href=\"https://developer.carbonblack.com/reference/cb-defense/1/rest-api/#create-new-policy\">here</a>. In some negative scenarios action will fail with a API error message \"Error creating policy - Error modifying policy\" but policy will be created on the server with the given name. This Action requires API Key and API Connector ID.",
+            "verbose": "The <b>json_fields</b> parameter can be used to configure other fields in the created policy. This parameter takes a JSON dictionary with the format of the policy field seen <a href=\"https://developer.carbonblack.com/reference/cb-defense/1/rest-api/#create-new-policy\">here</a>. In some negative scenarios action will fail with an API error message \"Error creating policy - Error modifying policy\" but policy will be created on the server with the given name. This Action requires API Key and API Connector ID.",
             "type": "generic",
             "identifier": "create_policy",
             "read_only": false,
