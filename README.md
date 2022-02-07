@@ -2,16 +2,16 @@
 # Carbon Black Defense
 
 Publisher: Splunk  
-Connector Version: 2\.0\.17  
+Connector Version: 2\.1\.0  
 Product Vendor: Carbon Black  
 Product Name: Defense  
 Product Version Supported (regex): "\.\*"  
-Minimum Product Version: 4\.9\.39220  
+Minimum Product Version: 5\.1\.0  
 
 This app integrates with an instance of Carbon Black defense to run investigative and generic actions
 
-[comment]: # " File: readme.md"
-[comment]: # "  Copyright (c) 2018-2021 Splunk Inc."
+[comment]: # " File: README.md"
+[comment]: # "  Copyright (c) 2018-2022 Splunk Inc."
 [comment]: # ""
 [comment]: # "Licensed under the Apache License, Version 2.0 (the 'License');"
 [comment]: # "you may not use this file except in compliance with the License."
@@ -303,7 +303,7 @@ Create a new policy on CB Defense
 Type: **generic**  
 Read only: **False**
 
-The <b>json\_fields</b> parameter can be used to configure other fields in the created policy\. This parameter takes a JSON dictionary with the format of the policy field seen <a href="https\://developer\.carbonblack\.com/reference/cb\-defense/1/rest\-api/\#create\-new\-policy">here</a>\. This Action requires API Key and API Connector ID\.
+The <b>json\_fields</b> parameter can be used to configure other fields in the created policy\. This parameter takes a JSON dictionary with the format of the policy field seen <a href="https\://developer\.carbonblack\.com/reference/cb\-defense/1/rest\-api/\#create\-new\-policy">here</a>\. In some negative scenarios action will fail with an API error message "Error creating policy \- Error modifying policy" but policy will be created on the server with the given name\. This Action requires API Key and API Connector ID\.
 
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
@@ -311,7 +311,7 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **name** |  required  | Name | string | 
 **description** |  required  | Description | string | 
 **priority** |  required  | Priority Level | string | 
-**json\_fields** |  optional  | Other configuration fields in JSON format | string | 
+**json\_fields** |  optional  | Other configuration fields in JSON format\. Defaults to '\{"sensorSettings"\: \[\]\}' if left empty | string | 
 
 #### Action Output
 DATA PATH | TYPE | CONTAINS
