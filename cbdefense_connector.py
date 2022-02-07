@@ -15,15 +15,17 @@
 #
 #
 # Phantom App imports
-import phantom.app as phantom
-from phantom.base_connector import BaseConnector
-from phantom.action_result import ActionResult
-from cbdefense_consts import *
-import requests
-import time
-import json
-from bs4 import BeautifulSoup
 import ipaddress
+import json
+import time
+
+import phantom.app as phantom
+import requests
+from bs4 import BeautifulSoup
+from phantom.action_result import ActionResult
+from phantom.base_connector import BaseConnector
+
+from cbdefense_consts import *
 
 
 class RetVal(tuple):
@@ -168,7 +170,11 @@ class CarbonBlackDefenseConnector(BaseConnector):
         try:
             resp_json = r.json()
         except Exception as e:
-            return RetVal(action_result.set_status(phantom.APP_ERROR, "Unable to parse JSON response. Error: {0}".format(self._get_error_message_from_exception(e))), None)
+            return RetVal(action_result.set_status(
+                phantom.APP_ERROR,
+                "Unable to parse JSON response. Error: {0}".format(
+                    self._get_error_message_from_exception(e))
+            ), None)
 
         # Please specify the status codes here
         if 200 <= r.status_code < 399:
@@ -249,14 +255,18 @@ class CarbonBlackDefenseConnector(BaseConnector):
             headers = auth_header
 
         try:
-            r = request_func(
+            r = request_func(  # nosemgrep
                 url,
                 json=data,
                 headers=headers,
                 verify=config.get('verify_server_cert', False),
                 params=params)
         except Exception as e:
-            return RetVal(action_result.set_status(phantom.APP_ERROR, "Error Connecting to server. Details: {0}".format(self._get_error_message_from_exception(e))), resp_json)
+            return RetVal(action_result.set_status(
+                phantom.APP_ERROR,
+                "Error Connecting to server. Details: {0}".format(
+                    self._get_error_message_from_exception(e))
+            ), resp_json)
 
         return self._process_response(r, action_result)
 
@@ -307,12 +317,11 @@ class CarbonBlackDefenseConnector(BaseConnector):
             }
         }
 
-        if 'json_fields' in param:
-            try:
-                policy_info = json.loads(param['json_fields'])
-            except Exception as e:
-                return action_result.set_status(phantom.APP_ERROR, "Could not parse JSON from 'json_fields' parameter: {0}".format(e))
-            body['policy'] = policy_info
+        try:
+            policy_info = json.loads(param.get('json_fields', '{"sensorSettings": []}'))
+        except Exception as e:
+            return action_result.set_status(phantom.APP_ERROR, "Could not parse JSON from 'json_fields' parameter: {0}".format(e))
+        body['policyInfo']['policy'] = policy_info
 
         ret_val, response = self._make_rest_call(CBD_POLICY_API, action_result, data=body, method='post')
 
@@ -348,7 +357,12 @@ class CarbonBlackDefenseConnector(BaseConnector):
         try:
             rule_info = json.loads(param['rules'])
         except Exception as e:
-            return action_result.set_status(phantom.APP_ERROR, "Could not parse JSON from rules parameter: {0}".format(self._get_error_message_from_exception(e)))
+            return action_result.set_status(
+                phantom.APP_ERROR,
+                "Could not parse JSON from rules parameter: {0}".format(
+                    self._get_error_message_from_exception(e)
+                )
+            )
 
         body = {"ruleInfo": rule_info}
 
@@ -722,7 +736,10 @@ class CarbonBlackDefenseConnector(BaseConnector):
         try:
             data = json.loads(param["policy"])
         except Exception as e:
-            return action_result.set_status(phantom.APP_ERROR, "Policy needs to be valid JSON data: " + self._get_error_message_from_exception(e))
+            return action_result.set_status(
+                phantom.APP_ERROR,
+                "Policy needs to be valid JSON data: " + self._get_error_message_from_exception(e)
+            )
 
         if "policyInfo" not in data:
             data = {"policyInfo": data}
@@ -803,8 +820,10 @@ class CarbonBlackDefenseConnector(BaseConnector):
 
 if __name__ == '__main__':
 
-    import pudb
     import argparse
+    from sys import exit
+
+    import pudb
 
     pudb.set_trace()
 
@@ -813,6 +832,7 @@ if __name__ == '__main__':
     argparser.add_argument('input_test_json', help='Input Test JSON file')
     argparser.add_argument('-u', '--username', help='username', required=False)
     argparser.add_argument('-p', '--password', help='password', required=False)
+    argparser.add_argument('-v', '--verify', action='store_true', help='verify', required=False, default=False)
 
     args = argparser.parse_args()
     session_id = None
@@ -820,6 +840,7 @@ if __name__ == '__main__':
     headers = None
     username = args.username
     password = args.password
+    verify = args.verify
 
     if username is not None and password is None:
         # User specified a username but not a password, so ask
@@ -829,7 +850,7 @@ if __name__ == '__main__':
         try:
             print("Accessing the Login page")
             login_url = BaseConnector._get_phantom_base_url() + '/login'
-            r = requests.get(login_url, verify=False)
+            r = requests.get(login_url, verify=verify)  # nosemgrep
             csrftoken = r.cookies['csrftoken']
 
             data = dict()
@@ -842,7 +863,7 @@ if __name__ == '__main__':
             headers['Referer'] = login_url
 
             print("Logging into Platform to get the session id")
-            r2 = requests.post(login_url, verify=False, data=data, headers=headers)
+            r2 = requests.post(login_url, verify=verify, data=data, headers=headers)  # nosemgrep
             session_id = r2.cookies['sessionid']
         except Exception as e:
             print("Unable to get session id from the platfrom. Error: " + str(e))

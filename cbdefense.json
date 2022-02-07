@@ -2,6 +2,7 @@
     "appid": "4d5a3ff3-5d68-4682-9209-73ffbe487c71",
     "name": "Carbon Black Defense",
     "description": "This app integrates with an instance of Carbon Black defense to run investigative and generic actions",
+    "fips_compliant": true,
     "type": "endpoint",
     "product_vendor": "Carbon Black",
     "logo": "logo_carbonblack.svg",
@@ -9,8 +10,8 @@
     "product_name": "Defense",
     "product_version_regex": ".*",
     "publisher": "Splunk",
-    "license": "Copyright (c) 2018-2021 Splunk Inc.",
-    "app_version": "2.0.18",
+    "license": "Copyright (c) 2018-2022 Splunk Inc.",
+    "app_version": "2.1.0",
     "utctime_updated": "2022-01-07T20:37:11.000000Z",
     "package_name": "phantom_carbonblackdefense",
     "main_module": "cbdefense_connector.py",
@@ -18,7 +19,7 @@
     "latest_tested_versions": [
         "Cloud, August 17 2021"
     ],
-    "min_phantom_version": "4.9.39220",
+    "min_phantom_version": "5.1.0",
     "app_wizard_version": "1.0.0",
     "configuration": {
         "api_url": {
@@ -1107,7 +1108,7 @@
         {
             "action": "add policy",
             "description": "Create a new policy on CB Defense",
-            "verbose": "The <b>json_fields</b> parameter can be used to configure other fields in the created policy. This parameter takes a JSON dictionary with the format of the policy field seen <a href=\"https://developer.carbonblack.com/reference/cb-defense/1/rest-api/#create-new-policy\">here</a>. This Action requires API Key and API Connector ID.",
+            "verbose": "The <b>json_fields</b> parameter can be used to configure other fields in the created policy. This parameter takes a JSON dictionary with the format of the policy field seen <a href=\"https://developer.carbonblack.com/reference/cb-defense/1/rest-api/#create-new-policy\">here</a>. In some negative scenarios action will fail with an API error message \"Error creating policy - Error modifying policy\" but policy will be created on the server with the given name. This Action requires API Key and API Connector ID.",
             "type": "generic",
             "identifier": "create_policy",
             "read_only": false,
@@ -1137,8 +1138,9 @@
                     "order": 2
                 },
                 "json_fields": {
-                    "description": "Other configuration fields in JSON format",
+                    "description": "Other configuration fields in JSON format. Defaults to '{\"sensorSettings\": []}' if left empty",
                     "data_type": "string",
+                    "default": "{\"sensorSettings\": []}",
                     "order": 3
                 }
             },
