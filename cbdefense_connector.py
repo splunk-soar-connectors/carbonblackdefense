@@ -738,7 +738,9 @@ class CarbonBlackDefenseConnector(BaseConnector):
         except Exception as e:
             return action_result.set_status(
                 phantom.APP_ERROR,
-                "Policy needs to be valid JSON data: " + self._get_error_message_from_exception(e)
+                "Policy needs to be valid JSON data: {}".format(
+                    self._get_error_message_from_exception(e)
+                )
             )
 
         if "policyInfo" not in data:
