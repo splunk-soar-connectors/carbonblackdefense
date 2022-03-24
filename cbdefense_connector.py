@@ -205,6 +205,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
 
         self._status_code = r.status_code
 
+        self.debug_print("Processing API response")
         # Process each 'Content-Type' of response separately
 
         # Process a json response
@@ -262,8 +263,9 @@ class CarbonBlackDefenseConnector(BaseConnector):
         else:
             headers = auth_header
 
+        self.debug_print("Making API call")
         try:
-            r = request_func(  # nosemgrep
+            r = request_func(
                 url,
                 json=data,
                 headers=headers,
@@ -762,7 +764,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _handle_update_policy(self, param):
-
+        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(param))
         policy_id = param["policy_id"]
         endpoint = CBD_POLICY_API + str(policy_id)
@@ -797,7 +799,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
         return action_result.set_status(phantom.APP_SUCCESS, CBD_POLICY_UPDATED_SUCCESS)
 
     def _handle_get_policy(self, param):
-
+        self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(param))
         policy_id = param["policy_id"]
         endpoint = CBD_POLICY_API + str(policy_id)
@@ -886,7 +888,7 @@ if __name__ == '__main__':
         try:
             print("Accessing the Login page")
             login_url = BaseConnector._get_phantom_base_url() + '/login'
-            r = requests.get(login_url, verify=verify, timeout=CBD_DEFAULT_REQUEST_TIMEOUT)  # nosemgrep
+            r = requests.get(login_url, verify=verify, timeout=CBD_DEFAULT_REQUEST_TIMEOUT)
             csrftoken = r.cookies['csrftoken']
 
             data = dict()
@@ -899,7 +901,7 @@ if __name__ == '__main__':
             headers['Referer'] = login_url
 
             print("Logging into Platform to get the session id")
-            r2 = requests.post(login_url, verify=verify, data=data, headers=headers, timeout=CBD_DEFAULT_REQUEST_TIMEOUT)  # nosemgrep
+            r2 = requests.post(login_url, verify=verify, data=data, headers=headers, timeout=CBD_DEFAULT_REQUEST_TIMEOUT)
             session_id = r2.cookies['sessionid']
         except Exception as e:
             print("Unable to get session id from the platfrom. Error: " + str(e))
