@@ -46,10 +46,16 @@ class CarbonBlackDefenseConnector(BaseConnector):
         self._siem_auth = None
         self._custom_api_auth = None
         self._org_key = None
+        self._status_code = None
 
     def initialize(self):
 
         self._state = self.load_state()
+
+        if not isinstance(self._state, dict):
+            self.debug_print("Resetting the state file with the default format")
+            self._state = {"app_version": self.get_app_json().get("app_version")}
+            return self.set_status(phantom.APP_ERROR, CBD_STATE_FILE_CORRUPT_ERR)
 
         config = self.get_config()
 
@@ -154,7 +160,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
             split_lines = error_text.split('\n')
             split_lines = [x.strip() for x in split_lines if x.strip()]
             error_text = '\n'.join(split_lines)
-        except:
+        except Exception:
             error_text = CBD_ERROR_TEXT
 
         message = "Status Code: {0}. Data from server:\n{1}\n".format(status_code,
@@ -196,6 +202,8 @@ class CarbonBlackDefenseConnector(BaseConnector):
             action_result.add_debug_data({'r_status_code': r.status_code})
             action_result.add_debug_data({'r_text': r.text})
             action_result.add_debug_data({'r_headers': r.headers})
+
+        self._status_code = r.status_code
 
         # Process each 'Content-Type' of response separately
 
@@ -260,7 +268,8 @@ class CarbonBlackDefenseConnector(BaseConnector):
                 json=data,
                 headers=headers,
                 verify=config.get('verify_server_cert', False),
-                params=params)
+                params=params,
+                timeout=CBD_DEFAULT_REQUEST_TIMEOUT)
         except Exception as e:
             return RetVal(action_result.set_status(
                 phantom.APP_ERROR,
@@ -699,10 +708,35 @@ class CarbonBlackDefenseConnector(BaseConnector):
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        ret_val, resp_json = self._make_rest_call(CBD_GET_ALERT_API.format(param['id'], self._org_key), action_result, is_new_api=True)
+        id = param['id']
+        ret_val, resp_json = self._make_rest_call(CBD_GET_ALERT_API.format(id, self._org_key), action_result, is_new_api=True)
 
         if phantom.is_fail(ret_val):
-            return ret_val
+            if self._status_code != 404:
+                return ret_val
+
+            # The id provided might be legacy id. Search for it.
+            data = {
+                "criteria": {
+                    "create_time": {
+                        "range": "all"
+                    },
+                },
+                "query": "alert_id:{}".format(id)
+            }
+            ret_val, resp_json = self._make_rest_call(CBD_SEARCH_ALERT_API.format(self._org_key), action_result,
+                                                      method="post", data=data, is_new_api=True)
+
+            if phantom.is_fail(ret_val):
+                return ret_val
+
+            results = resp_json.get("results", [])
+
+            if not results:
+                return action_result.set_status(phantom.APP_ERROR, "Alert ID '{}' does not exist".format(id))
+
+            resp_json = results[0]
+
         action_result.add_data(resp_json)
         summary = action_result.set_summary({})
         summary['device'] = resp_json.get('device_name', 'UNKNOWN')
@@ -852,7 +886,7 @@ if __name__ == '__main__':
         try:
             print("Accessing the Login page")
             login_url = BaseConnector._get_phantom_base_url() + '/login'
-            r = requests.get(login_url, verify=verify)  # nosemgrep
+            r = requests.get(login_url, verify=verify, timeout=CBD_DEFAULT_REQUEST_TIMEOUT)  # nosemgrep
             csrftoken = r.cookies['csrftoken']
 
             data = dict()
@@ -865,7 +899,7 @@ if __name__ == '__main__':
             headers['Referer'] = login_url
 
             print("Logging into Platform to get the session id")
-            r2 = requests.post(login_url, verify=verify, data=data, headers=headers)  # nosemgrep
+            r2 = requests.post(login_url, verify=verify, data=data, headers=headers, timeout=CBD_DEFAULT_REQUEST_TIMEOUT)  # nosemgrep
             session_id = r2.cookies['sessionid']
         except Exception as e:
             print("Unable to get session id from the platfrom. Error: " + str(e))

@@ -11,7 +11,7 @@
     "product_version_regex": ".*",
     "publisher": "Splunk",
     "license": "Copyright (c) 2018-2022 Splunk Inc.",
-    "app_version": "2.1.1",
+    "app_version": "2.2.0",
     "utctime_updated": "2022-02-09T04:16:31.000000Z",
     "package_name": "phantom_carbonblackdefense",
     "main_module": "cbdefense_connector.py",
@@ -31,7 +31,6 @@
         "ph_0": {
             "description": "Placeholder",
             "data_type": "ph",
-            "required": false,
             "order": 1
         },
         "api_connector_id": {
@@ -124,6 +123,67 @@
                         1,
                         0
                     ]
+                },
+                {
+                    "data_path": "action_result.data.*.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "SERVER-18"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.email",
+                    "data_type": "string",
+                    "example_values": [
+                        "test@example.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "REGISTERED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.base_device",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.nsx_enabled",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.quarantined",
+                    "data_type": "boolean",
+                    "example_values": [
+                        false,
+                        true
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.cloud_provider_tags",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.auto_scaling_group_name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.virtual_private_cloud_id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.cloud_provider_account_id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.cloud_provider_resource_id",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.nsx_distributed_firewall_policy",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.activation_code",
@@ -754,6 +814,17 @@
                         "success",
                         "failed"
                     ]
+                },
+                {
+                    "data_path": "action_result.data.*.orgId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1105
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.vdiAutoDeregInactiveIntervalMs",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.description",
@@ -1665,6 +1736,36 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.legacy",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.enriched",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.blocked_name",
+                    "data_type": "string",
+                    "example_values": [
+                        "c:\\program files\\process hacker 2\\processhacker.exe"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.blocked_effective_reputation",
+                    "data_type": "string",
+                    "example_values": [
+                        "KNOWN_MALWARE"
+                    ]
+                },
+                {
                     "data_path": "action_result.data.*.alert_category",
                     "data_type": "string",
                     "example_values": [
@@ -2041,6 +2142,40 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.event_network_inbound",
+                    "data_type": "boolean",
+                    "example_values": [
+                        false,
+                        true
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.event_network_location",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.event_network_protocol",
+                    "data_type": "string",
+                    "example_values": [
+                        "TCP"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.event_network_local_ipv4",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.event_network_remote_ipv4",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.event_network_remote_port",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1514
+                    ]
+                },
+                {
                     "data_path": "action_result.data.*.backend_timestamp",
                     "data_type": "string",
                     "example_values": [
@@ -2284,6 +2419,76 @@
                     "contains": [
                         "cb defense event id"
                     ]
+                },
+                {
+                    "data_path": "action_result.data.*.netconn_ipv4",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.netconn_port",
+                    "data_type": "numeric",
+                    "example_values": [
+                        80
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.netconn_domain",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.netconn_inbound",
+                    "data_type": "boolean",
+                    "example_values": [
+                        false,
+                        true
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.netconn_location",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.netconn_protocol",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.netconn_local_ipv4",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.netconn_local_port",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.event_network_inbound",
+                    "data_type": "boolean",
+                    "example_values": [
+                        false,
+                        true
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.event_network_location",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.event_network_protocol",
+                    "data_type": "string",
+                    "example_values": [
+                        "TCP"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.event_network_local_ipv4",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.event_network_remote_ipv4",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.event_network_remote_port",
+                    "data_type": "numeric"
                 },
                 {
                     "data_path": "action_result.data.*.backend_timestamp",
@@ -2773,6 +2978,433 @@
                     ],
                     "contains": [
                         "cb defense alert id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.id",
+                    "data_type": "string",
+                    "example_values": [
+                        "4456642fa7c0730ffa911ebbf18076f4da5904e"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.tags",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "CB_ANALYTICS"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.reason",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.org_key",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.category",
+                    "data_type": "string",
+                    "example_values": [
+                        "THREAT"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.severity",
+                    "data_type": "numeric",
+                    "example_values": [
+                        4
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.workflow.state",
+                    "data_type": "string",
+                    "example_values": [
+                        "OPEN"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.workflow.comment",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.workflow.changed_by",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.workflow.remediation",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.workflow.last_update_time",
+                    "data_type": "string",
+                    "example_values": [
+                        "2021-08-17T22:25:10.574Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.device_id",
+                    "data_type": "numeric",
+                    "example_values": [
+                        4456642
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.device_os",
+                    "data_type": "string",
+                    "example_values": [
+                        "WINDOWS"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.policy_id",
+                    "data_type": "numeric",
+                    "example_values": [
+                        73597
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.run_state",
+                    "data_type": "string",
+                    "example_values": [
+                        "RAN"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.threat_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "515dab3bf7a5443b938ed49326509767"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.create_time",
+                    "data_type": "string",
+                    "example_values": [
+                        "2021-08-17T22:25:10.574Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.device_name",
+                    "data_type": "string",
+                    "example_values": [
+                        "DESKTOP-1"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.policy_name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.reason_code",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.process_name",
+                    "data_type": "string",
+                    "example_values": [
+                        "mofcomp.exe"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.target_value",
+                    "data_type": "string",
+                    "example_values": [
+                        "HIGH"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.notes_present",
+                    "data_type": "boolean",
+                    "example_values": [
+                        false,
+                        true
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.sensor_action",
+                    "data_type": "string",
+                    "example_values": [
+                        "DENY"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.policy_applied",
+                    "data_type": "string",
+                    "example_values": [
+                        "APPLIED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.device_location",
+                    "data_type": "string",
+                    "example_values": [
+                        "OFFSITE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.device_username",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.last_event_time",
+                    "data_type": "string",
+                    "example_values": [
+                        "2021-08-17T22:33:04.814Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.legacy_alert_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "2DAEF827"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.first_event_time",
+                    "data_type": "string",
+                    "example_values": [
+                        "2021-08-17T22:25:04.420Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.last_update_time",
+                    "data_type": "string",
+                    "example_values": [
+                        "2021-08-17T22:46:14.689Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.device_os_version",
+                    "data_type": "string",
+                    "example_values": [
+                        "Windows 10 x64"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.threat_indicators.*.sha256",
+                    "data_type": "string",
+                    "example_values": [
+                        "ad37a667b5c331cea98d7100675181167b21e6f2266547bea3ae0959c1ffbf81"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.threat_indicators.*.process_name",
+                    "data_type": "string",
+                    "example_values": [
+                        "mofcomp.exe"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.threat_activity_c2",
+                    "data_type": "string",
+                    "example_values": [
+                        "NOT_ATTEMPTED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.created_by_event_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "fa7c0730ffa911ebbf18076f4da5904e"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.threat_activity_dlp",
+                    "data_type": "string",
+                    "example_values": [
+                        "NOT_ATTEMPTED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.threat_cause_vector",
+                    "data_type": "string",
+                    "example_values": [
+                        "UNKNOWN"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.threat_activity_phish",
+                    "data_type": "string",
+                    "example_values": [
+                        "NOT_ATTEMPTED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.blocked_threat_category",
+                    "data_type": "string",
+                    "example_values": [
+                        "NON_MALWARE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.threat_cause_actor_name",
+                    "data_type": "string",
+                    "example_values": [
+                        "mofcomp.exe"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.threat_cause_reputation",
+                    "data_type": "string",
+                    "example_values": [
+                        "ADAPTIVE_WHITE_LIST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.threat_cause_parent_guid",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.threat_cause_actor_sha256",
+                    "data_type": "string",
+                    "example_values": [
+                        "ad37a667b5c331cea98d7100675181167b21e6f2266547bea3ae0959c1ffbf81"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.threat_cause_process_guid",
+                    "data_type": "string",
+                    "example_values": [
+                        "7DESJ9GN-004400c2-00000dfc-00000000-1d793b6b9f735ed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.not_blocked_threat_category",
+                    "data_type": "string",
+                    "example_values": [
+                        "UNKNOWN"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.threat_cause_cause_event_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "fa7c0730ffa911ebbf18076f4da5904e"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.threat_cause_threat_category",
+                    "data_type": "string",
+                    "example_values": [
+                        "NON_MALWARE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.results.*.threat_cause_actor_process_pid",
+                    "data_type": "string",
+                    "example_values": [
+                        "3580-132737127044036077-0"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.num_found",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.num_available",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.reason_code",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.sensor_action",
+                    "data_type": "string",
+                    "example_values": [
+                        "DENY"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policy_applied",
+                    "data_type": "string",
+                    "example_values": [
+                        "APPLIED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.device_location",
+                    "data_type": "string",
+                    "example_values": [
+                        "OFFSITE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threat_activity_c2",
+                    "data_type": "string",
+                    "example_values": [
+                        "NOT_ATTEMPTED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.created_by_event_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "fa7c0730ffa911ebbf18076f4da5904e"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threat_activity_dlp",
+                    "data_type": "string",
+                    "example_values": [
+                        "NOT_ATTEMPTED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threat_activity_phish",
+                    "data_type": "string",
+                    "example_values": [
+                        "NOT_ATTEMPTED"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.blocked_threat_category",
+                    "data_type": "string",
+                    "example_values": [
+                        "NON_MALWARE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threat_cause_parent_guid",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.threat_cause_process_guid",
+                    "data_type": "string",
+                    "example_values": [
+                        "7DESJ9GN-004400c2-00000dfc-00000000-1d793b6b9f735ed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.not_blocked_threat_category",
+                    "data_type": "string",
+                    "example_values": [
+                        "UNKNOWN"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threat_cause_cause_event_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "fa7c0730ffa911ebbf18076f4da5904e"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.threat_cause_actor_process_pid",
+                    "data_type": "string",
+                    "example_values": [
+                        "3580-132737127044036077-0"
                     ]
                 },
                 {
@@ -3463,8 +4095,19 @@
                     "column_order": 0
                 },
                 {
-                    "data_path": "action_result.data",
-                    "data_type": "string"
+                    "data_path": "action_result.data.*.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.success",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
                 },
                 {
                     "data_path": "action_result.summary.policy_id",
@@ -3534,6 +4177,43 @@
                     "example_values": [
                         "3436345"
                     ]
+                },
+                {
+                    "data_path": "action_result.data.*.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.success",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.orgId",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1105
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.onDemandScan.profile",
+                    "data_type": "string",
+                    "example_values": [
+                        "NORMAL"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.policy.knownBadHashAutoDeleteDelayMs",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.policyInfo.vdiAutoDeregInactiveIntervalMs",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.policyInfo.description",
@@ -3749,7 +4429,7 @@
             },
             {
                 "module": "urllib3",
-                "input_file": "wheels/shared/urllib3-1.26.8-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/urllib3-1.26.9-py2.py3-none-any.whl"
             }
         ]
     }
