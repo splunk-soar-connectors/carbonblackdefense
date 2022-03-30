@@ -10,7 +10,7 @@
     "product_name": "Defense",
     "product_version_regex": ".*",
     "publisher": "Splunk",
-    "license": "Copyright (c) 2018-2022 Splunk Inc.",
+    "copyright": "Copyright (c) 2018-2022 Splunk Inc.",
     "app_version": "2.2.0",
     "utctime_updated": "2022-02-09T04:16:31.000000Z",
     "package_name": "phantom_carbonblackdefense",
@@ -2951,7 +2951,7 @@
             "read_only": true,
             "parameters": {
                 "id": {
-                    "description": "Alert ID",
+                    "description": "Alert ID/Legacy alert ID",
                     "data_type": "string",
                     "required": true,
                     "primary": true,
