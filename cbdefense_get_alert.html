@@ -87,6 +87,7 @@ and limitations under the License.
                 <table class="phantom-table dataTable">
                     <thead>
                         <th class="widget-th">Alert ID</th>
+                        <th class="widget-th">Legacy alert ID</th>
                         <th class="widget-th">Type</th>
                         <th class="widget-th">Device ID</th>
                         <th class="widget-th">Device Name</th>
@@ -97,6 +98,13 @@ and limitations under the License.
                                 <a href="javascript:;" onclick="context_menu(this, [{'contains': ['cb defense alert id'],
                                 'value': '{{ finding_data.id }}' }], 0, {{ container.id }}, null, false);">
                                     {{ finding_data.id }}
+                                <span class="fa fa-caret-down" style="font-size: smaller;"></span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="javascript:;" onclick="context_menu(this, [{'contains': ['cb defense legacy alert id'],
+                                'value': '{{ finding_data.legacy_alert_id }}' }], 0, {{ container.id }}, null, false);">
+                                    {{ finding_data.legacy_alert_id }}
                                 <span class="fa fa-caret-down" style="font-size: smaller;"></span>
                                 </a>
                             </td>
