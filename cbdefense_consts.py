@@ -30,7 +30,12 @@ CBD_EVENT_JOB_SEARCH_API = "/api/investigate/v1/orgs/{1}/enriched_events/{2}/{0}
 CBD_EVENT_JOB_RESULT_API = "/api/investigate/v2/orgs/{1}/enriched_events/{2}/{0}/results"
 CBD_GET_ALERT_API = "/appservices/v6/orgs/{1}/alerts/{0}"
 CBD_GET_EVENT_API = "/api/investigate/v2/orgs/{0}/enriched_events/detail_jobs"
-
+CBD_SEARCH_ALERT_API = "/appservices/v6/orgs/{0}/alerts/_search"
+CBD_DEFAULT_REQUEST_TIMEOUT = 30  # in seconds
+CBD_STATE_FILE_CORRUPT_ERR = (
+    "Error occurred while loading the state file due to its unexpected format. "
+    "Resetting the state file with the default format. Please try again"
+)
 ERROR_CODE_EXCEPTION = "Error code unavailable"
 CBD_JSON_FORMAT_ERROR = "Please provide data in correct json format"
 ERROR_MSG_EXCEPTION = "Unknown error occurred. Please check the asset configuration and|or action parameters."

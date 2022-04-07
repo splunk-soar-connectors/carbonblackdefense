@@ -2,11 +2,11 @@
 # Carbon Black Defense
 
 Publisher: Splunk  
-Connector Version: 2\.1\.1  
+Connector Version: 2\.2\.0  
 Product Vendor: Carbon Black  
 Product Name: Defense  
 Product Version Supported (regex): "\.\*"  
-Minimum Product Version: 5\.1\.0  
+Minimum Product Version: 5\.2\.0  
 
 This app integrates with an instance of Carbon Black defense to run investigative and generic actions
 
@@ -61,6 +61,16 @@ type** and accordingly select **Custom Access Level** which has appropriate perm
 -   For 'org.alerts.dismiss' allow permissions for 'EXECUTE'.
 -   For 'org.alerts.notes' allow permissions for 'CREATE', 'READ', and 'DELETE'.
 -   For 'org.search.events', allow permission for 'CREATE' and 'READ'.
+
+## Port Information
+
+The app uses HTTP/HTTPS protocol for communicating with the Carbon Black Defense Server. Below are
+the default ports used by Splunk SOAR.
+
+| Service Name | Transport Protocol | Port |
+|--------------|--------------------|------|
+| http         | tcp                | 80   |
+| https        | tcp                | 443  |
 
 
 ### Configuration Variables
@@ -127,6 +137,18 @@ DATA PATH | TYPE | CONTAINS
 action\_result\.status | string | 
 action\_result\.parameter\.limit | numeric | 
 action\_result\.parameter\.start | numeric | 
+action\_result\.data\.\*\.name | string | 
+action\_result\.data\.\*\.email | string | 
+action\_result\.data\.\*\.status | string | 
+action\_result\.data\.\*\.base\_device | string | 
+action\_result\.data\.\*\.nsx\_enabled | string | 
+action\_result\.data\.\*\.quarantined | boolean | 
+action\_result\.data\.\*\.cloud\_provider\_tags | string | 
+action\_result\.data\.\*\.auto\_scaling\_group\_name | string | 
+action\_result\.data\.\*\.virtual\_private\_cloud\_id | string | 
+action\_result\.data\.\*\.cloud\_provider\_account\_id | string | 
+action\_result\.data\.\*\.cloud\_provider\_resource\_id | string | 
+action\_result\.data\.\*\.nsx\_distributed\_firewall\_policy | string | 
 action\_result\.data\.\*\.activation\_code | string | 
 action\_result\.data\.\*\.activation\_code\_expiry\_time | string | 
 action\_result\.data\.\*\.ad\_group\_id | numeric | 
@@ -249,6 +271,8 @@ No parameters are required for this action
 DATA PATH | TYPE | CONTAINS
 --------- | ---- | --------
 action\_result\.status | string | 
+action\_result\.data\.\*\.orgId | numeric | 
+action\_result\.data\.\*\.vdiAutoDeregInactiveIntervalMs | string | 
 action\_result\.data\.\*\.description | string | 
 action\_result\.data\.\*\.id | numeric |  `cb defense policy id` 
 action\_result\.data\.\*\.latestRevision | numeric | 
@@ -437,6 +461,10 @@ action\_result\.parameter\.limit | numeric |
 action\_result\.parameter\.owner | string | 
 action\_result\.parameter\.search\_span | string | 
 action\_result\.parameter\.start | numeric | 
+action\_result\.data\.\*\.legacy | boolean | 
+action\_result\.data\.\*\.enriched | boolean | 
+action\_result\.data\.\*\.blocked\_name | string | 
+action\_result\.data\.\*\.blocked\_effective\_reputation | string | 
 action\_result\.data\.\*\.alert\_category | string | 
 action\_result\.data\.\*\.alert\_id | string |  `cb defense alert id` 
 action\_result\.data\.\*\.backend\_timestamp | string | 
@@ -498,6 +526,12 @@ action\_result\.parameter\.host\_name | string |  `host name`
 action\_result\.parameter\.ip | string |  `ip`  `ipv6` 
 action\_result\.parameter\.owner | string | 
 action\_result\.parameter\.search\_span | string | 
+action\_result\.data\.\*\.event\_network\_inbound | boolean | 
+action\_result\.data\.\*\.event\_network\_location | string | 
+action\_result\.data\.\*\.event\_network\_protocol | string | 
+action\_result\.data\.\*\.event\_network\_local\_ipv4 | string | 
+action\_result\.data\.\*\.event\_network\_remote\_ipv4 | string | 
+action\_result\.data\.\*\.event\_network\_remote\_port | numeric | 
 action\_result\.data\.\*\.backend\_timestamp | string | 
 action\_result\.data\.\*\.device\_group\_id | numeric | 
 action\_result\.data\.\*\.device\_id | numeric |  `cb defense device id` 
@@ -542,6 +576,20 @@ DATA PATH | TYPE | CONTAINS
 --------- | ---- | --------
 action\_result\.status | string | 
 action\_result\.parameter\.id | string |  `cb defense event id` 
+action\_result\.data\.\*\.netconn\_ipv4 | numeric | 
+action\_result\.data\.\*\.netconn\_port | numeric | 
+action\_result\.data\.\*\.netconn\_domain | string | 
+action\_result\.data\.\*\.netconn\_inbound | boolean | 
+action\_result\.data\.\*\.netconn\_location | string | 
+action\_result\.data\.\*\.netconn\_protocol | string | 
+action\_result\.data\.\*\.netconn\_local\_ipv4 | numeric | 
+action\_result\.data\.\*\.netconn\_local\_port | numeric | 
+action\_result\.data\.\*\.event\_network\_inbound | boolean | 
+action\_result\.data\.\*\.event\_network\_location | string | 
+action\_result\.data\.\*\.event\_network\_protocol | string | 
+action\_result\.data\.\*\.event\_network\_local\_ipv4 | string | 
+action\_result\.data\.\*\.event\_network\_remote\_ipv4 | string | 
+action\_result\.data\.\*\.event\_network\_remote\_port | numeric | 
 action\_result\.data\.\*\.backend\_timestamp | string | 
 action\_result\.data\.\*\.childproc\_cmdline | string |  `file path` 
 action\_result\.data\.\*\.childproc\_cmdline\_length | numeric | 
@@ -610,13 +658,29 @@ This Action requires Custom API Key, Custom API Connector ID, and Organization K
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**id** |  required  | Alert ID | string |  `cb defense alert id` 
+**id** |  required  | Alert ID/Legacy alert ID | string |  `cb defense alert id`  `cb defense legacy alert id` 
 
 #### Action Output
 DATA PATH | TYPE | CONTAINS
 --------- | ---- | --------
 action\_result\.status | string | 
-action\_result\.parameter\.id | string |  `cb defense alert id` 
+action\_result\.parameter\.id | string |  `cb defense alert id`  `cb defense legacy alert id` 
+action\_result\.data\.\*\.num\_found | numeric | 
+action\_result\.data\.\*\.num\_available | numeric | 
+action\_result\.data\.\*\.reason\_code | string | 
+action\_result\.data\.\*\.sensor\_action | string | 
+action\_result\.data\.\*\.policy\_applied | string | 
+action\_result\.data\.\*\.device\_location | string | 
+action\_result\.data\.\*\.threat\_activity\_c2 | string | 
+action\_result\.data\.\*\.created\_by\_event\_id | string | 
+action\_result\.data\.\*\.threat\_activity\_dlp | string | 
+action\_result\.data\.\*\.threat\_activity\_phish | string | 
+action\_result\.data\.\*\.blocked\_threat\_category | string | 
+action\_result\.data\.\*\.threat\_cause\_parent\_guid | string | 
+action\_result\.data\.\*\.threat\_cause\_process\_guid | string | 
+action\_result\.data\.\*\.not\_blocked\_threat\_category | string | 
+action\_result\.data\.\*\.threat\_cause\_cause\_event\_id | string | 
+action\_result\.data\.\*\.threat\_cause\_actor\_process\_pid | string | 
 action\_result\.data\.\*\.category | string | 
 action\_result\.data\.\*\.count | numeric | 
 action\_result\.data\.\*\.create\_time | string | 
@@ -633,7 +697,7 @@ action\_result\.data\.\*\.ioc\_hit | string |  `ip`  `ipv6`
 action\_result\.data\.\*\.ioc\_id | string | 
 action\_result\.data\.\*\.last\_event\_time | string | 
 action\_result\.data\.\*\.last\_update\_time | string | 
-action\_result\.data\.\*\.legacy\_alert\_id | string | 
+action\_result\.data\.\*\.legacy\_alert\_id | string |  `cb defense legacy alert id` 
 action\_result\.data\.\*\.notes\_present | boolean | 
 action\_result\.data\.\*\.org\_key | string | 
 action\_result\.data\.\*\.policy\_id | numeric | 
@@ -733,7 +797,8 @@ DATA PATH | TYPE | CONTAINS
 action\_result\.status | string | 
 action\_result\.parameter\.policy | string | 
 action\_result\.parameter\.policy\_id | string |  `cb defense policy id` 
-action\_result\.data | string | 
+action\_result\.data\.\*\.message | string | 
+action\_result\.data\.\*\.success | boolean | 
 action\_result\.summary\.policy\_id | string |  `cb defense policy id` 
 action\_result\.message | string | 
 summary\.total\_objects | numeric | 
@@ -757,6 +822,12 @@ DATA PATH | TYPE | CONTAINS
 --------- | ---- | --------
 action\_result\.status | string | 
 action\_result\.parameter\.policy\_id | string |  `cb defense policy id` 
+action\_result\.data\.\*\.message | string | 
+action\_result\.data\.\*\.success | boolean | 
+action\_result\.data\.\*\.policyInfo\.orgId | numeric | 
+action\_result\.data\.\*\.policyInfo\.policy\.avSettings\.onDemandScan\.profile | string | 
+action\_result\.data\.\*\.policyInfo\.policy\.knownBadHashAutoDeleteDelayMs | string | 
+action\_result\.data\.\*\.policyInfo\.vdiAutoDeregInactiveIntervalMs | string | 
 action\_result\.data\.\*\.policyInfo\.description | string | 
 action\_result\.data\.\*\.policyInfo\.id | numeric | 
 action\_result\.data\.\*\.policyInfo\.latestRevision | numeric | 
