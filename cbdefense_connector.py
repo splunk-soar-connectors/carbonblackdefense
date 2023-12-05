@@ -514,7 +514,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
             result_params["rows"] = params['rows'] = limit
 
         if not query:
-            return action_result.set_status(phantom.APP_ERROR, CBD_REQUIRED_FIELD_MESSAGE_PROCESS)
+            return action_result.set_status(phantom.APP_ERROR, CBD_REQUIRED_FIELD_MSG_PROCESS)
 
         get_job_id_api = CBD_LIST_PROCESS_GET_JOB_API.format(self._org_key)
         ret_val, resp_json_job_id = self._make_rest_call(get_job_id_api, action_result, data=params, method="post", is_new_api=True)
@@ -608,7 +608,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
         params, query = self.create_events_data(param, params, query)
 
         if not query:
-            return action_result.set_status(phantom.APP_ERROR, CBD_REQUIRED_FIELD_MESSAGE)
+            return action_result.set_status(phantom.APP_ERROR, CBD_REQUIRED_FIELD_MSG)
 
         ret_val, resp_json = self._make_rest_call(CBD_LIST_EVENT_GET_JOB_API.format(self._org_key), action_result, data=params, method='post',
                                                   is_new_api=True)
