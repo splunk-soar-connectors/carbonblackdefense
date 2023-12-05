@@ -55,7 +55,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
         if not isinstance(self._state, dict):
             self.debug_print("Resetting the state file with the default format")
             self._state = {"app_version": self.get_app_json().get("app_version")}
-            return self.set_status(phantom.APP_ERROR, CBD_STATE_FILE_CORRUPT_ERR)
+            return self.set_status(phantom.APP_ERROR, CBD_STATE_FILE_CORRUPT_ERROR)
 
         config = self.get_config()
 
@@ -109,7 +109,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
                 return None
 
             if parameter < 0:
-                action_result.set_status(phantom.APP_ERROR, ERR_NEGATIVE_INT_PARAM.format(param=key))
+                action_result.set_status(phantom.APP_ERROR, ERROR_NEGATIVE_INT_PARAM.format(param=key))
                 return None
 
             if not allow_zero and parameter == 0:

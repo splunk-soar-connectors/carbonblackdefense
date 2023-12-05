@@ -32,7 +32,7 @@ CBD_GET_ALERT_API = "/appservices/v6/orgs/{1}/alerts/{0}"
 CBD_GET_EVENT_API = "/api/investigate/v2/orgs/{0}/enriched_events/detail_jobs"
 CBD_SEARCH_ALERT_API = "/appservices/v6/orgs/{0}/alerts/_search"
 CBD_DEFAULT_REQUEST_TIMEOUT = 30  # in seconds
-CBD_STATE_FILE_CORRUPT_ERR = (
+CBD_STATE_FILE_CORRUPT_ERROR = (
     "Error occurred while loading the state file due to its unexpected format. "
     "Resetting the state file with the default format. Please try again"
 )
@@ -53,7 +53,7 @@ CBD_POLICY_RETRIEVED_SUCCESS = "Policy retrieved successfully"
 CBD_REQUIRED_FIELD_MSG = "Add at least value in one of the following fields: event_type, ip, host name, hash, application, owner"
 CBD_REQUIRED_FIELD_MSG_PROCESS = "Add at least value in one of the following fields: ip, host name, owner"
 INVALID_INT = "Please provide a valid integer value in the {param}"
-ERR_NEGATIVE_INT_PARAM = "Please provide a valid non-negative integer value in the {param}"
+ERROR_NEGATIVE_INT_PARAM = "Please provide a valid non-negative integer value in the {param}"
 NON_ZERO_ERROR = "Please provide non-zero positive integer in {param}"
 TEST_CONNECTIVITY_FAILED = "Test Connectivity Failed"
 TEST_CONNECTIVITY_PASSED = "Test Connectivity Passed"
