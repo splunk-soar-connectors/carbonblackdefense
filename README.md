@@ -540,7 +540,7 @@ action_result.data.\*.device_policy_id | numeric |  |   6525
 action_result.data.\*.device_timestamp | string |  |   2021-08-16T16:13:19.408Z 
 action_result.data.\*.enriched | boolean |  |   True  False 
 action_result.data.\*.enriched_event_type | string |  |   SYSTEM_API_CALL 
-action_result.data.\*.event_description | string |  |   The application "<share><link hash="c7db4ae8175c33a47baa3ddfa089fad17bc8e362f21e835d78ab22c9231fe370">C:\\Windows\\system32\\svchost.exe -k netsvcs</link></share>" attempted to open the process "c:\\windows\\system32\\wbem\\wmiprvse.exe", by calling the function "OpenProcess". The operation was successful. # pragma: allowlist secret
+action_result.data.\*.event_description | string |  |   The application "<share><link hash="c7db4ae8175c33a47baa3ddfa089fad17bc8e362f21e835d78ab22c9231fe370">C:\\Windows\\system32\\svchost.exe -k netsvcs</link></share>" attempted to open the process "c:\\windows\\system32\\wbem\\wmiprvse.exe", by calling the function "OpenProcess". The operation was successful. 
 action_result.data.\*.event_id | string |  `cb defense event id`  |   f39a55e8feac11eb9c368d6106d24432 
 action_result.data.\*.event_type | string |  |   crossproc 
 action_result.data.\*.ingress_time | numeric |  |   1629130444544 
@@ -616,7 +616,7 @@ action_result.data.\*.device_timestamp | string |  |   2021-08-12T08:08:02.934Z
 action_result.data.\*.document_guid | string |  |   DJ9-V4MJTwWEyJUqfPgZMw 
 action_result.data.\*.enriched | boolean |  |   True  False 
 action_result.data.\*.enriched_event_type | string |  |   CREATE_PROCESS 
-action_result.data.\*.event_description | string |  |   The application "<share><link hash="cbc104fcc03cb2acbdafc2fe2669e8da54993f8d21d8851d4d80ecec26a3a9f0">C:\\program files (x86)\\google\\chrome\\application\\chrome.exe</link></share>" invoked the application "<share><link hash="cbc104fcc03cb2acbdafc2fe2669e8da54993f8d21d8851d4d80ecec26a3a9f0">C:\\program files (x86)\\google\\chrome\\application\\chrome.exe</link></share>". The operation was successful. # pragma: allowlist secret
+action_result.data.\*.event_description | string |  |   The application "<share><link hash="cbc104fcc03cb2acbdafc2fe2669e8da54993f8d21d8851d4d80ecec26a3a9f0">C:\\program files (x86)\\google\\chrome\\application\\chrome.exe</link></share>" invoked the application "<share><link hash="cbc104fcc03cb2acbdafc2fe2669e8da54993f8d21d8851d4d80ecec26a3a9f0">C:\\program files (x86)\\google\\chrome\\application\\chrome.exe</link></share>". The operation was successful. 
 action_result.data.\*.event_id | string |  `md5`  |   71a57a17fb4411eb935515fc69969bb2 
 action_result.data.\*.event_report_code | string |  |   SUB_RPT_NONE 
 action_result.data.\*.event_type | string |  |   childproc 
