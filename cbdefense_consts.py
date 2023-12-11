@@ -1,6 +1,6 @@
 # File: cbdefense_consts.py
 #
-# Copyright (c) 2018-2022 Splunk Inc.
+# Copyright (c) 2018-2023 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ CBD_GET_ALERT_API = "/appservices/v6/orgs/{1}/alerts/{0}"
 CBD_GET_EVENT_API = "/api/investigate/v2/orgs/{0}/enriched_events/detail_jobs"
 CBD_SEARCH_ALERT_API = "/appservices/v6/orgs/{0}/alerts/_search"
 CBD_DEFAULT_REQUEST_TIMEOUT = 30  # in seconds
-CBD_STATE_FILE_CORRUPT_ERR = (
+CBD_STATE_FILE_CORRUPT_ERROR = (
     "Error occurred while loading the state file due to its unexpected format. "
     "Resetting the state file with the default format. Please try again"
 )
@@ -50,10 +50,10 @@ CBD_COMPLETED_NOT_EQ_CONTACTED = ", process still not completed so results may v
 CBD_NOTIFICATION_API = "/integrationServices/v3/notification"
 CBD_POLICY_UPDATED_SUCCESS = "Policy updated successfully"
 CBD_POLICY_RETRIEVED_SUCCESS = "Policy retrieved successfully"
-CBD_REQUIRED_FIELD_MESSAGE = "Add at least value in one of the following fields: event_type, ip, host name, hash, application, owner"
-CBD_REQUIRED_FIELD_MESSAGE_PROCESS = "Add at least value in one of the following fields: ip, host name, owner"
+CBD_REQUIRED_FIELD_MSG = "Add at least value in one of the following fields: event_type, ip, host name, hash, application, owner"
+CBD_REQUIRED_FIELD_MSG_PROCESS = "Add at least value in one of the following fields: ip, host name, owner"
 INVALID_INT = "Please provide a valid integer value in the {param}"
-ERR_NEGATIVE_INT_PARAM = "Please provide a valid non-negative integer value in the {param}"
+ERROR_NEGATIVE_INT_PARAM = "Please provide a valid non-negative integer value in the {param}"
 NON_ZERO_ERROR = "Please provide non-zero positive integer in {param}"
 TEST_CONNECTIVITY_FAILED = "Test Connectivity Failed"
 TEST_CONNECTIVITY_PASSED = "Test Connectivity Passed"
