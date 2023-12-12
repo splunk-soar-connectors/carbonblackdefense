@@ -1,6 +1,6 @@
 # File: cbdefense_connector.py
 #
-# Copyright (c) 2018-2022 Splunk Inc.
+# Copyright (c) 2018-2023 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
         if not isinstance(self._state, dict):
             self.debug_print("Resetting the state file with the default format")
             self._state = {"app_version": self.get_app_json().get("app_version")}
-            return self.set_status(phantom.APP_ERROR, CBD_STATE_FILE_CORRUPT_ERR)
+            return self.set_status(phantom.APP_ERROR, CBD_STATE_FILE_CORRUPT_ERROR)
 
         config = self.get_config()
 
@@ -109,7 +109,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
                 return None
 
             if parameter < 0:
-                action_result.set_status(phantom.APP_ERROR, ERR_NEGATIVE_INT_PARAM.format(param=key))
+                action_result.set_status(phantom.APP_ERROR, ERROR_NEGATIVE_INT_PARAM.format(param=key))
                 return None
 
             if not allow_zero and parameter == 0:
@@ -514,7 +514,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
             result_params["rows"] = params['rows'] = limit
 
         if not query:
-            return action_result.set_status(phantom.APP_ERROR, CBD_REQUIRED_FIELD_MESSAGE_PROCESS)
+            return action_result.set_status(phantom.APP_ERROR, CBD_REQUIRED_FIELD_MSG_PROCESS)
 
         get_job_id_api = CBD_LIST_PROCESS_GET_JOB_API.format(self._org_key)
         ret_val, resp_json_job_id = self._make_rest_call(get_job_id_api, action_result, data=params, method="post", is_new_api=True)
@@ -608,7 +608,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
         params, query = self.create_events_data(param, params, query)
 
         if not query:
-            return action_result.set_status(phantom.APP_ERROR, CBD_REQUIRED_FIELD_MESSAGE)
+            return action_result.set_status(phantom.APP_ERROR, CBD_REQUIRED_FIELD_MSG)
 
         ret_val, resp_json = self._make_rest_call(CBD_LIST_EVENT_GET_JOB_API.format(self._org_key), action_result, data=params, method='post',
                                                   is_new_api=True)
