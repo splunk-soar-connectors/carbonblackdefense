@@ -816,21 +816,6 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.orgId",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1105
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.vdiAutoDeregInactiveIntervalMs",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.description",
-                    "data_type": "string"
-                },
-                {
                     "data_path": "action_result.data.*.id",
                     "data_type": "numeric",
                     "example_values": [
@@ -841,106 +826,11 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.latestRevision",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1488926710902,
-                        1628764195890
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.name",
-                    "data_type": "string",
-                    "example_values": [
-                        "default"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.avSettings.apc.enabled",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.avSettings.apc.maxExeDelay",
-                    "data_type": "numeric",
-                    "example_values": [
-                        45
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.avSettings.apc.maxFileSize",
-                    "data_type": "numeric",
-                    "example_values": [
-                        4
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.avSettings.apc.riskLevel",
-                    "data_type": "numeric",
-                    "example_values": [
-                        4
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.avSettings.features.*.enabled",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.avSettings.features.*.name",
-                    "data_type": "string",
-                    "example_values": [
-                        "SIGNATURE_UPDATE"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.avSettings.onAccessScan.profile",
-                    "data_type": "string",
-                    "example_values": [
-                        "NORMAL",
-                        "AGGRESSIVE"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.avSettings.onDemandScan.profile",
-                    "data_type": "string",
-                    "example_values": [
-                        "NORMAL"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.avSettings.onDemandScan.scanCdDvd",
-                    "data_type": "string",
-                    "example_values": [
-                        "AUTOSCAN"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.avSettings.onDemandScan.scanUsb",
-                    "data_type": "string",
-                    "example_values": [
-                        "AUTOSCAN"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.avSettings.onDemandScan.schedule.days",
+                    "data_path": "action_result.data.*.description",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.policy.avSettings.onDemandScan.schedule.rangeHours",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.avSettings.onDemandScan.schedule.recoveryScanIfMissed",
+                    "data_path": "action_result.data.*.is_system",
                     "data_type": "boolean",
                     "example_values": [
                         true,
@@ -948,193 +838,19 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.policy.avSettings.onDemandScan.schedule.startHour",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.avSettings.signatureUpdate.schedule.fullIntervalHours",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.avSettings.signatureUpdate.schedule.initialRandomDelayHours",
-                    "data_type": "numeric",
-                    "example_values": [
-                        4
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.avSettings.signatureUpdate.schedule.intervalHours",
-                    "data_type": "numeric",
-                    "example_values": [
-                        4
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.avSettings.updateServers.servers.*.flags",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.avSettings.updateServers.servers.*.regId",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.policy.avSettings.updateServers.servers.*.server",
+                    "data_path": "action_result.data.*.priority_level",
                     "data_type": "string",
                     "example_values": [
-                        "http://defense.phantom.local",
-                        "http://updates.cdc.carbonblack.io/update"
-                    ],
-                    "contains": [
-                        "url"
+                       "MEDIUM"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.policy.avSettings.updateServers.serversForOffSiteDevices",
-                    "data_type": "string",
-                    "example_values": [
-                        "http://defense.phantom.local",
-                        "http://updates.cdc.carbonblack.io/update"
-                    ],
-                    "contains": [
-                        "url"
-                    ]
+                    "data_path": "action_result.data.*.position",
+                    "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.policy.directoryActionRules",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.policy.directoryActionRules.*.actions.FILE_UPLOAD",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.directoryActionRules.*.actions.PROTECTION",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.directoryActionRules.*.path",
-                    "data_type": "string",
-                    "contains": [
-                        "file path"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.id",
-                    "data_type": "numeric",
-                    "example_values": [
-                        -1
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.knownBadHashAutoDeleteDelayMs",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.policy.rules",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.policy.rules.*.action",
-                    "data_type": "string",
-                    "example_values": [
-                        "DENY",
-                        "TERMINATE"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.rules.*.application.type",
-                    "data_type": "string",
-                    "example_values": [
-                        "REPUTATION"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.rules.*.application.value",
-                    "data_type": "string",
-                    "example_values": [
-                        "COMPANY_BLACK_LIST",
-                        "KNOWN_MALWARE"
-                    ],
-                    "contains": [
-                        "file path",
-                        "file name"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.rules.*.id",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1,
-                        402
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.rules.*.operation",
-                    "data_type": "string",
-                    "example_values": [
-                        "RUN"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.rules.*.required",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.sensorSettings.*.name",
-                    "data_type": "string",
-                    "example_values": [
-                        "ALLOW_UNINSTALL"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policy.sensorSettings.*.value",
-                    "data_type": "string",
-                    "example_values": [
-                        "true"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.priorityLevel",
-                    "data_type": "string",
-                    "example_values": [
-                        "MEDIUM"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.systemPolicy",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.version",
-                    "data_type": "numeric",
-                    "example_values": [
-                        2
-                    ]
+                    "data_path": "action_result.data.*.num_devices",
+                    "data_type": "numeric"
                 },
                 {
                     "data_path": "action_result.summary.num_policies",
@@ -1255,14 +971,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.message",
-                    "data_type": "string",
-                    "example_values": [
-                        "Success"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policyId",
+                    "data_path": "action_result.data.*.id",
                     "data_type": "numeric",
                     "example_values": [
                         13145
@@ -1274,12 +983,312 @@
                     "column_order": 1
                 },
                 {
-                    "data_path": "action_result.data.*.success",
+                    "data_path": "action_result.data.*.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "Standard"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.org_key",
+                    "data_type": "string",
+                    "example_values": [
+                        "ABCD1234"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.priority_level",
+                    "data_type": "string",
+                    "example_values": [
+                        "MEDIUM"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.position",
+                    "data_type": "numeric",
+                    "example_values": [
+                        -1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.is_system",
                     "data_type": "boolean",
                     "example_values": [
                         true,
                         false
                     ]
+                },
+                {
+                    "data_path": "action_result.data.*.description",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.auto_deregister_inactive_vdi_interval_ms",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.auto_delete_known_bad_hashes_delay",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.avira_protection_cloud.enabled",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.avira_protection_cloud.max_exe_delay",
+                    "data_type": "numeric",
+                    "example_values": [
+                        45
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.avira_protection_cloud.max_file_size",
+                    "data_type": "numeric",
+                    "example_values": [
+                        4
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.avira_protection_cloud.risk_level",
+                    "data_type": "numeric",
+                    "example_values": [
+                        4
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_access_scan.enabled",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_access_scan.mode",
+                    "data_type": "string",
+                    "example_values": [
+                        "NORMAL"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.enabled",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.profile",
+                    "data_type": "string",
+                    "example_values": [
+                        "NORMAL"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.scan_cd_dvd",
+                    "data_type": "string",
+                    "example_values": [
+                        "AUTOSCAN"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.scan_usb",
+                    "data_type": "string",
+                    "example_values": [
+                        "AUTOSCAN"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.schedule.days",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.schedule.range_hours",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.schedule.recovery_scan_if_missed",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.schedule.start_hour",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.signature_update.enabled",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.signature_update.schedule.full_interval_hours",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.signature_update.schedule.initial_random_delay_hours",
+                    "data_type": "numeric",
+                    "example_values": [
+                        4
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.signature_update.schedule.interval_hours",
+                    "data_type": "numeric",
+                    "example_values": [
+                        4
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.update_servers.servers_for_onsite_devices.*.server",
+                    "data_type": "string",
+                    "example_values": [
+                         "http://updates.cdc.carbonblack.io/update"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.update_servers.servers_for_onsite_devices.*.preferred",
+                    "data_type": "bolean",
+                    "example_values": [
+                         true,
+                         false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.update_servers.servers_for_offsite_devices",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://defense.phantom.local",
+                        "http://updates.cdc.carbonblack.io/update"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.update_servers.servers_override",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.rules.*.id",
+                    "data_type": "numeric",
+                    "example_values": [
+                       1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.rules.*.required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.rules.*.action",
+                    "data_type": "string",
+                    "example_values": [
+                        "TERMINATE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.rules.*.application.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "REPUTATION"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.rules.*.application.value",
+                    "data_type": "string",
+                    "example_values": [
+                        "KNOWN_MALWARE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.rules.*.operation",
+                    "data_type": "string",
+                    "example_values": [
+                        "RUN"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.directory_action_rules",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.sensor_settings.*.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "ALLOW_UNINSTALL"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.sensor_settings.*.value",
+                    "data_type": "string",
+                    "example_values": [
+                        "true"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.managed_detection_response_permissions.policy_modification",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.managed_detection_response_permissions.quarantine",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.rule_configs",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.summary.policy_id",
@@ -1356,21 +1365,6 @@
                     ],
                     "contains": [
                         "cb defense policy id"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.message",
-                    "data_type": "string",
-                    "example_values": [
-                        "Success"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.success",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
                     ]
                 },
                 {
@@ -1466,14 +1460,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.message",
-                    "data_type": "string",
-                    "example_values": [
-                        "Success"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.ruleId",
+                    "data_path": "action_result.data.*.id",
                     "data_type": "numeric",
                     "example_values": [
                         1
@@ -1482,15 +1469,43 @@
                     "column_order": 0
                 },
                 {
-                    "data_path": "action_result.data.*.success",
+                    "data_path": "action_result.data.*.required",
                     "data_type": "boolean",
                     "example_values": [
-                        true,
+                        true, 
                         false
                     ]
                 },
                 {
-                    "data_path": "action_result.summary.rule_id",
+                    "data_path": "action_result.data.*.action",
+                    "data_type": "string",
+                    "example_values": [
+                        "TERMINATE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.application.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "REPUTATION"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.application.value",
+                    "data_type": "string",
+                    "example_values": [
+                        "SUSPECT_MALWARE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.operation",
+                    "data_type": "string",
+                    "example_values": [
+                        "RUN"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.id",
                     "data_type": "numeric",
                     "example_values": [
                         1
@@ -1574,21 +1589,6 @@
                     "data_type": "string",
                     "example_values": [
                         "145634"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.message",
-                    "data_type": "string",
-                    "example_values": [
-                        "Success"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.success",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
                     ]
                 },
                 {
@@ -3735,7 +3735,7 @@
                 "policy": {
                     "data_type": "string",
                     "order": 0,
-                    "description": "JSON object containing the policy details (see https://developer.carbonblack.com/reference/cb-defense/1/rest-api/#create-new-policy)",
+                    "description": "JSON object containing the policy details (see https://developer.carbonblack.com/reference/carbon-black-cloud/platform/latest/policy-service/#update-policy)",
                     "required": true
                 },
                 "policy_id": {
@@ -3780,6 +3780,315 @@
                     "column_order": 0
                 },
                 {
+                    "data_path": "action_result.data.*.id",
+                    "data_type": "numeric",
+                    "example_values": [
+                        13145
+                    ],
+                    "contains": [
+                        "cb defense policy id"
+                    ],
+                    "column_name": "ID",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.data.*.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "Standard"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.org_key",
+                    "data_type": "string",
+                    "example_values": [
+                        "ABCD1234"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.priority_level",
+                    "data_type": "string",
+                    "example_values": [
+                        "MEDIUM"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.position",
+                    "data_type": "numeric",
+                    "example_values": [
+                        -1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.is_system",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.description",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.auto_deregister_inactive_vdi_interval_ms",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.auto_delete_known_bad_hashes_delay",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.avira_protection_cloud.enabled",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.avira_protection_cloud.max_exe_delay",
+                    "data_type": "numeric",
+                    "example_values": [
+                        45
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.avira_protection_cloud.max_file_size",
+                    "data_type": "numeric",
+                    "example_values": [
+                        4
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.avira_protection_cloud.risk_level",
+                    "data_type": "numeric",
+                    "example_values": [
+                        4
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_access_scan.enabled",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_access_scan.mode",
+                    "data_type": "string",
+                    "example_values": [
+                        "NORMAL"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.enabled",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.profile",
+                    "data_type": "string",
+                    "example_values": [
+                        "NORMAL"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.scan_cd_dvd",
+                    "data_type": "string",
+                    "example_values": [
+                        "AUTOSCAN"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.scan_usb",
+                    "data_type": "string",
+                    "example_values": [
+                        "AUTOSCAN"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.schedule.days",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.schedule.range_hours",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.schedule.recovery_scan_if_missed",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.schedule.start_hour",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.signature_update.enabled",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.signature_update.schedule.full_interval_hours",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.signature_update.schedule.initial_random_delay_hours",
+                    "data_type": "numeric",
+                    "example_values": [
+                        4
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.signature_update.schedule.interval_hours",
+                    "data_type": "numeric",
+                    "example_values": [
+                        4
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.update_servers.servers_for_onsite_devices.*.server",
+                    "data_type": "string",
+                    "example_values": [
+                         "http://updates.cdc.carbonblack.io/update"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.update_servers.servers_for_onsite_devices.*.preferred",
+                    "data_type": "bolean",
+                    "example_values": [
+                         true,
+                         false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.update_servers.servers_for_offsite_devices",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://defense.phantom.local",
+                        "http://updates.cdc.carbonblack.io/update"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.update_servers.servers_override",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.rules.*.id",
+                    "data_type": "numeric",
+                    "example_values": [
+                       1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.rules.*.required",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.rules.*.action",
+                    "data_type": "string",
+                    "example_values": [
+                        "TERMINATE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.rules.*.application.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "REPUTATION"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.rules.*.application.value",
+                    "data_type": "string",
+                    "example_values": [
+                        "KNOWN_MALWARE"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.rules.*.operation",
+                    "data_type": "string",
+                    "example_values": [
+                        "RUN"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.directory_action_rules",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.sensor_settings.*.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "ALLOW_UNINSTALL"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.sensor_settings.*.value",
+                    "data_type": "string",
+                    "example_values": [
+                        "true"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.managed_detection_response_permissions.policy_modification",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.managed_detection_response_permissions.quarantine",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version",
+                    "data_type": "numeric"
+                },
+                {
                     "data_path": "action_result.data.*.message",
                     "data_type": "string",
                     "example_values": [
@@ -3787,12 +4096,8 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.success",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
+                    "data_path": "action_result.data.*.rule_configs",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.summary.policy_id",
@@ -3864,14 +4169,158 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.message",
-                    "data_type": "string",
+                    "data_path": "action_result.data.*.id",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.org_key",
+                    "data_type": "numeric",
                     "example_values": [
-                        "Success"
+                        1105
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.success",
+                    "data_path": "action_result.data.*.priority_level",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.position",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.is_system",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.data.*.description",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.auto_deregister_inactive_vdi_interval_ms",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.auto_deregister_inactive_vm_workloads_interval_ms",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.update_time",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.avira_protection_cloud.apc.enabled",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.avira_protection_cloud.apc.max_exe_delay",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.avira_protection_cloud.apc.max_file_size",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.avira_protection_cloud.apc.risk_level",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_access_scan.enabled",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_access_scan.mode",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.enabled",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.profile",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.scan_cd_dvd",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.scan_usb",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.schedule.start_hour",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.schedule.range_hours",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.on_demand_scan.schedule.recovery_scan_if_missed",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.signature_update.enabled",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.signature_update.schedule.full_interval_hours",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.signature_update.schedule.initial_random_delay_hours",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.signature_update.schedule.interval_hours",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.update_servers.servers_for_onsite_devices.*.server",
+                    "data_type": "string",
+                    "example_values": [
+                         "http://updates.cdc.carbonblack.io/update"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.update_servers.servers_for_onsite_devices.*.preferred",
+                    "data_type": "bolean",
+                    "example_values": [
+                         true,
+                         false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.update_servers.servers_for_offsite_devices",
+                    "data_type": "string",
+                    "example_values": [
+                        "http://defense.phantom.local",
+                        "http://updates.cdc.carbonblack.io/update"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.av_settings.update_servers.servers_override",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.rules.*.id",
+                    "data_type": "numeric",
+                    "example_values": [
+                       1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.rules.*.required",
                     "data_type": "boolean",
                     "example_values": [
                         true,
@@ -3879,177 +4328,87 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.policyInfo.orgId",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1105
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.onDemandScan.profile",
+                    "data_path": "action_result.data.*.rules.*.action",
                     "data_type": "string",
                     "example_values": [
-                        "NORMAL"
+                        "TERMINATE"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.policyInfo.policy.knownBadHashAutoDeleteDelayMs",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.vdiAutoDeregInactiveIntervalMs",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.description",
+                    "data_path": "action_result.data.*.rules.*.application.type",
                     "data_type": "string",
-                    "column_name": "Policy Description",
-                    "column_order": 1
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.id",
-                    "data_type": "numeric"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.latestRevision",
-                    "data_type": "numeric"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.name",
-                    "data_type": "string",
-                    "column_name": "Policy Name",
-                    "column_order": 0
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.apc.enabled",
-                    "data_type": "boolean"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.apc.maxExeDelay",
-                    "data_type": "numeric"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.apc.maxFileSize",
-                    "data_type": "numeric"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.apc.riskLevel",
-                    "data_type": "numeric"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.features.*.enabled",
-                    "data_type": "boolean"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.features.*.name",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.onAccessScan.profile",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.onDemandScan.scanCdDvd",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.onDemandScan.scanUsb",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.onDemandScan.schedule.days",
-                    "data_type": "numeric"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.onDemandScan.schedule.rangeHours",
-                    "data_type": "numeric"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.onDemandScan.schedule.recoveryScanIfMissed",
-                    "data_type": "boolean"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.onDemandScan.schedule.startHour",
-                    "data_type": "numeric"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.signatureUpdate.schedule.fullIntervalHours",
-                    "data_type": "numeric"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.signatureUpdate.schedule.initialRandomDelayHours",
-                    "data_type": "numeric"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.signatureUpdate.schedule.intervalHours",
-                    "data_type": "numeric"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.updateServers.servers.*.flags",
-                    "data_type": "numeric"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.updateServers.servers.*.regId",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.updateServers.servers.*.server.*.name",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.avSettings.updateServers.serversForOffSiteDevices.*.name",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.id",
-                    "data_type": "numeric",
-                    "contains": [
-                        "cb defense policy id"
+                    "example_values": [
+                        "REPUTATION"
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.policyInfo.policy.rules.*.action",
+                    "data_path": "action_result.data.*.rules.*.application.value",
+                    "data_type": "string",
+                    "example_values": [
+                        "ADAPTIVE_WHITE_LIST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.rules.*.operation",
+                    "data_type": "string",
+                    "example_values": [
+                        "RANSOM"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.directory_action_rules",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.policyInfo.policy.rules.*.application.type",
-                    "data_type": "string"
+                    "data_path": "action_result.data.*.sensor_settings.*.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "ALLOW_UNINSTALL"
+                    ]
                 },
                 {
-                    "data_path": "action_result.data.*.policyInfo.policy.rules.*.application.value",
-                    "data_type": "string"
+                    "data_path": "action_result.data.*.sensor_settings.*.value",
+                    "data_type": "string",
+                    "example_values": [
+                        "true"
+                    ]
                 },
                 {
-                    "data_path": "action_result.data.*.policyInfo.policy.rules.*.id",
+                    "data_path": "action_result.data.*.rule_configs.*.id",
                     "data_type": "numeric"
                 },
                 {
-                    "data_path": "action_result.data.*.policyInfo.policy.rules.*.operation",
+                    "data_path": "action_result.data.*.rule_configs.*.name",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.policyInfo.policy.rules.*.required",
-                    "data_type": "boolean"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.policy.sensorSettings.*.name",
+                    "data_path": "action_result.data.*.rule_configs.*.description",
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.policyInfo.policy.sensorSettings.*.value",
+                    "data_path": "action_result.data.*.rule_configs.*.inherited_from",
+                    "data_type": "string",
+                    "example_values": [
+                        "psc:region"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.rule_configs.*.category",
+                    "data_type": "string",
+                    "example_values": [
+                        "core_prevention"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.rule_configs.*.parameters.WindowsAssignmentMode",
+                    "data_type": "string",
+                    "example_values": [
+                        "BLOCK"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.sensor_configs",
                     "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.priorityLevel",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.systemPolicy",
-                    "data_type": "boolean"
-                },
-                {
-                    "data_path": "action_result.data.*.policyInfo.version",
-                    "data_type": "numeric"
                 },
                 {
                     "data_path": "action_result.summary.policy_id",
