@@ -334,7 +334,7 @@ action_result.data.\*.av_settings.signature_update.schedule.full_interval_hours 
 action_result.data.\*.av_settings.signature_update.schedule.initial_random_delay_hours | numeric |  |   4 
 action_result.data.\*.av_settings.signature_update.schedule.interval_hours | numeric |  |   4 
 action_result.data.\*.av_settings.update_servers.servers_for_onsite_devices.\*.server | string |  `url`  |   http://updates.cdc.carbonblack.io/update 
-action_result.data.\*.av_settings.update_servers.servers_for_onsite_devices.\*.preferred | bolean |  |   True  False 
+action_result.data.\*.av_settings.update_servers.servers_for_onsite_devices.\*.preferred | boolean |  |   True  False 
 action_result.data.\*.av_settings.update_servers.servers_for_offsite_devices | string |  `url`  |   http://defense.phantom.local  http://updates.cdc.carbonblack.io/update 
 action_result.data.\*.av_settings.update_servers.servers_override | string |  |  
 action_result.data.\*.rules.\*.id | numeric |  |   1 
@@ -828,7 +828,7 @@ action_result.data.\*.signature_update.schedule.full_interval_hours | numeric | 
 action_result.data.\*.signature_update.schedule.initial_random_delay_hours | numeric |  |   4 
 action_result.data.\*.signature_update.schedule.interval_hours | numeric |  |   4 
 action_result.data.\*.av_settings.update_servers.servers_for_onsite_devices.\*.server | string |  `url`  |   http://updates.cdc.carbonblack.io/update 
-action_result.data.\*.av_settings.update_servers.servers_for_onsite_devices.\*.preferred | bolean |  |   True  False 
+action_result.data.\*.av_settings.update_servers.servers_for_onsite_devices.\*.preferred | boolean |  |   True  False 
 action_result.data.\*.av_settings.update_servers.servers_for_offsite_devices | string |  `url`  |   http://defense.phantom.local  http://updates.cdc.carbonblack.io/update 
 action_result.data.\*.av_settings.update_servers.servers_override | string |  |  
 action_result.data.\*.rules.\*.id | numeric |  |   1 
@@ -896,7 +896,7 @@ action_result.data.\*.av_settings.signature_update.schedule.full_interval_hours 
 action_result.data.\*.av_settings.signature_update.schedule.initial_random_delay_hours | numeric |  |  
 action_result.data.\*.av_settings.signature_update.schedule.interval_hours | numeric |  |  
 action_result.data.\*.av_settings.update_servers.servers_for_onsite_devices.\*.server | string |  `url`  |   http://updates.cdc.carbonblack.io/update 
-action_result.data.\*.av_settings.update_servers.servers_for_onsite_devices.\*.preferred | bolean |  |   True  False 
+action_result.data.\*.av_settings.update_servers.servers_for_onsite_devices.\*.preferred | boolean |  |   True  False 
 action_result.data.\*.av_settings.update_servers.servers_for_offsite_devices | string |  `url`  |   http://defense.phantom.local  http://updates.cdc.carbonblack.io/update 
 action_result.data.\*.av_settings.update_servers.servers_override | string |  |  
 action_result.data.\*.rules.\*.id | numeric |  |   1 
