@@ -271,51 +271,12 @@ No parameters are required for this action
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.status | string |  |   success  failed 
-action_result.data.\*.orgId | numeric |  |   1105 
-action_result.data.\*.vdiAutoDeregInactiveIntervalMs | string |  |  
-action_result.data.\*.description | string |  |  
 action_result.data.\*.id | numeric |  `cb defense policy id`  |   6525 
-action_result.data.\*.latestRevision | numeric |  |   1488926710902  1628764195890 
-action_result.data.\*.name | string |  |   default 
-action_result.data.\*.policy.avSettings.apc.enabled | boolean |  |   True  False 
-action_result.data.\*.policy.avSettings.apc.maxExeDelay | numeric |  |   45 
-action_result.data.\*.policy.avSettings.apc.maxFileSize | numeric |  |   4 
-action_result.data.\*.policy.avSettings.apc.riskLevel | numeric |  |   4 
-action_result.data.\*.policy.avSettings.features.\*.enabled | boolean |  |   True  False 
-action_result.data.\*.policy.avSettings.features.\*.name | string |  |   SIGNATURE_UPDATE 
-action_result.data.\*.policy.avSettings.onAccessScan.profile | string |  |   NORMAL  AGGRESSIVE 
-action_result.data.\*.policy.avSettings.onDemandScan.profile | string |  |   NORMAL 
-action_result.data.\*.policy.avSettings.onDemandScan.scanCdDvd | string |  |   AUTOSCAN 
-action_result.data.\*.policy.avSettings.onDemandScan.scanUsb | string |  |   AUTOSCAN 
-action_result.data.\*.policy.avSettings.onDemandScan.schedule.days | string |  |  
-action_result.data.\*.policy.avSettings.onDemandScan.schedule.rangeHours | numeric |  |   0 
-action_result.data.\*.policy.avSettings.onDemandScan.schedule.recoveryScanIfMissed | boolean |  |   True  False 
-action_result.data.\*.policy.avSettings.onDemandScan.schedule.startHour | numeric |  |   0 
-action_result.data.\*.policy.avSettings.signatureUpdate.schedule.fullIntervalHours | numeric |  |   0 
-action_result.data.\*.policy.avSettings.signatureUpdate.schedule.initialRandomDelayHours | numeric |  |   4 
-action_result.data.\*.policy.avSettings.signatureUpdate.schedule.intervalHours | numeric |  |   4 
-action_result.data.\*.policy.avSettings.updateServers.servers.\*.flags | numeric |  |   0 
-action_result.data.\*.policy.avSettings.updateServers.servers.\*.regId | string |  |  
-action_result.data.\*.policy.avSettings.updateServers.servers.\*.server | string |  `url`  |   http://defense.phantom.local  http://updates.cdc.carbonblack.io/update 
-action_result.data.\*.policy.avSettings.updateServers.serversForOffSiteDevices | string |  `url`  |   http://defense.phantom.local  http://updates.cdc.carbonblack.io/update 
-action_result.data.\*.policy.directoryActionRules | string |  |  
-action_result.data.\*.policy.directoryActionRules.\*.actions.FILE_UPLOAD | boolean |  |   True  False 
-action_result.data.\*.policy.directoryActionRules.\*.actions.PROTECTION | boolean |  |   True  False 
-action_result.data.\*.policy.directoryActionRules.\*.path | string |  `file path`  |  
-action_result.data.\*.policy.id | numeric |  |   -1 
-action_result.data.\*.policy.knownBadHashAutoDeleteDelayMs | string |  |  
-action_result.data.\*.policy.rules | string |  |  
-action_result.data.\*.policy.rules.\*.action | string |  |   DENY  TERMINATE 
-action_result.data.\*.policy.rules.\*.application.type | string |  |   REPUTATION 
-action_result.data.\*.policy.rules.\*.application.value | string |  `file path`  `file name`  |   COMPANY_BLACK_LIST  KNOWN_MALWARE 
-action_result.data.\*.policy.rules.\*.id | numeric |  |   1  402 
-action_result.data.\*.policy.rules.\*.operation | string |  |   RUN 
-action_result.data.\*.policy.rules.\*.required | boolean |  |   True  False 
-action_result.data.\*.policy.sensorSettings.\*.name | string |  |   ALLOW_UNINSTALL 
-action_result.data.\*.policy.sensorSettings.\*.value | string |  |   true 
-action_result.data.\*.priorityLevel | string |  |   MEDIUM 
-action_result.data.\*.systemPolicy | boolean |  |   True  False 
-action_result.data.\*.version | numeric |  |   2 
+action_result.data.\*.description | string |  |  
+action_result.data.\*.is_system | boolean |  |   True  False 
+action_result.data.\*.priority_level | string |  |   MEDIUM 
+action_result.data.\*.position | numeric |  |  
+action_result.data.\*.num_devices | numeric |  |  
 action_result.summary.num_policies | numeric |  |   33  93 
 action_result.message | string |  |   Num policies: 33  Num policies: 93 
 summary.total_objects | numeric |  |   1 
@@ -345,9 +306,51 @@ action_result.parameter.description | string |  |   This is going to be deleted 
 action_result.parameter.json_fields | string |  |   {"sensorSettings":[{"name":"ALLOW_UNINSTALL","value":"true"}]} 
 action_result.parameter.name | string |  |   Phantom policy 3 
 action_result.parameter.priority | string |  |   MEDIUM 
+action_result.data.\*.id | numeric |  `cb defense policy id`  |   13145 
+action_result.data.\*.name | string |  |   Standard 
+action_result.data.\*.org_key | string |  |   ABCD1234 
+action_result.data.\*.priority_level | string |  |   MEDIUM 
+action_result.data.\*.position | numeric |  |   -1 
+action_result.data.\*.is_system | boolean |  |   True  False 
+action_result.data.\*.description | string |  |  
+action_result.data.\*.auto_deregister_inactive_vdi_interval_ms | numeric |  |   0 
+action_result.data.\*.auto_delete_known_bad_hashes_delay | numeric |  |   0 
+action_result.data.\*.av_settings.avira_protection_cloud.enabled | boolean |  |   True  False 
+action_result.data.\*.av_settings.avira_protection_cloud.max_exe_delay | numeric |  |   45 
+action_result.data.\*.av_settings.avira_protection_cloud.max_file_size | numeric |  |   4 
+action_result.data.\*.av_settings.avira_protection_cloud.risk_level | numeric |  |   4 
+action_result.data.\*.av_settings.on_access_scan.enabled | boolean |  |   True  False 
+action_result.data.\*.av_settings.on_access_scan.mode | string |  |   NORMAL 
+action_result.data.\*.av_settings.on_demand_scan.enabled | boolean |  |   True  False 
+action_result.data.\*.av_settings.on_demand_scan.profile | string |  |   NORMAL 
+action_result.data.\*.av_settings.on_demand_scan.scan_cd_dvd | string |  |   AUTOSCAN 
+action_result.data.\*.av_settings.on_demand_scan.scan_usb | string |  |   AUTOSCAN 
+action_result.data.\*.av_settings.on_demand_scan.schedule.days | string |  |  
+action_result.data.\*.av_settings.on_demand_scan.schedule.range_hours | numeric |  |   0 
+action_result.data.\*.av_settings.on_demand_scan.schedule.recovery_scan_if_missed | boolean |  |   True  False 
+action_result.data.\*.av_settings.on_demand_scan.schedule.start_hour | numeric |  |   0 
+action_result.data.\*.av_settings.signature_update.enabled | boolean |  |   True  False 
+action_result.data.\*.av_settings.signature_update.schedule.full_interval_hours | numeric |  |   0 
+action_result.data.\*.av_settings.signature_update.schedule.initial_random_delay_hours | numeric |  |   4 
+action_result.data.\*.av_settings.signature_update.schedule.interval_hours | numeric |  |   4 
+action_result.data.\*.av_settings.update_servers.servers_for_onsite_devices.\*.server | string |  `url`  |   http://updates.cdc.carbonblack.io/update 
+action_result.data.\*.av_settings.update_servers.servers_for_onsite_devices.\*.preferred | bolean |  |   True  False 
+action_result.data.\*.av_settings.update_servers.servers_for_offsite_devices | string |  `url`  |   http://defense.phantom.local  http://updates.cdc.carbonblack.io/update 
+action_result.data.\*.av_settings.update_servers.servers_override | string |  |  
+action_result.data.\*.rules.\*.id | numeric |  |   1 
+action_result.data.\*.rules.\*.required | boolean |  |   True  False 
+action_result.data.\*.rules.\*.action | string |  |   TERMINATE 
+action_result.data.\*.rules.\*.application.type | string |  |   REPUTATION 
+action_result.data.\*.rules.\*.application.value | string |  |   KNOWN_MALWARE 
+action_result.data.\*.rules.\*.operation | string |  |   RUN 
+action_result.data.\*.directory_action_rules | string |  |  
+action_result.data.\*.sensor_settings.\*.name | string |  |   ALLOW_UNINSTALL 
+action_result.data.\*.sensor_settings.\*.value | string |  |   true 
+action_result.data.\*.managed_detection_response_permissions.policy_modification | boolean |  |   True  False 
+action_result.data.\*.managed_detection_response_permissions.quarantine | boolean |  |   True  False 
+action_result.data.\*.version | numeric |  |  
 action_result.data.\*.message | string |  |   Success 
-action_result.data.\*.policyId | numeric |  `cb defense policy id`  |   13145 
-action_result.data.\*.success | boolean |  |   True  False 
+action_result.data.\*.rule_configs | string |  |  
 action_result.summary.policy_id | numeric |  `cb defense policy id`  |   13145 
 action_result.message | string |  |   Policy id: 74507 
 summary.total_objects | numeric |  |   1 
@@ -371,8 +374,6 @@ DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.status | string |  |   success  failed 
 action_result.parameter.id | string |  `cb defense policy id`  |   13145 
-action_result.data.\*.message | string |  |   Success 
-action_result.data.\*.success | boolean |  |   True  False 
 action_result.summary.policy_id | string |  `cb defense policy id`  |   13145 
 action_result.message | string |  |   Policy successfully deleted 
 summary.total_objects | numeric |  |   1 
@@ -398,10 +399,13 @@ DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 action_result.status | string |  |   success  failed 
 action_result.parameter.id | string |  `cb defense policy id`  |   12864 
 action_result.parameter.rules | string |  |   {"action":"TERMINATE","application":{"type":"REPUTATION","value":"COMPANY_BLACK_LIST"},"operation":"RANSOM","required":true,"id":1} 
-action_result.data.\*.message | string |  |   Success 
-action_result.data.\*.ruleId | numeric |  |   1 
-action_result.data.\*.success | boolean |  |   True  False 
-action_result.summary.rule_id | numeric |  |   1 
+action_result.data.\*.id | numeric |  |   1 
+action_result.data.\*.required | boolean |  |   True  False 
+action_result.data.\*.action | string |  |   TERMINATE 
+action_result.data.\*.application.type | string |  |   REPUTATION 
+action_result.data.\*.application.value | string |  |   SUSPECT_MALWARE 
+action_result.data.\*.operation | string |  |   RUN 
+action_result.summary.id | numeric |  |   1 
 action_result.message | string |  |   Rule id: 1 
 summary.total_objects | numeric |  |   1 
 summary.total_objects_successful | numeric |  |   1   
@@ -426,8 +430,6 @@ DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 action_result.status | string |  |   success  failed 
 action_result.parameter.policy_id | string |  `cb defense policy id`  |   12864 
 action_result.parameter.rule_id | string |  |   145634 
-action_result.data.\*.message | string |  |   Success 
-action_result.data.\*.success | boolean |  |   True  False 
 action_result.summary.rule_id | string |  |   13145 
 action_result.message | string |  |   Rule successfully deleted 
 summary.total_objects | numeric |  |   1 
@@ -789,7 +791,7 @@ This Action requires API Key and API Connector ID.
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**policy** |  required  | JSON object containing the policy details (see https://developer.carbonblack.com/reference/cb-defense/1/rest-api/#create-new-policy) | string | 
+**policy** |  required  | JSON object containing the policy details (see https://developer.carbonblack.com/reference/carbon-black-cloud/platform/latest/policy-service/#update-policy) | string | 
 **policy_id** |  required  | The ID of the policy to replace. This ID must match the ID in the request URL | numeric |  `cb defense policy id` 
 
 #### Action Output
@@ -798,8 +800,51 @@ DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 action_result.status | string |  |   success  failed 
 action_result.parameter.policy | string |  |   {"key": "value"} 
 action_result.parameter.policy_id | string |  `cb defense policy id`  |   2343456356 
+action_result.data.\*.id | numeric |  `cb defense policy id`  |   13145 
+action_result.data.\*.name | string |  |   Standard 
+action_result.data.\*.org_key | string |  |   ABCD1234 
+action_result.data.\*.priority_level | string |  |   MEDIUM 
+action_result.data.\*.position | numeric |  |   -1 
+action_result.data.\*.is_system | boolean |  |   True  False 
+action_result.data.\*.description | string |  |  
+action_result.data.\*.auto_deregister_inactive_vdi_interval_ms | numeric |  |   0 
+action_result.data.\*.auto_delete_known_bad_hashes_delay | numeric |  |   0 
+action_result.data.\*.av_settings.avira_protection_cloud.enabled | boolean |  |   True  False 
+action_result.data.\*.av_settings.avira_protection_cloud.max_exe_delay | numeric |  |   45 
+action_result.data.\*.av_settings.avira_protection_cloud.max_file_size | numeric |  |   4 
+action_result.data.\*.av_settings.avira_protection_cloud.risk_level | numeric |  |   4 
+action_result.data.\*.av_settings.on_access_scan.enabled | boolean |  |   True  False 
+action_result.data.\*.av_settings.on_access_scan.mode | string |  |   NORMAL 
+action_result.data.\*.av_settings.on_demand_scan.enabled | boolean |  |   True  False 
+action_result.data.\*.av_settings.on_demand_scan.profile | string |  |   NORMAL 
+action_result.data.\*.av_settings.on_demand_scan.scan_cd_dvd | string |  |   AUTOSCAN 
+action_result.data.\*.av_settings.on_demand_scan.scan_usb | string |  |   AUTOSCAN 
+action_result.data.\*.av_settings.on_demand_scan.schedule.days | string |  |  
+action_result.data.\*.av_settings.on_demand_scan.schedule.range_hours | numeric |  |   0 
+action_result.data.\*.av_settings.on_demand_scan.schedule.recovery_scan_if_missed | boolean |  |   True  False 
+action_result.data.\*.av_settings.on_demand_scan.schedule.start_hour | numeric |  |   0 
+action_result.data.\*.signature_update.enabled | boolean |  |   True  False 
+action_result.data.\*.signature_update.schedule.full_interval_hours | numeric |  |   0 
+action_result.data.\*.signature_update.schedule.initial_random_delay_hours | numeric |  |   4 
+action_result.data.\*.signature_update.schedule.interval_hours | numeric |  |   4 
+action_result.data.\*.av_settings.update_servers.servers_for_onsite_devices.\*.server | string |  `url`  |   http://updates.cdc.carbonblack.io/update 
+action_result.data.\*.av_settings.update_servers.servers_for_onsite_devices.\*.preferred | bolean |  |   True  False 
+action_result.data.\*.av_settings.update_servers.servers_for_offsite_devices | string |  `url`  |   http://defense.phantom.local  http://updates.cdc.carbonblack.io/update 
+action_result.data.\*.av_settings.update_servers.servers_override | string |  |  
+action_result.data.\*.rules.\*.id | numeric |  |   1 
+action_result.data.\*.rules.\*.required | boolean |  |   True  False 
+action_result.data.\*.rules.\*.action | string |  |   TERMINATE 
+action_result.data.\*.rules.\*.application.type | string |  |   REPUTATION 
+action_result.data.\*.rules.\*.application.value | string |  |   KNOWN_MALWARE 
+action_result.data.\*.rules.\*.operation | string |  |   RUN 
+action_result.data.\*.directory_action_rules | string |  |  
+action_result.data.\*.sensor_settings.\*.name | string |  |   ALLOW_UNINSTALL 
+action_result.data.\*.sensor_settings.\*.value | string |  |   true 
+action_result.data.\*.managed_detection_response_permissions.policy_modification | boolean |  |   True  False 
+action_result.data.\*.managed_detection_response_permissions.quarantine | boolean |  |   True  False 
+action_result.data.\*.version | numeric |  |  
 action_result.data.\*.message | string |  |   Success 
-action_result.data.\*.success | boolean |  |   True  False 
+action_result.data.\*.rule_configs | string |  |  
 action_result.summary.policy_id | string |  `cb defense policy id`  |   53253 
 action_result.message | string |  |   Policy updated successfully 
 summary.total_objects | numeric |  |  
@@ -823,48 +868,53 @@ DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.status | string |  |   success  failed 
 action_result.parameter.policy_id | string |  `cb defense policy id`  |   3436345 
-action_result.data.\*.message | string |  |   Success 
-action_result.data.\*.success | boolean |  |   True  False 
-action_result.data.\*.policyInfo.orgId | numeric |  |   1105 
-action_result.data.\*.policyInfo.policy.avSettings.onDemandScan.profile | string |  |   NORMAL 
-action_result.data.\*.policyInfo.policy.knownBadHashAutoDeleteDelayMs | string |  |  
-action_result.data.\*.policyInfo.vdiAutoDeregInactiveIntervalMs | string |  |  
-action_result.data.\*.policyInfo.description | string |  |  
-action_result.data.\*.policyInfo.id | numeric |  |  
-action_result.data.\*.policyInfo.latestRevision | numeric |  |  
-action_result.data.\*.policyInfo.name | string |  |  
-action_result.data.\*.policyInfo.policy.avSettings.apc.enabled | boolean |  |  
-action_result.data.\*.policyInfo.policy.avSettings.apc.maxExeDelay | numeric |  |  
-action_result.data.\*.policyInfo.policy.avSettings.apc.maxFileSize | numeric |  |  
-action_result.data.\*.policyInfo.policy.avSettings.apc.riskLevel | numeric |  |  
-action_result.data.\*.policyInfo.policy.avSettings.features.\*.enabled | boolean |  |  
-action_result.data.\*.policyInfo.policy.avSettings.features.\*.name | string |  |  
-action_result.data.\*.policyInfo.policy.avSettings.onAccessScan.profile | string |  |  
-action_result.data.\*.policyInfo.policy.avSettings.onDemandScan.scanCdDvd | string |  |  
-action_result.data.\*.policyInfo.policy.avSettings.onDemandScan.scanUsb | string |  |  
-action_result.data.\*.policyInfo.policy.avSettings.onDemandScan.schedule.days | numeric |  |  
-action_result.data.\*.policyInfo.policy.avSettings.onDemandScan.schedule.rangeHours | numeric |  |  
-action_result.data.\*.policyInfo.policy.avSettings.onDemandScan.schedule.recoveryScanIfMissed | boolean |  |  
-action_result.data.\*.policyInfo.policy.avSettings.onDemandScan.schedule.startHour | numeric |  |  
-action_result.data.\*.policyInfo.policy.avSettings.signatureUpdate.schedule.fullIntervalHours | numeric |  |  
-action_result.data.\*.policyInfo.policy.avSettings.signatureUpdate.schedule.initialRandomDelayHours | numeric |  |  
-action_result.data.\*.policyInfo.policy.avSettings.signatureUpdate.schedule.intervalHours | numeric |  |  
-action_result.data.\*.policyInfo.policy.avSettings.updateServers.servers.\*.flags | numeric |  |  
-action_result.data.\*.policyInfo.policy.avSettings.updateServers.servers.\*.regId | string |  |  
-action_result.data.\*.policyInfo.policy.avSettings.updateServers.servers.\*.server.\*.name | string |  |  
-action_result.data.\*.policyInfo.policy.avSettings.updateServers.serversForOffSiteDevices.\*.name | string |  |  
-action_result.data.\*.policyInfo.policy.id | numeric |  `cb defense policy id`  |  
-action_result.data.\*.policyInfo.policy.rules.\*.action | string |  |  
-action_result.data.\*.policyInfo.policy.rules.\*.application.type | string |  |  
-action_result.data.\*.policyInfo.policy.rules.\*.application.value | string |  |  
-action_result.data.\*.policyInfo.policy.rules.\*.id | numeric |  |  
-action_result.data.\*.policyInfo.policy.rules.\*.operation | string |  |  
-action_result.data.\*.policyInfo.policy.rules.\*.required | boolean |  |  
-action_result.data.\*.policyInfo.policy.sensorSettings.\*.name | string |  |  
-action_result.data.\*.policyInfo.policy.sensorSettings.\*.value | string |  |  
-action_result.data.\*.policyInfo.priorityLevel | string |  |  
-action_result.data.\*.policyInfo.systemPolicy | boolean |  |  
-action_result.data.\*.policyInfo.version | numeric |  |  
+action_result.data.\*.id | numeric |  |  
+action_result.data.\*.name | string |  |  
+action_result.data.\*.org_key | numeric |  |   1105 
+action_result.data.\*.priority_level | string |  |  
+action_result.data.\*.position | numeric |  |  
+action_result.data.\*.is_system | boolean |  |  
+action_result.data.\*.description | string |  |  
+action_result.data.\*.auto_deregister_inactive_vdi_interval_ms | numeric |  |  
+action_result.data.\*.auto_deregister_inactive_vm_workloads_interval_ms | numeric |  |  
+action_result.data.\*.update_time | numeric |  |  
+action_result.data.\*.av_settings.avira_protection_cloud.apc.enabled | boolean |  |  
+action_result.data.\*.av_settings.avira_protection_cloud.apc.max_exe_delay | numeric |  |  
+action_result.data.\*.av_settings.avira_protection_cloud.apc.max_file_size | numeric |  |  
+action_result.data.\*.av_settings.avira_protection_cloud.apc.risk_level | numeric |  |  
+action_result.data.\*.av_settings.on_access_scan.enabled | boolean |  |  
+action_result.data.\*.av_settings.on_access_scan.mode | string |  |  
+action_result.data.\*.av_settings.on_demand_scan.enabled | boolean |  |  
+action_result.data.\*.av_settings.on_demand_scan.profile | string |  |  
+action_result.data.\*.av_settings.on_demand_scan.scan_cd_dvd | string |  |  
+action_result.data.\*.av_settings.on_demand_scan.scan_usb | string |  |  
+action_result.data.\*.av_settings.on_demand_scan.schedule.start_hour | numeric |  |  
+action_result.data.\*.av_settings.on_demand_scan.schedule.range_hours | numeric |  |  
+action_result.data.\*.av_settings.on_demand_scan.schedule.recovery_scan_if_missed | boolean |  |  
+action_result.data.\*.av_settings.signature_update.enabled | boolean |  |  
+action_result.data.\*.av_settings.signature_update.schedule.full_interval_hours | numeric |  |  
+action_result.data.\*.av_settings.signature_update.schedule.initial_random_delay_hours | numeric |  |  
+action_result.data.\*.av_settings.signature_update.schedule.interval_hours | numeric |  |  
+action_result.data.\*.av_settings.update_servers.servers_for_onsite_devices.\*.server | string |  `url`  |   http://updates.cdc.carbonblack.io/update 
+action_result.data.\*.av_settings.update_servers.servers_for_onsite_devices.\*.preferred | bolean |  |   True  False 
+action_result.data.\*.av_settings.update_servers.servers_for_offsite_devices | string |  `url`  |   http://defense.phantom.local  http://updates.cdc.carbonblack.io/update 
+action_result.data.\*.av_settings.update_servers.servers_override | string |  |  
+action_result.data.\*.rules.\*.id | numeric |  |   1 
+action_result.data.\*.rules.\*.required | boolean |  |   True  False 
+action_result.data.\*.rules.\*.action | string |  |   TERMINATE 
+action_result.data.\*.rules.\*.application.type | string |  |   REPUTATION 
+action_result.data.\*.rules.\*.application.value | string |  |   ADAPTIVE_WHITE_LIST 
+action_result.data.\*.rules.\*.operation | string |  |   RANSOM 
+action_result.data.\*.directory_action_rules | string |  |  
+action_result.data.\*.sensor_settings.\*.name | string |  |   ALLOW_UNINSTALL 
+action_result.data.\*.sensor_settings.\*.value | string |  |   true 
+action_result.data.\*.rule_configs.\*.id | numeric |  |  
+action_result.data.\*.rule_configs.\*.name | string |  |  
+action_result.data.\*.rule_configs.\*.description | string |  |  
+action_result.data.\*.rule_configs.\*.inherited_from | string |  |   psc:region 
+action_result.data.\*.rule_configs.\*.category | string |  |   core_prevention 
+action_result.data.\*.rule_configs.\*.parameters.WindowsAssignmentMode | string |  |   BLOCK 
+action_result.data.\*.sensor_configs | string |  |  
 action_result.summary.policy_id | string |  `cb defense policy id`  |   13145 
 action_result.message | string |  |   Policy retrieved successfully 
 summary.total_objects | numeric |  |  
