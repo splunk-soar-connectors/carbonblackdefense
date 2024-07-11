@@ -1020,8 +1020,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.description",
-                    "data_type": "string",
-                    "example_values": []
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.auto_deregister_inactive_vdi_interval_ms",
@@ -1177,7 +1176,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.av_settings.update_servers.servers_for_onsite_devices.*.preferred",
-                    "data_type": "bolean",
+                    "data_type": "boolean",
                     "example_values": [
                          true,
                          false
@@ -3829,8 +3828,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.description",
-                    "data_type": "string",
-                    "example_values": []
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.auto_deregister_inactive_vdi_interval_ms",
@@ -3986,7 +3984,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.av_settings.update_servers.servers_for_onsite_devices.*.preferred",
-                    "data_type": "bolean",
+                    "data_type": "boolean",
                     "example_values": [
                          true,
                          false
@@ -4291,7 +4289,7 @@
                 },
                 {
                     "data_path": "action_result.data.*.av_settings.update_servers.servers_for_onsite_devices.*.preferred",
-                    "data_type": "bolean",
+                    "data_type": "boolean",
                     "example_values": [
                          true,
                          false
