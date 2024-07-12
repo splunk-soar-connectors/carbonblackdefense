@@ -10,7 +10,7 @@
     "product_name": "Defense",
     "product_version_regex": ".*",
     "publisher": "Splunk",
-    "license": "Copyright (c) 2018-2023 Splunk Inc.",
+    "license": "Copyright (c) 2018-2024 Splunk Inc.",
     "app_version": "2.2.1",
     "utctime_updated": "2022-02-09T04:16:31.000000Z",
     "package_name": "phantom_carbonblackdefense",
@@ -19,7 +19,7 @@
     "latest_tested_versions": [
         "Cloud, August 17 2021"
     ],
-    "min_phantom_version": "5.2.0",
+    "min_phantom_version": "6.2.1",
     "app_wizard_version": "1.0.0",
     "configuration": {
         "api_url": {
@@ -3788,9 +3788,7 @@
                     ],
                     "contains": [
                         "cb defense policy id"
-                    ],
-                    "column_name": "ID",
-                    "column_order": 1
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.name",
