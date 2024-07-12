@@ -273,6 +273,7 @@ DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 action_result.status | string |  |   success  failed 
 action_result.data.\*.id | numeric |  `cb defense policy id`  |   6525 
 action_result.data.\*.description | string |  |  
+action_result.data.\*.name | string |  |  
 action_result.data.\*.is_system | boolean |  |   True  False 
 action_result.data.\*.priority_level | string |  |   MEDIUM 
 action_result.data.\*.position | numeric |  |  
@@ -296,14 +297,14 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **name** |  required  | Name | string | 
 **description** |  required  | Description | string | 
 **priority** |  required  | Priority Level | string | 
-**json_fields** |  optional  | Other configuration fields in JSON format. Defaults to '{"sensorSettings": []}' if left empty | string | 
+**json_fields** |  optional  | Other configuration fields in JSON format. Defaults to '{"sensor_settings": []}' if left empty | string | 
 
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.status | string |  |   success  failed 
 action_result.parameter.description | string |  |   This is going to be deleted very soon 
-action_result.parameter.json_fields | string |  |   {"sensorSettings":[{"name":"ALLOW_UNINSTALL","value":"true"}]} 
+action_result.parameter.json_fields | string |  |   {"sensor_settings":[{"name":"ALLOW_UNINSTALL","value":"true"}]} 
 action_result.parameter.name | string |  |   Phantom policy 3 
 action_result.parameter.priority | string |  |   MEDIUM 
 action_result.data.\*.id | numeric |  `cb defense policy id`  |   13145 
