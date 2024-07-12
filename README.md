@@ -6,12 +6,12 @@ Connector Version: 2.2.1
 Product Vendor: Carbon Black  
 Product Name: Defense  
 Product Version Supported (regex): ".\*"  
-Minimum Product Version: 5.2.0  
+Minimum Product Version: 6.2.1  
 
 This app integrates with an instance of Carbon Black defense to run investigative and generic actions
 
 [comment]: # " File: README.md"
-[comment]: # "  Copyright (c) 2018-2023 Splunk Inc."
+[comment]: # "  Copyright (c) 2018-2024 Splunk Inc."
 [comment]: # ""
 [comment]: # "Licensed under the Apache License, Version 2.0 (the 'License');"
 [comment]: # "you may not use this file except in compliance with the License."
