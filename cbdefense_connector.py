@@ -375,9 +375,8 @@ class CarbonBlackDefenseConnector(BaseConnector):
                 )
             )
 
-        ret_val, response = self._make_rest_call(
-            CBD_ADD_RULE_API.format(self._org_key, param['id']), action_result, data=rule_info, method='post'
-            )
+        ret_val, response = self._make_rest_call(CBD_ADD_RULE_API.format(self._org_key, param['id']), action_result, data=rule_info,
+                                                 method='post')
 
         if phantom.is_fail(ret_val):
             return ret_val
@@ -392,9 +391,8 @@ class CarbonBlackDefenseConnector(BaseConnector):
         self.save_progress("In action handler for: {0}".format(self.get_action_identifier()))
         action_result = self.add_action_result(ActionResult(dict(param)))
         rule_id = param['rule_id']
-        ret_val, response = self._make_rest_call(
-            CBD_DEL_RULE_API.format(self._org_key, param['policy_id'], rule_id), action_result, method='delete'
-            )
+        ret_val, response = self._make_rest_call(CBD_DEL_RULE_API.format(self._org_key, param['policy_id'], rule_id), action_result,
+                                                 method='delete')
 
         if phantom.is_fail(ret_val):
             return ret_val
