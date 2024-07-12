@@ -12,16 +12,12 @@
 # the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
 # either express or implied. See the License for the specific language governing permissions
 # and limitations under the License.
-# CBD_POLICY_API = "/integrationServices/v3/policy/"
 CBD_POLICY_SUMMARY_API = "/policyservice/v1/orgs/{0}/policies/summary"
 CBD_POLICY_API = "/policyservice/v1/orgs/{0}/policies"
-# CBD_POLICY_API_DEL = "/integrationServices/v3/policy/{0}"
 CBD_POLICY_API_DEL = "/policyservice/v1/orgs/{0}/policies/{1}"
 CBD_POLICY_DELETED = "Policy successfully deleted"
 CBD_RULE_DELETED = "Rule successfully deleted"
-# CBD_ADD_RULE_API = "/integrationServices/v3/policy/{0}/rule"
 CBD_ADD_RULE_API = "/policyservice/v1/orgs/{0}/policies/{1}/rules"
-# CBD_DEL_RULE_API = "/integrationServices/v3/policy/{0}/rule/{1}"
 CBD_DEL_RULE_API = "/policyservice/v1/orgs/{0}/policies/{1}/rules/{2}"
 CBD_LIST_DEVICE_API = "/appservices/v6/orgs/{0}/devices/_search"
 CBD_UPDATE_DEVICE_API = "/appservices/v6/orgs/{0}/device_actions"
