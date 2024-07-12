@@ -830,6 +830,10 @@
                     "data_type": "string"
                 },
                 {
+                    "data_path": "action_result.data.*.name",
+                    "data_type": "string"
+                },
+                {
                     "data_path": "action_result.data.*.is_system",
                     "data_type": "boolean",
                     "example_values": [
@@ -925,9 +929,9 @@
                     "order": 2
                 },
                 "json_fields": {
-                    "description": "Other configuration fields in JSON format. Defaults to '{\"sensorSettings\": []}' if left empty",
+                    "description": "Other configuration fields in JSON format. Defaults to '{\"sensor_settings\": []}' if left empty",
                     "data_type": "string",
-                    "default": "{\"sensorSettings\": []}",
+                    "default": "{\"sensor_settings\": []}",
                     "order": 3
                 }
             },
@@ -953,7 +957,7 @@
                     "data_path": "action_result.parameter.json_fields",
                     "data_type": "string",
                     "example_values": [
-                        "{\"sensorSettings\":[{\"name\":\"ALLOW_UNINSTALL\",\"value\":\"true\"}]}"
+                        "{\"sensor_settings\":[{\"name\":\"ALLOW_UNINSTALL\",\"value\":\"true\"}]}"
                     ]
                 },
                 {
@@ -978,9 +982,7 @@
                     ],
                     "contains": [
                         "cb defense policy id"
-                    ],
-                    "column_name": "ID",
-                    "column_order": 1
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.name",

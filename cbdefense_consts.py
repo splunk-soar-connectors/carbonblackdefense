@@ -14,7 +14,7 @@
 # and limitations under the License.
 # CBD_POLICY_API = "/integrationServices/v3/policy/"
 CBD_POLICY_SUMMARY_API = "/policyservice/v1/orgs/{0}/policies/summary"
-CBD_POLICY_API = "/policyservice/v1/orgs/{0}/policies/"
+CBD_POLICY_API = "/policyservice/v1/orgs/{0}/policies"
 # CBD_POLICY_API_DEL = "/integrationServices/v3/policy/{0}"
 CBD_POLICY_API_DEL = "/policyservice/v1/orgs/{0}/policies/{1}"
 CBD_POLICY_DELETED = "Policy successfully deleted"
