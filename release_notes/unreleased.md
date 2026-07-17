@@ -4,3 +4,4 @@
 * - Escaped alert identifiers before embedding them in the get-alert widget JavaScript context.
 * - Escaped policy identifiers before embedding them in the list-policies widget JavaScript context.
 * - Restricted alert identifiers to safe URL-path characters before sending Carbon Black Defense API requests.
+* - Prevented transport errors from exposing sensitive asset configuration values in action results.

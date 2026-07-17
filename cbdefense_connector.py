@@ -267,11 +267,8 @@ class CarbonBlackDefenseConnector(BaseConnector):
                 params=params,
                 timeout=CBD_DEFAULT_REQUEST_TIMEOUT,
             )
-        except Exception as e:
-            return RetVal(
-                action_result.set_status(phantom.APP_ERROR, f"Error Connecting to server. Details: {self._get_error_message_from_exception(e)}"),
-                resp_json,
-            )
+        except Exception:
+            return RetVal(action_result.set_status(phantom.APP_ERROR, "Error connecting to server"), resp_json)
 
         return self._process_response(r, action_result)
 
