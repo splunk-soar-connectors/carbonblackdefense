@@ -17,6 +17,7 @@
 # Phantom App imports
 import ipaddress
 import json
+import re
 import time
 
 import phantom.app as phantom
@@ -688,6 +689,9 @@ class CarbonBlackDefenseConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         id = param["id"]
+        if not re.fullmatch(r"[A-Za-z0-9_-]+", id):
+            return action_result.set_status(phantom.APP_ERROR, "Alert ID contains unsupported characters")
+
         ret_val, resp_json = self._make_rest_call(CBD_GET_ALERT_API.format(id, self._org_key), action_result, is_new_api=True)
 
         if phantom.is_fail(ret_val):
