@@ -70,6 +70,7 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 **custom_api_connector_id** | optional | password | Custom API Connector ID |
 **custom_api_key** | optional | password | Custom API Key |
 **org_key** | optional | password | Organization Key |
+**verify_server_cert** | optional | boolean | Verify server certificate |
 
 ### Supported Actions
 

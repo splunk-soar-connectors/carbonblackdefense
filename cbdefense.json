@@ -67,6 +67,12 @@
             "description": "Organization Key",
             "data_type": "password",
             "order": 8
+        },
+        "verify_server_cert": {
+            "description": "Verify server certificate",
+            "data_type": "boolean",
+            "default": true,
+            "order": 9
         }
     },
     "actions": [

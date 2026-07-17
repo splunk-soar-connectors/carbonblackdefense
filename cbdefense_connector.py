@@ -262,7 +262,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
                 url,
                 json=data,
                 headers=headers,
-                verify=config.get("verify_server_cert", False),
+                verify=config.get("verify_server_cert", True),
                 params=params,
                 timeout=CBD_DEFAULT_REQUEST_TIMEOUT,
             )
