@@ -10,7 +10,7 @@
     "product_name": "Defense",
     "product_version_regex": ".*",
     "publisher": "Splunk",
-    "license": "Copyright (c) 2018-2025 Splunk Inc.",
+    "license": "Copyright (c) 2018-2026 Splunk Inc.",
     "app_version": "2.2.2",
     "utctime_updated": "2025-09-05T16:26:59.171342Z",
     "package_name": "phantom_carbonblackdefense",
@@ -67,6 +67,12 @@
             "description": "Organization Key",
             "data_type": "password",
             "order": 8
+        },
+        "verify_server_cert": {
+            "description": "Verify server certificate",
+            "data_type": "boolean",
+            "default": true,
+            "order": 9
         }
     },
     "actions": [

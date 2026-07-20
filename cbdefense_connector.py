@@ -1,6 +1,6 @@
 # File: cbdefense_connector.py
 #
-# Copyright (c) 2018-2025 Splunk Inc.
+# Copyright (c) 2018-2026 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 # Phantom App imports
 import ipaddress
 import json
+import re
 import time
 
 import phantom.app as phantom
@@ -262,15 +263,12 @@ class CarbonBlackDefenseConnector(BaseConnector):
                 url,
                 json=data,
                 headers=headers,
-                verify=config.get("verify_server_cert", False),
+                verify=config.get("verify_server_cert", True),
                 params=params,
                 timeout=CBD_DEFAULT_REQUEST_TIMEOUT,
             )
-        except Exception as e:
-            return RetVal(
-                action_result.set_status(phantom.APP_ERROR, f"Error Connecting to server. Details: {self._get_error_message_from_exception(e)}"),
-                resp_json,
-            )
+        except Exception:
+            return RetVal(action_result.set_status(phantom.APP_ERROR, "Error connecting to server"), resp_json)
 
         return self._process_response(r, action_result)
 
@@ -688,6 +686,9 @@ class CarbonBlackDefenseConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
 
         id = param["id"]
+        if not re.fullmatch(r"[A-Za-z0-9_-]+", id):
+            return action_result.set_status(phantom.APP_ERROR, "Alert ID contains unsupported characters")
+
         ret_val, resp_json = self._make_rest_call(CBD_GET_ALERT_API.format(id, self._org_key), action_result, is_new_api=True)
 
         if phantom.is_fail(ret_val):
