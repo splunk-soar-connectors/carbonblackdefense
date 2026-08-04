@@ -1,7 +1,7 @@
 # Carbon Black Defense
 
 Publisher: Splunk <br>
-Connector Version: 3.0.0 <br>
+Connector Version: 3.0.1 <br>
 Product Vendor: Carbon Black <br>
 Product Name: Defense <br>
 Minimum Product Version: 5.2.0

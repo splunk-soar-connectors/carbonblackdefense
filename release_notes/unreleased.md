@@ -1,4 +1,1 @@
 **Unreleased**
-
-* Validate policy and rule identifiers before constructing management request paths.
-* Redact response bodies, headers, and nested parser details from persisted error and debug output.
