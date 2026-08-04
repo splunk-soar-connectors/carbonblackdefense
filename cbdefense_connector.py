@@ -22,7 +22,6 @@ import time
 
 import phantom.app as phantom
 import requests
-from bs4 import BeautifulSoup
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 
@@ -115,6 +114,13 @@ class CarbonBlackDefenseConnector(BaseConnector):
 
         return parameter
 
+    def _validate_path_identifier(self, action_result, value, name):
+        value = str(value)
+        if not re.fullmatch(r"[A-Za-z0-9_-]+", value):
+            action_result.set_status(phantom.APP_ERROR, f"{name} contains unsupported characters")
+            return None
+        return value
+
     def _get_error_message_from_exception(self, e):
         """This function is used to get appropriate error message from the exception.
         :param e: Exception object
@@ -146,56 +152,24 @@ class CarbonBlackDefenseConnector(BaseConnector):
         return RetVal(action_result.set_status(phantom.APP_ERROR, CBD_EMPTY_RESPONSE_NO_HEADER), None)
 
     def _process_html_response(self, response, action_result):
-        # An html response, treat it like an error
-        status_code = response.status_code
-
-        try:
-            soup = BeautifulSoup(response.text, "html.parser")
-            error_text = soup.text
-            split_lines = error_text.split("\n")
-            split_lines = [x.strip() for x in split_lines if x.strip()]
-            error_text = "\n".join(split_lines)
-        except Exception:
-            error_text = CBD_ERROR_TEXT
-
-        message = f"Status Code: {status_code}. Data from server:\n{error_text}\n"
-
-        message = message.replace("{", "{{").replace("}", "}}")
-
-        return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
+        return RetVal(action_result.set_status(phantom.APP_ERROR, f"Request failed with status code {response.status_code}"), None)
 
     def _process_json_response(self, r, action_result):
         # Try a json parse
         try:
             resp_json = r.json()
-        except Exception as e:
-            return RetVal(
-                action_result.set_status(
-                    phantom.APP_ERROR, f"Unable to parse JSON response. Error: {self._get_error_message_from_exception(e)}"
-                ),
-                None,
-            )
+        except Exception:
+            return RetVal(action_result.set_status(phantom.APP_ERROR, "Unable to parse JSON response"), None)
 
         # Please specify the status codes here
         if 200 <= r.status_code < 399:
             return RetVal(phantom.APP_SUCCESS, resp_json)
 
-        # You should process the error returned in the json
-        if "message" in resp_json:
-            message = resp_json["message"]
-        else:
-            message = "Error from server. Status Code: {} Data from server: {}".format(
-                r.status_code, r.text.replace("{", "{{").replace("}", "}}")
-            )
-
-        return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
+        return RetVal(action_result.set_status(phantom.APP_ERROR, f"Request failed with status code {r.status_code}"), None)
 
     def _process_response(self, r, action_result):
-        # store the r_text in debug data, it will get dumped in the logs if the action fails
         if hasattr(action_result, "add_debug_data"):
             action_result.add_debug_data({"r_status_code": r.status_code})
-            action_result.add_debug_data({"r_text": r.text})
-            action_result.add_debug_data({"r_headers": r.headers})
 
         self._status_code = r.status_code
 
@@ -218,9 +192,7 @@ class CarbonBlackDefenseConnector(BaseConnector):
             return self._process_empty_reponse(r, action_result)
 
         # everything else is actually an error at this point
-        message = "Can't process response from server. Status Code: {} Data from server: {}".format(
-            r.status_code, r.text.replace("{", "{{").replace("}", "}}")
-        )
+        message = f"Can't process response from server. Status Code: {r.status_code}"
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
@@ -335,7 +307,9 @@ class CarbonBlackDefenseConnector(BaseConnector):
     def _handle_delete_policy(self, param):
         self.save_progress(f"In action handler for: {self.get_action_identifier()}")
         action_result = self.add_action_result(ActionResult(dict(param)))
-        policy_id = param["id"]
+        policy_id = self._validate_path_identifier(action_result, param["id"], "Policy ID")
+        if policy_id is None:
+            return action_result.get_status()
 
         ret_val, response = self._make_rest_call(CBD_POLICY_API_DEL.format(policy_id), action_result, method="delete")
 
@@ -360,7 +334,11 @@ class CarbonBlackDefenseConnector(BaseConnector):
 
         body = {"ruleInfo": rule_info}
 
-        ret_val, response = self._make_rest_call(CBD_ADD_RULE_API.format(param["id"]), action_result, data=body, method="post")
+        policy_id = self._validate_path_identifier(action_result, param["id"], "Policy ID")
+        if policy_id is None:
+            return action_result.get_status()
+
+        ret_val, response = self._make_rest_call(CBD_ADD_RULE_API.format(policy_id), action_result, data=body, method="post")
 
         if phantom.is_fail(ret_val):
             return ret_val
@@ -373,8 +351,11 @@ class CarbonBlackDefenseConnector(BaseConnector):
     def _handle_delete_rule(self, param):
         self.save_progress(f"In action handler for: {self.get_action_identifier()}")
         action_result = self.add_action_result(ActionResult(dict(param)))
-        rule_id = param["rule_id"]
-        ret_val, response = self._make_rest_call(CBD_DEL_RULE_API.format(param["policy_id"], rule_id), action_result, method="delete")
+        policy_id = self._validate_path_identifier(action_result, param["policy_id"], "Policy ID")
+        rule_id = self._validate_path_identifier(action_result, param["rule_id"], "Rule ID")
+        if policy_id is None or rule_id is None:
+            return action_result.get_status()
+        ret_val, response = self._make_rest_call(CBD_DEL_RULE_API.format(policy_id, rule_id), action_result, method="delete")
 
         if phantom.is_fail(ret_val):
             return ret_val
@@ -743,7 +724,9 @@ class CarbonBlackDefenseConnector(BaseConnector):
     def _handle_update_policy(self, param):
         self.save_progress(f"In action handler for: {self.get_action_identifier()}")
         action_result = self.add_action_result(ActionResult(param))
-        policy_id = param["policy_id"]
+        policy_id = self._validate_path_identifier(action_result, param["policy_id"], "Policy ID")
+        if policy_id is None:
+            return action_result.get_status()
         endpoint = CBD_POLICY_API + str(policy_id)
 
         try:
@@ -775,7 +758,9 @@ class CarbonBlackDefenseConnector(BaseConnector):
     def _handle_get_policy(self, param):
         self.save_progress(f"In action handler for: {self.get_action_identifier()}")
         action_result = self.add_action_result(ActionResult(param))
-        policy_id = param["policy_id"]
+        policy_id = self._validate_path_identifier(action_result, param["policy_id"], "Policy ID")
+        if policy_id is None:
+            return action_result.get_status()
         endpoint = CBD_POLICY_API + str(policy_id)
         ret_val, response = self._make_rest_call(endpoint, action_result)
 
